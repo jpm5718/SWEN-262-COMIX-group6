@@ -24,5 +24,7 @@ public class App{
     public static void main(String[] args) {
         App app = new App();
         app.connect();
+        PTUI ptui = new PTUI();
+        ptui.run();
     }
 }
