@@ -1,9 +1,10 @@
 package src;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 import java.io.*;
 import java.util.Scanner;
 
@@ -14,59 +15,82 @@ import java.util.Scanner;
  * 
  * @author James McGuire
  */
-public class App{
-    /*stores the url to connect with database */
+public class App {
+    /* stores the url to connect with database */
     private final String url = "jdbc:postgresql://localhost/group6";
 
-    /*stores user associated with database */
+    /* stores user associated with database */
     private final String user = "group6";
 
-    /*stores password of database to be used when connecting */
+    /* stores password of database to be used when connecting */
     private final String password = "group6";
 
-    /*this method connects our project with our postrgres database */
-    public Connection connect(){
+    /* this method connects our project with our postrgres database */
+    public Connection connect() {
         Connection conn = null;
-        try{
+        try {
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection to PostgreSQL successful.");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
         return conn;
     }
 
-    /*this method takes the data from the csv file and reads it into a table in our database */
-    private void processComic() throws FileNotFoundException, SQLException{
+    public void createTables(){
+        try(Connection conn = connect(); Statement statement = conn.createStatement(0, 0);){
+            String sql_create_query = "DROP TABLE IF EXISTS comics;" +
+                                      "CREATE TABLE comics" +
+                                      "(id SERIAL PRIMARY KEY," +
+                                       " series TEXT," +
+                                       " issue TEXT," +
+                                       "title TEXT," +
+                                       "var_desc TEXT, " +
+                                       "publisher TEXT," +
+                                       "release_date TEXT," +
+                                       "format TEXT," +
+                                       "added_date TEXT, " +
+                                       "creators TEXT);";
+            statement.executeUpdate(sql_create_query);
+            System.out.println("Created comics table...");
+        }catch(SQLException e){System.out.println(e.getMessage());}
+    }
+
+    /*
+     * this method takes the data from the csv file and reads it into a table in our
+     * database
+     */
+    private void processComic() throws FileNotFoundException, SQLException {
         int count = 0;
-        /*the complete line read in from the csv file */
+        /* the complete line read in from the csv file */
         String line;
 
-        /*the line after it has been split and stored in a string array */
+        /* the line after it has been split and stored in a string array */
         String[] splitline;
 
-        /*Scanner object to read csv file */
+        /* Scanner object to read csv file */
         Scanner scanner = new Scanner(new File("data\\comics.csv"));
 
-        /*this is the sql statement without the data inputted.
+        /*
+         * this is the sql statement without the data inputted.
          * will be used when committing data to the table.
          */
         final String SQL_INSERT_STATEMENT = "INSERT INTO comics" +
-        " (series, issue, title, var_desc, publisher, release_date, format, added_date, creators)" + 
-        " (?, ?, ?, ? , ?, ?, ?, ?, ?);";
-        
-        scanner.nextLine(); //skips first three lines of csv file
+                " (series, issue, title, var_desc, publisher, release_date, format, added_date, creators)" +
+                " (?, ?, ?, ? , ?, ?, ?, ?, ?);";
+
+        scanner.nextLine(); // skips first three lines of csv file
         scanner.nextLine(); // ""
         scanner.nextLine(); // ""
 
-        /*For each line in the csv file, it is split, each piece of data is stored, and then 
+        /*
+         * For each line in the csv file, it is split, each piece of data is stored, and
+         * then
          * it is thrown into the correct cell in our database comics table
          */
-        while(scanner.hasNextLine()){
+        while (scanner.hasNextLine()) {
             line = scanner.nextLine();
-            splitline = line.split(","); //next few lines store each field in the line to its respective variable
+            splitline = line.split(","); // next few lines store each field in the line to its respective variable
             String series = splitline[0];
             String issue = splitline[1];
             String title = splitline[2];
@@ -77,11 +101,8 @@ public class App{
             String dateadded = splitline[7];
             String creators = splitline[8];
 
-            try{
-                Connection conn = connect();
-                PreparedStatement statement = conn.prepareStatement(SQL_INSERT_STATEMENT);
-
-                statement.setString(1, series);  //throws correct piece of data into sql insert statement
+            try (Connection conn = connect(); PreparedStatement statement = conn.prepareStatement(SQL_INSERT_STATEMENT);){
+                statement.setString(1, series); // throws correct piece of data into sql insert statement
                 statement.setString(2, issue);
                 statement.setString(3, title);
                 statement.setString(4, description);
@@ -99,7 +120,7 @@ public class App{
                     statement.executeBatch();
                 }
 
-            }catch(SQLException e){
+            } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -110,6 +131,7 @@ public class App{
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.connect();
+        app.createTables();
         app.processComic();
         PTUI ptui = new PTUI();
         ptui.run();
