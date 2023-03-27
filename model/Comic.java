@@ -1,4 +1,4 @@
 package model;
 
-public class Comic {
+public interface Comic {
 }
