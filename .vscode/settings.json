@@ -1,6 +1,9 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar"
+        "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar",
+        "c:\\Users\\james\\Downloads\\opencsv-5.7.1.jar",
+        "c:\\Users\\james\\Downloads\\opencsv-5.7.1-sources.jar",
+        "c:\\Users\\james\\Downloads\\commons-lang3-3.0.jar\\commons-lang3-3.0.jar"
     ]
 }

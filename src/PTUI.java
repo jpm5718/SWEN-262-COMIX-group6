@@ -30,9 +30,7 @@ public class PTUI {
         switch(choice){
             case 1:
                 break;
-            case 2:
-                break;
+            case 2: break;
         }
-
     }
 }
