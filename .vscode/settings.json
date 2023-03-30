@@ -1,6 +1,9 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar"
+        "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar",
+        "c:\\Users\\james\\Downloads\\jackson-annotations-2.15.0-rc1.jar",
+        "c:\\Users\\james\\Downloads\\jackson-core-2.15.0-rc1.jar",
+        "c:\\Users\\james\\Downloads\\jackson-databind-2.15.0-rc1.jar"
     ]
 }

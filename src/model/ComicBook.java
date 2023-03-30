@@ -1,29 +1,37 @@
 package src.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Class that represents a base comic book object.
  * 
  * @author James McGuire
  */
 public class ComicBook {
-    /* All data fields a comic book can have */
-    private String series;
-    private String issue;
-    private String full_title;
-    private String var_desc;
-    private String publisher;
-    private String release_date;
-    private String format;
-    private String date_added;
-    private String creators;
+    /* All data fields a comic book can have as json properties */
+    @JsonProperty("series") private String series;
+    @JsonProperty("issue") private String issue;
+    @JsonProperty("full_title") private String full_title;
+    @JsonProperty("var_desc") private String var_desc;
+    @JsonProperty("publisher") private String publisher;
+    @JsonProperty("release_date") private String release_date;
+    @JsonProperty("format") private String format;
+    @JsonProperty("date_added") private String date_added;
+    @JsonProperty("creators") private String creators;
+    @JsonProperty("value") private double value;
 
-    private double value = 9.99;
-
-    /* Default constructor to initialize a comic book object */
-    public ComicBook() {
-    }
-
-    /* Constructor to create a comic book object with parameters */
+    /**
+     * Constructor to create a comic book object
+     * @param series The series the comic book is in
+     * @param issue The issue of the comic book
+     * @param full_title The comic's full title
+     * @param var_desc Variant description of the comic
+     * @param publisher Publisher of the comic book
+     * @param release_date When the comic was released
+     * @param format FOrmat it is in 
+     * @param date_added The date it was added to the database (?)
+     * @param creators The creators of the comic book
+     */
     public ComicBook(String series, String issue, String full_title, String var_desc, String publisher,
             String release_date, String format, String date_added, String creators) {
         this.series = series;
@@ -35,12 +43,12 @@ public class ComicBook {
         this.format = format;
         this.date_added = date_added;
         this.creators = creators;
+        this.value = 9.99; // every comic's base value is $9.99
     }
 
     // --------------------------------------------------------------------------------------------------------------------
     // TONS OF GETTERS AND SETTERS :0
     // --------------------------------------------------------------------------------------------------------------------
-    
     public String getSeries() {
         return series;
     }
