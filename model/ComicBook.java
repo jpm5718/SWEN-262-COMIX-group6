@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ComicBook implements Comic {
 
     @JsonProperty("series") private String series;
