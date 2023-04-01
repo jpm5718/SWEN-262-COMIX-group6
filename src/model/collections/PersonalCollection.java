@@ -5,9 +5,11 @@ import src.model.collections.search.CollectionSearchStrategy;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.CollectionSortStrategy;
 import src.model.comics.Comic;
+import src.model.comics.ComicBook;
 import src.model.comics.GradedComic;
 
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
 
 public class PersonalCollection {
@@ -18,7 +20,6 @@ public class PersonalCollection {
     private CollectionSortStrategy sortStrategy;
     private DisplayStrategy displayStrategy;
     private int numberOfIssues;
-    private int value;
 
     public PersonalCollection(String name) {
         collection = new TreeMap<>();
@@ -26,23 +27,22 @@ public class PersonalCollection {
         searchStrategy = new SearchByTitle();
         sortStrategy = null;
         numberOfIssues = 0;
-        value = 0;
     }
 
     public void addComic(Comic comic) {
         collection.put(comic.getId(), comic);
         numberOfIssues++;
-        value += comic.getValue();
+    }
+
+    public void addComic(Queue<String> attributes) {
+        Comic comic = new ComicBook(attributes);
+        collection.put(comic.getId(), comic);
+        numberOfIssues++;
     }
 
     public void removeComic(Comic comic) {
         collection.remove(comic.getId());
         numberOfIssues--;
-        value -= comic.getValue();
-    }
-
-    public Comic getComic() {
-        return null;
     }
 
     public void gradeComic(Comic comic, int grade) {
@@ -89,7 +89,16 @@ public class PersonalCollection {
         return numberOfIssues;
     }
 
-    public int getValue() {
+    public double getValue() {
+        double value = 0;
+
+        for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
+
+            //how's that for a weird looking call. comicEntry.getValue() gets the comic
+            //comicEntry.getValue().getValue() gets the value of the comic
+            value = value + comicEntry.getValue().getValue();
+        }
+
         return value;
     }
 }
