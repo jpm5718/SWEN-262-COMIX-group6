@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import src.model.ComicBook;
+import src.model.comics.Comic;
 
 public class ComicBookFileDAO implements ComicBookDAO{
     /**the name of the file that comics are being read in from */
@@ -15,7 +15,7 @@ public class ComicBookFileDAO implements ComicBookDAO{
     private String jsonfile = "data/comics.json";
    
     /**the list containing all the comic objects, used to convert objects into json objects */
-    private List<ComicBook> comics = new ArrayList<>();
+    private List<Comic> comics = new ArrayList<>();
 
     /**used to serialize and deserialize objects to/from json formatting */
     private ObjectMapper mapper = new ObjectMapper();

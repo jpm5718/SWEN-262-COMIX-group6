@@ -32,8 +32,8 @@ public class ComicBook implements Comic {
         format = attributes.poll();
         dateAdded = attributes.poll();
         creators = attributes.poll();
-        value = Double.parseDouble(Objects.requireNonNull(attributes.poll()));
         id = Integer.parseInt(Objects.requireNonNull(attributes.poll()));
+        value = 9.99; //base value of comic (assumption)
     }
 
     public String getSeries() { return series; }
