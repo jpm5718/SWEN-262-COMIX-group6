@@ -1,22 +1,24 @@
 package src.model.collections;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import src.model.collections.display.DisplayStrategy;
 import src.model.collections.search.CollectionSearchStrategy;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.CollectionSortStrategy;
 import src.model.comics.Comic;
+import src.model.comics.GradedComic;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class PersonalCollection {
 
-    @JsonProperty("personalCollection")Map<Integer, Comic> collection;
-    @JsonProperty("name")private String name;
-    @JsonProperty("searchStrategy")private CollectionSearchStrategy searchStrategy;
-    @JsonProperty("sortMethod")private CollectionSortStrategy sortStrategy;
-    @JsonProperty("numberOfIssues")private int numberOfIssues;
-    @JsonProperty("value")private int value;
+    Map<Integer, Comic> collection;
+    private String name;
+    private CollectionSearchStrategy searchStrategy;
+    private CollectionSortStrategy sortStrategy;
+    private DisplayStrategy displayStrategy;
+    private int numberOfIssues;
+    private int value;
 
     public PersonalCollection(String name) {
         collection = new TreeMap<>();
@@ -41,6 +43,10 @@ public class PersonalCollection {
 
     public Comic getComic() {
         return null;
+    }
+
+    public void gradeComic(Comic comic, int grade) {
+        comic = new GradedComic(comic, grade);
     }
 
     public String getName() {
@@ -69,6 +75,14 @@ public class PersonalCollection {
 
     public void executeSort() {
         this.collection = sortStrategy.Sort();
+    }
+
+    public void setDisplayStrategy(DisplayStrategy displayStrategy) {
+        this.displayStrategy = displayStrategy;
+    }
+
+    public void display() {
+        displayStrategy.display();
     }
 
     public int getNumberOfIssues() {
