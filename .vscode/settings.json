@@ -6,6 +6,11 @@
         "c:\\Users\\james\\Downloads\\jackson-core-2.15.0-rc1.jar",
         "c:\\Users\\james\\Downloads\\jackson-databind-2.15.0-rc1.jar",
         "c:\\Users\\james\\Downloads\\commons-lang3-3.0.jar\\commons-lang3-3.0.jar",
-        "c:\\Users\\james\\Downloads\\opencsv-5.7.1.jar"
+        "c:\\Users\\james\\Downloads\\opencsv-5.7.1.jar",
+        "c:\\Programs\\Java Stf\\commons-lang3-3.0.jar",
+        "c:\\Programs\\Java Stf\\jackson-annotations-2.15.0-rc1.jar",
+        "c:\\Programs\\Java Stf\\jackson-core-2.15.0-rc1.jar",
+        "c:\\Programs\\Java Stf\\jackson-databind-2.15.0-rc1.jar",
+        "c:\\Programs\\Java Stf\\opencsv-5.7.1.jar"
     ]
 }
