@@ -5,9 +5,9 @@
 package src.model.collections;
 
 import src.model.collections.display.DisplayStrategy;
-import src.model.collections.search.CollectionSearchStrategy;
+import src.model.collections.search.SearchStrategy;
 import src.model.collections.search.SearchByTitle;
-import src.model.collections.sort.CollectionSortStrategy;
+import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
 import src.model.comics.editComic.EditStrategy;
 
@@ -20,8 +20,8 @@ public class PersonalCollection {
 
     Map<Integer, Comic> collection;
     private String name;
-    private CollectionSearchStrategy searchStrategy;
-    private CollectionSortStrategy sortStrategy;
+    private SearchStrategy searchStrategy;
+    private SortStrategy sortStrategy;
     private DisplayStrategy displayStrategy;
     private EditStrategy editStrategy;
     private int numberOfIssues;
@@ -134,7 +134,7 @@ public class PersonalCollection {
 
     /**
      * Sets the algorithm for editing a comic in the collection
-     * @param editStrategy
+     * @param editStrategy - concrete strategy
      */
     public void setEditStrategy(EditStrategy editStrategy) {
         this.editStrategy = editStrategy;
@@ -153,7 +153,7 @@ public class PersonalCollection {
      * Sets the algorithm for searching for a comic in the collection
      * @param searchStrategy - concrete strategy
      */
-    public void setSearchStrategy(CollectionSearchStrategy searchStrategy) {
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
         this.searchStrategy = searchStrategy;
     }
 
@@ -171,7 +171,7 @@ public class PersonalCollection {
      * Sets the algorithm for sorting the collection
      * @param sortStrategy - concrete strategy
      */
-    public void setSortStrategy(CollectionSortStrategy sortStrategy) {
+    public void setSortStrategy(SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
     }
 

@@ -9,7 +9,7 @@ import src.model.comics.Comic;
 
 import java.util.Map;
 
-public class SortBySeries implements CollectionSortStrategy {
+public class SortBySeries implements SortStrategy {
 
     @Override
     public Map<Integer, Comic> Sort(Map<Integer, Comic> collection) {

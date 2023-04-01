@@ -8,6 +8,6 @@ package src.model.collections.sort;
 import src.model.comics.Comic;
 import java.util.Map;
 
-public interface CollectionSortStrategy {
+public interface SortStrategy {
     Map<Integer, Comic> Sort(Map<Integer, Comic> collection);
 }

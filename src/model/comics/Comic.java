@@ -6,7 +6,6 @@
 package src.model.comics;
 
 public interface Comic {
-
     String getSeries();
     String getIssue();
     String getFullTitle();

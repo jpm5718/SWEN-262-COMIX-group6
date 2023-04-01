@@ -9,7 +9,7 @@ import src.model.comics.Comic;
 
 import java.util.ArrayList;
 
-public class SearchByComicType implements CollectionSearchStrategy {
+public class SearchByComicType implements SearchStrategy {
     @Override
     public ArrayList<Comic> search(String term, boolean exactMatch) {
         return null;

@@ -9,6 +9,6 @@ import src.model.comics.Comic;
 
 import java.util.ArrayList;
 
-public interface CollectionSearchStrategy {
+public interface SearchStrategy {
     ArrayList<Comic> search(String term, boolean exactMatch);
 }
