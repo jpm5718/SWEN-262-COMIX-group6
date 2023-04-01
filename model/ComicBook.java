@@ -2,9 +2,16 @@ package model;
 
 public class ComicBook implements Comic {
 
-    String author;
-    String issue;
-    String title;
+    @JsonProperty("series") private String series;
+    @JsonProperty("issue") private String issue;
+    @JsonProperty("full_title") private String full_title;
+    @JsonProperty("var_desc") private String var_desc;
+    @JsonProperty("publisher") private String publisher;
+    @JsonProperty("release_date") private String release_date;
+    @JsonProperty("format") private String format;
+    @JsonProperty("date_added") private String date_added;
+    @JsonProperty("creators") private String creators;
+    @JsonProperty("value") private double value;
 
     public ComicBook() {}
 
