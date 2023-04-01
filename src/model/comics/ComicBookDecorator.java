@@ -1,3 +1,8 @@
+/**
+ * @author Dan Corcoran
+ */
+
+
 package src.model.comics;
 
 public abstract class ComicBookDecorator implements Comic {

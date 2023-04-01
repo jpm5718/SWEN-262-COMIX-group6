@@ -1,3 +1,8 @@
+/**
+ * @author Dan Corcoran
+ */
+
+
 package src.model.comics;
 
 public interface Comic {

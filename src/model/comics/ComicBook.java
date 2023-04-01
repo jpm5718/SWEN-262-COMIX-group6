@@ -1,23 +1,26 @@
-package src.model.comics;
+/**
+ * @author Dan Corcoran
+ */
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+package src.model.comics;
 
 import java.util.Objects;
 import java.util.Queue;
 
 public class ComicBook implements Comic {
 
-    @JsonProperty("series") private String series;
-    @JsonProperty("issue") private String issue;
-    @JsonProperty("fullTitle") private String fullTitle;
-    @JsonProperty("varDesc") private String varDesc;
-    @JsonProperty("publisher") private String publisher;
-    @JsonProperty("releaseDate") private String releaseDate;
-    @JsonProperty("format") private String format;
-    @JsonProperty("dateAdded") private String dateAdded;
-    @JsonProperty("creators") private String creators;
-    @JsonProperty("value") private double value;
-    @JsonProperty("id") private final int id;
+    private String series;
+    private String issue;
+    private String fullTitle;
+    private String varDesc;
+    private String publisher;
+    private String releaseDate;
+    private String format;
+    private String dateAdded;
+    private String creators;
+    private double value;
+    private final int id;
 
     public ComicBook(Queue<String> attributes) {
         series = attributes.poll();
@@ -33,37 +36,21 @@ public class ComicBook implements Comic {
         id = Integer.parseInt(Objects.requireNonNull(attributes.poll()));
     }
 
-    public String getSeries() {
-        return series;
-    }
+    public String getSeries() { return series; }
 
-    public String getIssue() {
-        return issue;
-    }
+    public String getIssue() { return issue; }
 
-    public String getFullTitle() {
-        return fullTitle;
-    }
+    public String getFullTitle() { return fullTitle; }
 
-    public String getVarDesc() {
-        return varDesc;
-    }
+    public String getVarDesc() { return varDesc; }
 
-    public String getPublisher() {
-        return publisher;
-    }
+    public String getPublisher() { return publisher; }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
+    public String getReleaseDate() { return releaseDate; }
 
-    public String getFormat() {
-        return format;
-    }
+    public String getFormat() { return format; }
 
-    public String getDateAdded() {
-        return dateAdded;
-    }
+    public String getDateAdded() { return dateAdded; }
 
     public String getCreators() {
         return creators;

@@ -1,7 +1,14 @@
+/**
+ * @author Dan Corcoran
+ */
+
+
 package src.model.collections.search;
 
 import src.model.comics.Comic;
 
+import java.util.ArrayList;
+
 public interface CollectionSearchStrategy {
-    Comic search(boolean exactMatch);
+    ArrayList<Comic> search(String term, boolean exactMatch);
 }

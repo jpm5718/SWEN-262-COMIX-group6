@@ -1,8 +1,17 @@
+/**
+ * @author Dan Corcoran
+ */
+
+
 package src.model.collections.display;
+
+import src.model.comics.Comic;
+
+import java.util.Map;
 
 public class DisplayByIssue implements DisplayStrategy{
     @Override
-    public void display() {
+    public void display(Map<Integer, Comic> collection) {
 
     }
 }
