@@ -10,7 +10,7 @@ import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
-import src.model.comics.editComic.EditStrategy;
+import src.model.collections.editComic.EditStrategy;
 
 import java.util.ArrayList;
 import java.util.Map;
