@@ -12,7 +12,7 @@ public class ComicBook implements Comic {
 
     private String series;
     private String issue;
-    private String fullTitle;
+    private String title;
     private String varDesc;
     private String publisher;
     private String releaseDate;
@@ -25,7 +25,7 @@ public class ComicBook implements Comic {
     public ComicBook(Queue<String> attributes) {
         series = attributes.poll();
         issue = attributes.poll();
-        fullTitle = attributes.poll();
+        title = attributes.poll();
         varDesc = attributes.poll();
         publisher = attributes.poll();
         releaseDate = attributes.poll();
@@ -40,7 +40,7 @@ public class ComicBook implements Comic {
 
     public String getIssue() { return issue; }
 
-    public String getFullTitle() { return fullTitle; }
+    public String getTitle() { return title; }
 
     public String getVarDesc() { return varDesc; }
 

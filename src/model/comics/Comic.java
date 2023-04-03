@@ -8,7 +8,7 @@ package src.model.comics;
 public interface Comic {
     String getSeries();
     String getIssue();
-    String getFullTitle();
+    String getTitle();
     String getVarDesc();
     String getPublisher();
     String getReleaseDate();
