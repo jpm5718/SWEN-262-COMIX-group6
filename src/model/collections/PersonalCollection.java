@@ -4,6 +4,7 @@
 
 package src.model.collections;
 
+import src.model.collections.modifyComicType.DecoratorStrategy;
 import src.model.collections.search.SearchStrategy;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
@@ -23,6 +24,7 @@ public class PersonalCollection implements ComicCollection {
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
     private EditStrategy editStrategy;
+    private DecoratorStrategy decoratorStrategy;
     private int numberOfIssues;
 
     public PersonalCollection(String name) {
@@ -33,6 +35,7 @@ public class PersonalCollection implements ComicCollection {
         searchStrategy = new SearchByTitle();
         sortStrategy = new SortByTitle();
         editStrategy = null;
+        decoratorStrategy = null;
         numberOfIssues = 0;
     }
 
@@ -69,10 +72,9 @@ public class PersonalCollection implements ComicCollection {
         numberOfIssues--;
     }
 
-    //------try to find a way to program the following 4 comic methods to an interface-----//
-
     /**
-     * Grades a comic currently in the collection
+     * Grades a comic currently in the collection.
+     * Cannot be used with decorator strategy due to the extra grade parameter
      * @param comic - comic being graded
      * @param grade - the grade applied to the comic
      */
@@ -88,52 +90,27 @@ public class PersonalCollection implements ComicCollection {
     }
 
     /**
-     * Slabs a comic currently in the collection
-     * @param comic - comic being slabbed
-     * */
-    public void slabComic(Comic comic) {
-        try {
-            int key = comic.getId();
-            comic = collection.get(key);
-            comic = new SlabbedComic(comic);
-            collection.replace(key, comic);
-        } catch (Exception e) {
-            System.out.println("Error: comic is not in this collection.");
-        }
+     * Sets the algorithm for decorating a comic in the collection
+     * @param decoratorStrategy - concrete strategy
+     */
+    public void setDecoratorStrategy(DecoratorStrategy decoratorStrategy) {
+        this.decoratorStrategy = decoratorStrategy;
     }
 
     /**
-     * Signs a comic currently in the collection
-     * @param comic - comic being signed
-     * */
-    public void signComic(Comic comic) {
+     * Slabs, signs, or authenticates a comic based on the selected strategy
+     * @param comic - comic being decorated
+     */
+    public void decorateComic(Comic comic) {
         try {
             int key = comic.getId();
             comic = collection.get(key);
-            comic = new SignedComic(comic);
+            comic = decoratorStrategy.decorate(comic);
             collection.replace(key, comic);
         } catch (Exception e) {
             System.out.println("Error: comic is not in this collection.");
         }
     }
-
-    /**
-     * Authenticates a comic currently in the collection
-     * @param comic - comic being authenticated
-     * */
-    public void authenticateComic(Comic comic) {
-        try {
-            int key = comic.getId();
-            comic = collection.get(key);
-            comic = new AuthenticatedComic(comic);
-            collection.replace(key, comic);
-        } catch (Exception e) {
-            System.out.println("Error: comic is not in this collection.");
-        }
-    }
-
-    //-------------------------------------------------------------------------------------//
-
     /**
      * Sets the algorithm for editing a comic in the collection
      * @param editStrategy - concrete strategy
