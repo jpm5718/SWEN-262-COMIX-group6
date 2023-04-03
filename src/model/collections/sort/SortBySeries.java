@@ -12,7 +12,7 @@ import java.util.Map;
 public class SortBySeries implements SortStrategy {
 
     @Override
-    public Map<Integer, Comic> Sort(Map<Integer, Comic> collection) {
+    public Map<Integer, Comic> sort(Map<Integer, Comic> collection) {
         return null;
     }
 }

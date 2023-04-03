@@ -9,5 +9,5 @@ import src.model.comics.Comic;
 import java.util.Map;
 
 public interface SortStrategy {
-    Map<Integer, Comic> Sort(Map<Integer, Comic> collection);
+    Map<Integer, Comic> sort(Map<Integer, Comic> collection);
 }
