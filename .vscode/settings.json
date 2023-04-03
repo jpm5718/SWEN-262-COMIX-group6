@@ -6,6 +6,7 @@
         "dependencies/jackson-databind-2.15.0-rc1.jar",
         "dependencies/opencsv-5.7.1.jar",
         "dependencies/commons-lang3-3.0.jar",
+        "dependencies/junit-platform-console-standalone-1.7.0-M1.jar"
         "dependencies/json-simple-1.1.jar"
     ]
 }
