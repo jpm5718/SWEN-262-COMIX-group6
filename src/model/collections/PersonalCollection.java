@@ -4,33 +4,34 @@
 
 package src.model.collections;
 
-import src.model.collections.display.DisplayStrategy;
 import src.model.collections.search.SearchStrategy;
 import src.model.collections.search.SearchByTitle;
+import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
-import src.model.comics.editComic.EditStrategy;
+import src.model.collections.editComic.EditStrategy;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
 
-public class PersonalCollection {
+public class PersonalCollection implements ComicCollection {
 
-    Map<Integer, Comic> collection;
+    private Map<Integer, Comic> collection;
     private String name;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
-    private DisplayStrategy displayStrategy;
     private EditStrategy editStrategy;
     private int numberOfIssues;
 
     public PersonalCollection(String name) {
         collection = new TreeMap<>();
         this.name = name;
+
+        //default strategies are searching and sorting by title
         searchStrategy = new SearchByTitle();
-        sortStrategy = null;
+        sortStrategy = new SortByTitle();
         editStrategy = null;
         numberOfIssues = 0;
     }
@@ -40,6 +41,7 @@ public class PersonalCollection {
      * Requires a comic object to be sent from the database of comics
      * @param comic - comic being added
      */
+    @Override
     public void addComic(Comic comic) {
         collection.put(comic.getId(), comic);
         numberOfIssues++;
@@ -60,7 +62,7 @@ public class PersonalCollection {
      * Removes a comic from the collection and decrements the number of issues
      * Requires a comic object to be sent from the databse of comics
      * Could be updated in the future to allow deletion based on various criteria
-     * @param comic
+     * @param comic - comic being removed
      */
     public void removeComic(Comic comic) {
         collection.remove(comic.getId());
@@ -153,6 +155,7 @@ public class PersonalCollection {
      * Sets the algorithm for searching for a comic in the collection
      * @param searchStrategy - concrete strategy
      */
+    @Override
     public void setSearchStrategy(SearchStrategy searchStrategy) {
         this.searchStrategy = searchStrategy;
     }
@@ -163,14 +166,16 @@ public class PersonalCollection {
      * @param exactMatch - decides whether the search term has to be met exactly
      * @return - list of comics from the search
      */
-    public ArrayList<Comic> executeSearch(String term, boolean exactMatch) {
-        return searchStrategy.search(term, exactMatch);
+    @Override
+    public ArrayList<Comic> search(String term, boolean exactMatch) {
+        return searchStrategy.search(collection, term, exactMatch);
     }
 
     /**
      * Sets the algorithm for sorting the collection
      * @param sortStrategy - concrete strategy
      */
+    @Override
     public void setSortStrategy(SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
     }
@@ -178,23 +183,17 @@ public class PersonalCollection {
     /**
      * Sorts the collection according to the chosen algorithm
      */
-    public void executeSort() {
-        this.collection = sortStrategy.Sort(collection);
+    @Override
+    public void sort() {
+        sortStrategy.sort(collection);
     }
 
     /**
-     * Sets the algorithm for what subdivision of the collection is displayed
-     * @param displayStrategy - concrete strategy
+     * Allows users to update the name of their collections
+     * @param name - new collection name
      */
-    public void setDisplayStrategy(DisplayStrategy displayStrategy) {
-        this.displayStrategy = displayStrategy;
-    }
-
-    /**
-     * Displays the collection according to the chosen display strategy
-     */
-    public void display() {
-        displayStrategy.display(collection);
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -209,22 +208,16 @@ public class PersonalCollection {
      * Returns the entire collection
      * @return - collection of comics
      */
+    @Override
     public Map<Integer, Comic> getCollection() {
         return collection;
-    }
-
-    /**
-     * Allows users to update the name of their collections
-     * @param name - new collection name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
      * Returns the current number of issues in the collection
      * @return - number of issues
      */
+    @Override
     public int getNumberOfIssues() {
         return numberOfIssues;
     }

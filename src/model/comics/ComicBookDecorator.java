@@ -24,8 +24,8 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public String getFullTitle() {
-        return comic.getFullTitle();
+    public String getTitle() {
+        return comic.getTitle();
     }
 
     @Override
