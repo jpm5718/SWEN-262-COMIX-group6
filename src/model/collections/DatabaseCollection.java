@@ -1,3 +1,7 @@
+/**
+ * @author Dan Corcoran
+ */
+
 package src.model.collections;
 
 import src.model.collections.display.DisplayStrategy;
@@ -41,7 +45,7 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public ArrayList<Comic> search(String term, boolean exactMatch) {
-        return searchStrategy.search(term, exactMatch);
+        return searchStrategy.search(collection, term, exactMatch);
     }
 
     @Override
@@ -51,26 +55,26 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public void sort() {
-        sortStrategy.sort(collection);
+        collection = sortStrategy.sort(collection);
     }
 
     @Override
     public void setDisplayStrategy(DisplayStrategy displayStrategy) {
-
+        this.displayStrategy = displayStrategy;
     }
 
     @Override
     public void display() {
-
+        displayStrategy.display(collection);
     }
 
     @Override
     public Map<Integer, Comic> getCollection() {
-        return null;
+        return collection;
     }
 
     @Override
     public int getNumberOfIssues() {
-        return 0;
+        return numberOfIssues;
     }
 }

@@ -170,7 +170,7 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public ArrayList<Comic> search(String term, boolean exactMatch) {
-        return searchStrategy.search(term, exactMatch);
+        return searchStrategy.search(collection, term, exactMatch);
     }
 
     /**
@@ -187,7 +187,7 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public void sort() {
-        this.collection = sortStrategy.sort(collection);
+        collection = sortStrategy.sort(collection);
     }
 
     /**

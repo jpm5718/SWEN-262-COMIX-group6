@@ -1,3 +1,7 @@
+/**
+ * @author Dan Corcoran
+ */
+
 package src.model.collections;
 
 import src.model.collections.display.DisplayStrategy;
