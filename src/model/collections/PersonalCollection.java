@@ -4,7 +4,6 @@
 
 package src.model.collections;
 
-import src.model.collections.display.DisplayStrategy;
 import src.model.collections.search.SearchStrategy;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
@@ -23,7 +22,6 @@ public class PersonalCollection implements ComicCollection {
     private String name;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
-    private DisplayStrategy displayStrategy;
     private EditStrategy editStrategy;
     private int numberOfIssues;
 
@@ -187,24 +185,7 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public void sort() {
-        collection = sortStrategy.sort(collection);
-    }
-
-    /**
-     * Sets the algorithm for what subdivision of the collection is displayed
-     * @param displayStrategy - concrete strategy
-     */
-    @Override
-    public void setDisplayStrategy(DisplayStrategy displayStrategy) {
-        this.displayStrategy = displayStrategy;
-    }
-
-    /**
-     * Displays the collection according to the chosen display strategy
-     */
-    @Override
-    public void display() {
-        displayStrategy.display(collection);
+        sortStrategy.sort(collection);
     }
 
     /**

@@ -4,7 +4,6 @@
 
 package src.model.collections;
 
-import src.model.collections.display.DisplayStrategy;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.search.SearchStrategy;
 import src.model.collections.sort.SortByTitle;
@@ -20,7 +19,6 @@ public class DatabaseCollection implements ComicCollection{
     private Map<Integer, Comic> collection;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
-    private DisplayStrategy displayStrategy;
     private int numberOfIssues;
 
     public DatabaseCollection() {
@@ -54,19 +52,7 @@ public class DatabaseCollection implements ComicCollection{
     }
 
     @Override
-    public void sort() {
-        collection = sortStrategy.sort(collection);
-    }
-
-    @Override
-    public void setDisplayStrategy(DisplayStrategy displayStrategy) {
-        this.displayStrategy = displayStrategy;
-    }
-
-    @Override
-    public void display() {
-        displayStrategy.display(collection);
-    }
+    public void sort() { sortStrategy.sort(collection); }
 
     @Override
     public Map<Integer, Comic> getCollection() {
