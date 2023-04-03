@@ -10,11 +10,11 @@ public interface Comic {
     String getIssue();
     String getTitle();
     String getVarDesc();
-    String getPublisher();
+    Publisher getPublisher();
     String getReleaseDate();
     String getFormat();
     String getDateAdded();
-    String getCreators();
+    Creators getCreators();
     double getValue();
     int getId();
 }
