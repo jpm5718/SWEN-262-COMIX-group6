@@ -52,7 +52,7 @@ public class ComicBookTest {
         //assertions
         assertEquals(expected_series, comic.getSeries());
         assertEquals(expected_issue, comic.getIssue());
-        assertEquals(expected_title, comic.getFullTitle());
+        assertEquals(expected_title, comic.getTitle());
         assertEquals(expected_varDesc, comic.getVarDesc());
         assertEquals(expected_publisher, comic.getPublisher());
         assertEquals(expected_releaseDate, comic.getReleaseDate());
