@@ -24,10 +24,6 @@ public class ComicBookFileDAO implements ComicBookDAO{
         this.csv_filename = csv_filename;
     }
 
-    public String[] getComics(){
-        return null;
-    }
-
     public void storeComics() throws Exception{
         ComicCSVReader csvreader = new ComicCSVReader(csv_filename);
         comics = csvreader.parseComics();
