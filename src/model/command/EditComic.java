@@ -3,15 +3,16 @@ package src.model.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 
 public class EditComic implements Command {
 
-    private ComicBook comic;
+    private Comic comic;
     private Map<String, String> changes;
     private Map<String, String> previous;
 
-    public EditComic(ComicBook comic, Map<String, String> changes) {
+    public EditComic(Comic comic, Map<String, String> changes) {
         this.comic = comic;
         this.changes = new HashMap<>(changes);
     }

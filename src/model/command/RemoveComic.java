@@ -2,28 +2,27 @@ package src.model.command;
 
 import java.util.List;
 
+import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 
 public class RemoveComic implements Command {
 
-    private List<Comic> collection;
+    private PersonalCollection collection;
     private Comic comic;
-    private int index;
 
-    public RemoveComic(List<Comic> collection, Comic comic) {       
+    public RemoveComic(PersonalCollection collection, Comic comic) {       
         this.collection = collection;
         this.comic = comic;
     }
 
     @Override
     public void execute() {
-        index = collection.indexOf(comic);
-        collection.remove(comic);
+        collection.removeComic(comic);
     }
 
     @Override
     public void undo() {
-        collection.add(index, comic);
+        collection.addComic(comic);
     }
 
     @Override

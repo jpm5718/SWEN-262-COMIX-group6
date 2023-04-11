@@ -1,26 +1,25 @@
 package src.model.command;
 
-import java.util.List;
-
+import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 
 public class AddComic implements Command {
     private Comic comic;
-    private List<Comic> personalCollection;
+    private PersonalCollection personalCollection;
 
-    public AddComic(Comic comic, List<Comic> personalCollection) {
+    public AddComic(Comic comic, PersonalCollection personalCollection) {
         this.comic = comic;
         this.personalCollection = personalCollection;
     }
 
     @Override
     public void execute() {
-        personalCollection.add(comic);
+        personalCollection.addComic(comic);
     }
 
     @Override
     public void undo() {
-        personalCollection.remove(comic);
+        personalCollection.removeComic(comic);
     }
 
     @Override
