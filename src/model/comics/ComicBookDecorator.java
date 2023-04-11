@@ -34,7 +34,7 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return comic.getPublisher();
     }
 
@@ -54,7 +54,7 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public String getCreators() {
+    public Creators getCreators() {
         return comic.getCreators();
     }
 
