@@ -8,13 +8,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Auth {
     static Scanner scan = new Scanner(System.in);
     static Boolean guest = true;
     static Boolean loggedIn = false;
 
     public static User createUser(String username, String password) {
-        User user = new User(username, password);
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        User user = new User(username, hashedPassword);
+
         return user;
     }
 
@@ -32,8 +36,8 @@ public class Auth {
             while (iterator.hasNext() && !loggedIn) {
                 JSONObject user = (JSONObject)iterator.next();
                 String storedUsername = (String)user.get("Username");
-                String storedPassword = (String)user.get("Password");
-                if (storedUsername.equals(username) && storedPassword.equals(password)) {
+                String storedHashedPassword = (String)user.get("Password");
+                if (storedUsername.equals(username) && BCrypt.checkpw(password, storedHashedPassword)) {
                     System.out.println("Logged in as " + username);
                     loggedIn = true;
                     guest = false;
@@ -53,6 +57,8 @@ public class Auth {
         System.out.println("Create your Password: ");
         String password = scan.nextLine();
 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
         // Read in the existing user data from the JSON file
         JSONParser parser = new JSONParser();
         JSONArray users = new JSONArray();
@@ -64,10 +70,10 @@ public class Auth {
             e.printStackTrace();
         }
 
-        // Create a new user object with the given username and password
+        // Create a new user object with the given username and hashed password
         JSONObject newUser = new JSONObject();
         newUser.put("Username", username);
-        newUser.put("Password", password);
+        newUser.put("Password", hashedPassword);
 
         // Add the new user to the array of existing users
         users.add(newUser);
@@ -86,7 +92,7 @@ public class Auth {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createUser(username, password);
+        createUser(username, hashedPassword);
     }
 
     public static void run() {
