@@ -6,6 +6,16 @@ import src.model.collections.Collection;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/*
+ * Adapter class dedicated specifically to working between
+ * java classes and JSON files, converting both JSON files to java objects
+ * as well as converting JSON files into java classes
+ * 
+ * @author Anthony MacKay
+ * 
+ */
+
+
 public class ComicJsonAdapter implements ComicAdapter {
     String filename;
     public ComicJsonAdapter(String filename) {
@@ -31,3 +41,4 @@ public class ComicJsonAdapter implements ComicAdapter {
     }
     
 }
+
