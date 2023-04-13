@@ -18,6 +18,7 @@ public class Auth {
     public static User createUser(String username, String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         User user = new User(username, hashedPassword);
+
         return user;
     }
 
@@ -55,6 +56,7 @@ public class Auth {
         String username = scan.nextLine();
         System.out.println("Create your Password: ");
         String password = scan.nextLine();
+
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         // Read in the existing user data from the JSON file
