@@ -34,5 +34,7 @@ public class User {
         }
     }
 
-
+    public String getUsername(){
+        return this.username;
+    }
 }

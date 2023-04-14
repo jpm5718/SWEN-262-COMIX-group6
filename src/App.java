@@ -4,6 +4,7 @@ import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
 import src.model.users.Auth;
 import src.persistance.ComicCSVReader;
+import src.view.UserInterface;
 
 public class App{
     public static void main(String[] args) throws Exception {
@@ -13,5 +14,6 @@ public class App{
 
         System.out.println("JSON comic file created and seeded");
         Auth.run();
+        UserInterface.run();
     }
 }

@@ -14,6 +14,7 @@ public class Auth {
     static Scanner scan = new Scanner(System.in);
     static Boolean guest = true;
     static Boolean loggedIn = false;
+    private static User currentUser;
 
     public static User createUser(String username, String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -41,6 +42,7 @@ public class Auth {
                     System.out.println("Logged in as " + username);
                     loggedIn = true;
                     guest = false;
+                    currentUser = new User(storedUsername, storedHashedPassword);
                 }
             }
             if (!loggedIn) {
@@ -88,11 +90,15 @@ public class Auth {
             fileWriter.close();
             loggedIn = true;
             guest = false;
-            System.out.println("Signed Up successfully!");
+            System.out.println("Signed Up successfully and logged in!");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createUser(username, hashedPassword);
+        currentUser = createUser(username, hashedPassword);
+    }
+
+    public static User getCurrentUser(){
+        return currentUser;
     }
 
     public static void run() {
