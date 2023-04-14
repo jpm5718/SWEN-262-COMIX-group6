@@ -12,7 +12,7 @@ public class App{
         ComicCollection database = new DatabaseCollection();
         database = reader.parseComics();
 
-        System.out.println("JSON comic file created and seeded");
+        System.out.println("JSON comic file created and seeded\n\n");
         Auth.run();
         UserInterface.run();
     }

@@ -24,9 +24,9 @@ public class Auth {
     }
 
     public static void logIn() {
-        System.out.println("Username: ");
+        System.out.println("\nUsername: ");
         String username = scan.nextLine();
-        System.out.println("Password: ");
+        System.out.println("\nPassword: ");
         String password = scan.nextLine();
         JSONParser parser = new JSONParser();
         try {
@@ -39,14 +39,14 @@ public class Auth {
                 String storedUsername = (String)user.get("Username");
                 String storedHashedPassword = (String)user.get("Password");
                 if (storedUsername.equals(username) && BCrypt.checkpw(password, storedHashedPassword)) {
-                    System.out.println("Logged in as " + username);
+                    System.out.println("\nLogged in as " + username);
                     loggedIn = true;
                     guest = false;
                     currentUser = new User(storedUsername, storedHashedPassword);
                 }
             }
             if (!loggedIn) {
-                System.out.println("Invalid username or password");
+                System.out.println("\nInvalid username or password");
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -54,9 +54,9 @@ public class Auth {
     }
 
     public static void signUp() {
-        System.out.println("Create your Username: ");
+        System.out.println("\nCreate your Username: ");
         String username = scan.nextLine();
-        System.out.println("Create your Password: ");
+        System.out.println("\nCreate your Password: ");
         String password = scan.nextLine();
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -90,7 +90,7 @@ public class Auth {
             fileWriter.close();
             loggedIn = true;
             guest = false;
-            System.out.println("Signed Up successfully and logged in!");
+            System.out.println("\nSigned Up successfully and logged in!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class Auth {
     }
 
     public static void run() {
-        System.out.println("Choose the command\n1 - Login\n2 - Sign up\n3 - Guest mode");
+        System.out.println("Welcome to COMIX!!\n\nChoose a command\n\t1) Login\n\t2) Sign up\n\t3) Guest mode");
         int command = scan.nextInt();
         scan.nextLine(); // add this line to consume the newline character
         if(command == 1) {

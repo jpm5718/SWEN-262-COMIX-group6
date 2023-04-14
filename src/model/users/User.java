@@ -32,6 +32,14 @@ public class User {
         if (personalCollections.remove(name) == null) {
             System.out.println("Collection \"" + name + "\" does not exist");
         }
+        else{
+            personalCollections.remove(name);
+            System.out.println(name + "removed successfully");
+        }
+    }
+
+    public Map<String, PersonalCollection> getCollections(){
+        return personalCollections;
     }
 
     public String getUsername(){
