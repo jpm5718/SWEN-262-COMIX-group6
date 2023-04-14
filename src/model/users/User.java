@@ -34,12 +34,16 @@ public class User {
         }
         else{
             personalCollections.remove(name);
-            System.out.println(name + "removed successfully");
+            System.out.println(name + " removed successfully");
         }
     }
 
     public Map<String, PersonalCollection> getCollections(){
         return personalCollections;
+    }
+
+    public PersonalCollection getCollectionByName(String name){
+       return personalCollections.get(name);
     }
 
     public String getUsername(){
