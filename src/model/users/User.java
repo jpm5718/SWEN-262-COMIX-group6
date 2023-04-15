@@ -10,6 +10,8 @@ import src.model.collections.PersonalCollection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class User {
     private final Map<String, PersonalCollection> personalCollections;
     private String username;
@@ -48,5 +50,9 @@ public class User {
 
     public String getUsername(){
         return this.username;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 }

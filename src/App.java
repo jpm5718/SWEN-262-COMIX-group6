@@ -6,14 +6,17 @@ import src.model.users.Auth;
 import src.persistance.ComicCSVReader;
 import src.view.UserInterface;
 
-public class App{
+public class App {
     public static void main(String[] args) throws Exception {
         ComicCSVReader reader = new ComicCSVReader("data/comics.csv");
         ComicCollection database = new DatabaseCollection();
+        Auth auth = new Auth();
+        UserInterface ui = new UserInterface();
+
         database = reader.parseComics();
 
         System.out.println("JSON comic file created and seeded\n\n");
-        Auth.run();
-        UserInterface.run();
+        auth.run();
+        ui.run();
     }
 }
