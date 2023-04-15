@@ -3,8 +3,12 @@ package src.persistance;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import src.model.collections.Collection;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import src.model.comics.Comic;
+import src.model.comics.ComicBook;
 
 /*
  * Adapter class dedicated specifically to working between
@@ -37,7 +41,21 @@ public class ComicJsonAdapter implements ComicAdapter {
     }
     @Override
     public Collection importToFormat() {
-        return null;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Comic[] comicList = mapper.readValue(new File(filename), ComicBook[].class);
+            Collection newCollection = new Collection();
+            for (Comic comic : comicList) {
+                newCollection.addComic(comic);
+            }
+            return newCollection;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+        
+
     }
     
 }
