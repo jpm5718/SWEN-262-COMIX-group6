@@ -12,7 +12,6 @@ import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
 import src.model.collections.editComic.EditStrategy;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
@@ -141,11 +140,10 @@ public class PersonalCollection implements ComicCollection {
      * Returns the comics that turned up in the search
      * @param term - search term
      * @param exactMatch - decides whether the search term has to be met exactly
-     * @return - list of comics from the search
      */
     @Override
-    public ArrayList<Comic> search(String term, boolean exactMatch) {
-        return searchStrategy.search(collection, term, exactMatch);
+    public void search(String term, boolean exactMatch) {
+        searchStrategy.search(collection, term, exactMatch);
     }
 
     /**
