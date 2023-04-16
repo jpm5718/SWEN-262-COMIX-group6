@@ -24,8 +24,8 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public String getFullTitle() {
-        return comic.getFullTitle();
+    public String getTitle() {
+        return comic.getTitle();
     }
 
     @Override
@@ -54,7 +54,7 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public String getCreators() {
+    public Creators getCreators() {
         return comic.getCreators();
     }
 
@@ -66,5 +66,55 @@ public abstract class ComicBookDecorator implements Comic {
     @Override
     public int getId() {
         return comic.getId();
+    }
+
+    @Override
+    public void setSeries(String series) {
+        comic.setSeries(series);
+    }
+
+    @Override
+    public void setIssue(String issue) {
+        comic.setIssue(issue);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        comic.setTitle(title);
+    }
+
+    @Override
+    public void setVarDesc(String varDesc) {
+        comic.setVarDesc(varDesc);
+    }
+
+    @Override
+    public void setPublisher(Publisher publisher) {
+        comic.setPublisher(publisher);
+    }
+
+    @Override
+    public void setReleaseDate(String releaseDate) {
+        comic.setReleaseDate(releaseDate);
+    }
+
+    @Override
+    public void setFormat(String format) {
+        comic.setFormat(format);
+    }
+
+    @Override
+    public void setDateAdded(String dateAdded) {
+        comic.setDateAdded(dateAdded);
+    }
+
+    @Override
+    public void setCreators(Creators creators) {
+        comic.setCreators(creators);
+    }
+
+    @Override
+    public void setValue(double value) {
+        comic.setValue(value);
     }
 }

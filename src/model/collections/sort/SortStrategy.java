@@ -6,8 +6,9 @@
 package src.model.collections.sort;
 
 import src.model.comics.Comic;
-import java.util.Map;
+
+import java.util.ArrayList;
 
 public interface SortStrategy {
-    Map<Integer, Comic> Sort(Map<Integer, Comic> collection);
+    ArrayList<Comic> sort(ArrayList<Comic> comics);
 }

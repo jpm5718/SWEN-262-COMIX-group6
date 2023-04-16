@@ -3,7 +3,7 @@
  */
 
 
-package src.model.comics.editComic;
+package src.model.collections.editComic;
 
 import src.model.comics.Comic;
 
