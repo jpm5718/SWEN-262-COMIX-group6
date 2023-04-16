@@ -61,8 +61,8 @@ public class ComicBook implements Comic {
     public Publisher getPublisher() { return publisher; }
 
     @Override
-    public Creators getCreators() {
-        return creators;
+    public String[] getCreators() {
+        return creators.getCreators();
     }
 
     @Override

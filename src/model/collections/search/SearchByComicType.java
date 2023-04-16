@@ -13,7 +13,7 @@ import java.util.Map;
 public class SearchByComicType implements SearchStrategy {
 
     @Override
-    public void search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
+    public ArrayList<Comic> search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
         ArrayList<Comic> results = new ArrayList<>();
 
         for (Comic comic : collection.values()) {
@@ -44,8 +44,6 @@ public class SearchByComicType implements SearchStrategy {
             }
         }
 
-        for (Comic comic : results) {
-            System.out.println(comic.getId() + ":\t" + comic.getTitle() + "\n");
-        }
+        return results;
     }
 }

@@ -7,39 +7,34 @@ package src.model.collections.search;
 
 import src.model.comics.Comic;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class SearchByRuns implements SearchStrategy {
+
     @Override
-    public void search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
-        ArrayList<Comic> helper = new ArrayList<>(collection.values());
-        helper = recursiveHelper(helper);
-
-        for (Comic comic : helper) {
-            System.out.println(comic.getId() + ":\t" + comic.getTitle() + "\n");
-        }
-    }
-
-    public ArrayList<Comic> recursiveHelper(ArrayList<Comic> comics) {
+    public ArrayList<Comic> search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
+        ArrayList<Comic> copy = new ArrayList<>(collection.values());
         ArrayList<Comic> results = new ArrayList<>();
-        return recursiveSearch(results, comics, 0, comics.get(0), comics.get(0), comics.get(1), 1);
-    }
 
-    public ArrayList<Comic> recursiveSearch(ArrayList<Comic> results, ArrayList<Comic> comics, int runSize, Comic start, Comic current, Comic next, int index) {
-        if (comics.isEmpty()) {
-            return results;
-        }
+        Comic start = copy.get(0);
+        int runSize = 1;
 
-        if (!current.getTitle().equals(next.getTitle()) || !getAscii(current.getIssue(), next.getIssue())) {
+        for (int i = 0; i < copy.size(); i++) {
+            for (int j = 0; getAscii(copy.get(i+j).getIssue(), copy.get(i+j+1).getIssue()); j++) {
+                runSize++;
+            }
             if (runSize >= 12) {
-                for (int i = comics.indexOf(start); i < comics.indexOf(current) ; i++) {
-                    results.add(comics.get(i));
-                    comics.remove(comics.get(i));
+                int startIndex = copy.indexOf(start);
+                for (int j = startIndex; j < startIndex + runSize; j++) {
+                    results.add(copy.get(startIndex + j));
                 }
             }
+            start = copy.get(copy.indexOf(start) + runSize);
+            runSize = 1;
         }
+
+        return results;
     }
 
     public boolean getAscii(String current, String next) {

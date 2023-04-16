@@ -54,7 +54,7 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public Creators getCreators() {
+    public String[] getCreators() {
         return comic.getCreators();
     }
 

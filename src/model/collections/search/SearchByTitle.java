@@ -13,19 +13,23 @@ import java.util.Map;
 public class SearchByTitle implements SearchStrategy {
 
     @Override
-    public void search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
+    public ArrayList<Comic> search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
+        ArrayList<Comic> results = new ArrayList<>();
+
         if (exactMatch) {
             for (Comic comic : collection.values()) {
                 if (comic.getTitle().equals(term)) {
-                    System.out.println(comic.getId() + ":\t" + comic.getTitle() + "\n");
+                    results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection.values()) {
                 if (comic.getTitle().contains(term)) {
-                    System.out.println(comic.getId() + ":\t" + comic.getTitle() + "\n");
+                    results.add(comic);
                 }
             }
         }
+
+        return results;
     }
 }
