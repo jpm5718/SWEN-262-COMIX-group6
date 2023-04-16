@@ -1,3 +1,7 @@
+/**
+ * @author Dan Corcoran
+ */
+
 package src.model.collections.modifyComicType;
 
 import src.model.comics.AuthenticatedComic;
