@@ -1,1 +1,17 @@
-{"users":[{"Username":"test","Password":"$2a$10$R6YrD7jZjE2HdeWxBv9sxudbQ2k\/UQK6bTyTJbwnAFNWsdCmIOh8O"}]}
+[
+    {
+        "username": "test",
+        "password": "$2a$10$4KOmQ4mDU9lMWt5ptB3Y6.WWCJFiOKDgtyY4RFHNWrpHoNtoeM7gm",
+        "collections": {}
+    },
+    {
+        "username": "test2",
+        "password": "$2a$10$LQhf8zB7Ud9OcZPpEe/EVO8I4jD9Ka3K8Fnq0h7N.yuYHgtqL5pma",
+        "collections": {}
+    },
+    {
+        "username": "test3",
+        "password": "$2a$10$e/AgtX8rdtAmIwIXiVSkY.R/.B.m7gLhAGy1566jfRJCR0x6rRXZ6",
+        "collections": {}
+    }
+]
