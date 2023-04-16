@@ -19,13 +19,13 @@ public class PersonalCollectionTests {
         String expected = "Test";
         assertEquals(expected, test.getName());
 
-        assertTrue();
+        assertTrue(true);
     }
 
     @Test
     public void testName() {
         String expected = "Test";
-        assertEquals();
+        assertEquals(expected, null);
     }
 
 }
