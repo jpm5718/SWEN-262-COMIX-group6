@@ -11,15 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
     private final Map<String, PersonalCollection> personalCollections;
-    private String username;
+    @JsonProperty("username") private String username;
 
     //this is pretty naive. We might want to implement some sort of password hashing
-    private String password;
+    @JsonProperty("password") private String password;
 
-    public User(String username, String password) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.username = username;
         this.password = password;
         personalCollections = new HashMap<>();

@@ -81,12 +81,10 @@ public class Auth {
                 System.out.println("\nLogged in as " + username);
                 loggedIn = true;
                 guest = false;
-                currentUser = new User(storedUsername, storedpw);
+                
             }
         }
-
-        if (!loggedIn)
-            System.out.println("\nInvalid username or password");
+        currentUser = new User(username, password);
     }
 
     public void signUp() throws Exception {
