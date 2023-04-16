@@ -1,3 +1,7 @@
+/**
+ * @author Dan Corcoran
+ */
+
 package src.model.collections.editComic;
 
 import src.model.comics.Comic;
@@ -5,6 +9,7 @@ import src.model.comics.Comic;
 public class SeriesEditor implements EditStrategy {
     @Override
     public Comic edit(Comic comic, String newAttribute) {
-        return null;
+        comic.setSeries(newAttribute);
+        return comic;
     }
 }
