@@ -6,6 +6,7 @@
 package src.model.collections.search;
 
 import src.model.comics.Comic;
+import src.model.comics.Creators;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,7 +19,8 @@ public class SearchByCreators implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection.values()) {
-                for (String creator : comic.getCreators()) {
+                Creators creators = comic.getCreators();
+                for (String creator : creators.getCreators()) {
                     if (creator.equals(term)) {
                         results.add(comic);
                     }
@@ -26,7 +28,8 @@ public class SearchByCreators implements SearchStrategy {
             }
         } else {
             for (Comic comic : collection.values()) {
-                for (String creator : comic.getCreators()) {
+                Creators creators = comic.getCreators();
+                for (String creator : creators.getCreators()) {
                     if (creator.contains(term)) {
                         results.add(comic);
                     }

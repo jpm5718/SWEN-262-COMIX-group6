@@ -10,6 +10,7 @@ import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.Comic;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -41,8 +42,8 @@ public class DatabaseCollection implements ComicCollection{
     }
 
     @Override
-    public void search(String term, boolean exactMatch) {
-        searchStrategy.search(collection, term, exactMatch);
+    public ArrayList<Comic> search(String term, boolean exactMatch) {
+        return searchStrategy.search(collection, term, exactMatch);
     }
 
     @Override
@@ -51,11 +52,11 @@ public class DatabaseCollection implements ComicCollection{
     }
 
     @Override
-    public void sort() { sortStrategy.sort(collection); }
+    public ArrayList<Comic> sort(ArrayList<Comic> comics) { return sortStrategy.sort(comics); }
 
     @Override
-    public Map<Integer, Comic> getCollection() {
-        return collection;
+    public ArrayList<Comic> getCollection() {
+        return new ArrayList<>(collection.values());
     }
 
     @Override

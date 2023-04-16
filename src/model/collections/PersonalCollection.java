@@ -12,6 +12,7 @@ import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
 import src.model.collections.editComic.EditStrategy;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
@@ -45,8 +46,12 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public void addComic(Comic comic) {
-        collection.put(comic.getId(), comic);
-        numberOfIssues++;
+        if (!collection.containsKey(comic.getId())) {
+            collection.put(comic.getId(), comic);
+            numberOfIssues++;
+        } else {
+            System.out.println("Comic is already in collection\n");
+        }
     }
 
     /**
@@ -56,8 +61,12 @@ public class PersonalCollection implements ComicCollection {
      */
     public void addComic(Queue<String> attributes) {
         Comic comic = new ComicBook(attributes);
-        collection.put(comic.getId(), comic);
-        numberOfIssues++;
+        if (!collection.containsKey(comic.getId())) {
+            collection.put(comic.getId(), comic);
+            numberOfIssues++;
+        } else {
+            System.out.println("Comic is already in collection\n");
+        }
     }
 
     /**
@@ -140,10 +149,11 @@ public class PersonalCollection implements ComicCollection {
      * Returns the comics that turned up in the search
      * @param term - search term
      * @param exactMatch - decides whether the search term has to be met exactly
+     * @return
      */
     @Override
-    public void search(String term, boolean exactMatch) {
-        searchStrategy.search(collection, term, exactMatch);
+    public ArrayList<Comic> search(String term, boolean exactMatch) {
+        return searchStrategy.search(collection, term, exactMatch);
     }
 
     /**
@@ -157,10 +167,11 @@ public class PersonalCollection implements ComicCollection {
 
     /**
      * Sorts the collection according to the chosen algorithm
+     * @return
      */
     @Override
-    public void sort() {
-        sortStrategy.sort(collection);
+    public ArrayList<Comic> sort(ArrayList<Comic> comics) {
+        return sortStrategy.sort(comics);
     }
 
     /**
@@ -184,8 +195,8 @@ public class PersonalCollection implements ComicCollection {
      * @return - collection of comics
      */
     @Override
-    public Map<Integer, Comic> getCollection() {
-        return collection;
+    public ArrayList<Comic> getCollection() {
+        return new ArrayList<>(collection.values());
     }
 
     /**

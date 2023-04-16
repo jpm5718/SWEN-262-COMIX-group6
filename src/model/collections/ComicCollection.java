@@ -8,7 +8,7 @@ import src.model.collections.search.SearchStrategy;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.Comic;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public interface ComicCollection {
 
@@ -16,13 +16,13 @@ public interface ComicCollection {
 
     void setSearchStrategy(SearchStrategy searchStrategy);
 
-    void search(String term, boolean exactMatch);
+    ArrayList<Comic> search(String term, boolean exactMatch);
 
     void setSortStrategy(SortStrategy sortStrategy);
 
-    void sort();
+    ArrayList<Comic> sort(ArrayList<Comic> comics);
 
-    Map<Integer, Comic> getCollection();
+    ArrayList<Comic> getCollection();
 
     int getNumberOfIssues();
 }
