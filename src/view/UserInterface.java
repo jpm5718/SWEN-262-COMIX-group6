@@ -22,7 +22,6 @@ import src.model.users.User;
  */
 public class UserInterface {
     Auth auth = new Auth();
-    
     // reference to current user
     private User user = auth.getCurrentUser();
     private Scanner scanner = new Scanner(System.in);
@@ -45,6 +44,9 @@ public class UserInterface {
         switch (choice) {
             // close out of program
             case -1:
+                try{
+                    auth.save();
+                } catch(Exception e) { }
                 System.exit(choice);
                 break;
 

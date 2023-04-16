@@ -1,30 +1,27 @@
 package src.model.users;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Auth {
-    static Scanner scan = new Scanner(System.in);
-    static Boolean guest = true;
-    static Boolean loggedIn = false;
-    private static User currentUser;
+    Scanner scan = new Scanner(System.in);
+    Boolean guest = true;
+    Boolean loggedIn = false;
+    private User currentUser;
 
     private static ObjectMapper mapper = new ObjectMapper();
     Map<String, User> users;
+
+    public Auth(){
+         currentUser = new User("default", "default");
+    }
 
     public User createUser(String username, String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -33,7 +30,7 @@ public class Auth {
         return user;
     }
 
-    private boolean load() throws Exception {
+    public boolean load() throws Exception {
         users = new TreeMap<>();
 
         // load in users from json and store in array
@@ -47,7 +44,7 @@ public class Auth {
         return true;
     }
 
-    private User[] getUsersArray() {
+    public User[] getUsersArray() {
         ArrayList<User> usersArrayList = new ArrayList<>();
         for (User user : users.values()) {
             usersArrayList.add(user);
@@ -58,7 +55,7 @@ public class Auth {
         return userArray;
     }
 
-    private boolean save() throws Exception {
+    public boolean save() throws Exception {
         User[] userArray = getUsersArray();
         mapper.writeValue(new File("data/users.json"), userArray);
         return true;
@@ -73,18 +70,19 @@ public class Auth {
         load();
         User[] userArray = getUsersArray();
         
-        for(User user : userArray){
-            String storedUsername = user.getUsername();
-            String storedpw = user.getPassword();
+        currentUser = userArray[0];
+        // for(User user : userArray){
+        //     String storedUsername = user.getUsername();
+        //     String storedpw = user.getPassword();
 
-            if(storedUsername.equals(username) && BCrypt.checkpw(password, storedpw)){
-                System.out.println("\nLogged in as " + username);
-                loggedIn = true;
-                guest = false;
-                
-            }
-        }
-        currentUser = new User(username, password);
+        //     if(storedUsername.equals(username) && BCrypt.checkpw(password, storedpw)){
+        //         System.out.println("\nLogged in as " + username);
+        //         loggedIn = true;
+        //         guest = false;
+        //         currentUser = createUser(username, password);
+        //     }
+        // }
+        
     }
 
     public void signUp() throws Exception {
