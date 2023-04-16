@@ -205,7 +205,6 @@ public class PersonalCollection implements ComicCollection {
         double value = 0;
 
         for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
-
             //how's that for a weird looking call. comicEntry.getValue() gets the comic
             //comicEntry.getValue().getValue() gets the value of the comic
             value = value + comicEntry.getValue().getValue();

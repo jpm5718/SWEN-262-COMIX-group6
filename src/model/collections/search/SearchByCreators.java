@@ -10,6 +10,7 @@ import src.model.comics.Comic;
 import java.util.ArrayList;
 import java.util.Map;
 
+
 public class SearchByCreators implements SearchStrategy {
 
     @Override
