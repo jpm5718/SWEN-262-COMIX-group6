@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import src.model.comics.Comic;
-import src.model.comics.ComicBook;
 
 public class EditComic implements Command {
 

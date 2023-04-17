@@ -1,7 +1,5 @@
 package src.model.command;
 
-import java.util.List;
-
 import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 

@@ -10,9 +10,13 @@ public abstract class DecoratorCommand implements Command {
     public DecoratorCommand(Comic comic) {
         this.comic = comic;
 
-        }
+    }
 
-        @Override
+    public Comic getDecoratedComic() {
+        return this.decoratedComic;
+    }
+
+    @Override
     public final void execute() {
         onExecute();
     }

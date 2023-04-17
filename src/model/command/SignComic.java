@@ -16,7 +16,6 @@ public class SignComic extends DecoratorCommand {
 
     @Override
     protected void onUndo() {
-        // Undo will automatically work because of DecoratorCommand's undo method        
     }
 
     @Override

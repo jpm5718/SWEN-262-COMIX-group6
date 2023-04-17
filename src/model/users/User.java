@@ -28,6 +28,10 @@ public class User {
         personalCollections.put(name, collection);
     }
 
+    public Map<String, PersonalCollection> getPersonalCollections() {
+        return this.personalCollections;
+    }
+
     public void removePersonalCollection(String name) {
         if (personalCollections.remove(name) == null) {
             System.out.println("Collection \"" + name + "\" does not exist");

@@ -19,7 +19,6 @@ public class GradeComic extends DecoratorCommand {
 
     @Override
     protected void onUndo() {
-        // Undo will automatically work through the DecoratorCommand's undo method       
     }
 
     @Override
