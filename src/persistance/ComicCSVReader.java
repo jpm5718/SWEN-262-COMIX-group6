@@ -1,14 +1,14 @@
 package src.persistance;
 
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import com.opencsv.CSVReader;
 
+import src.model.collections.ComicCollection;
+import src.model.collections.DatabaseCollection;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 
@@ -22,9 +22,6 @@ public class ComicCSVReader {
     /**the file path of the csv file */
     private String file;
 
-    /**the array list that will be sent back to the file dao */
-    List<Comic> comicbooks = new ArrayList<>();
-
     /**
      * Constructor so DOA can use the parser
      * 
@@ -34,6 +31,8 @@ public class ComicCSVReader {
         this.file = filename;
     }
 
+    ComicCollection database = new DatabaseCollection();
+
     /**
      * Creates a csv reader that reads in data line by line, and creates a 
      * ComicBook object. It then adds that object into the comicbooks ArrayList
@@ -41,7 +40,7 @@ public class ComicCSVReader {
      * @return the comicbooks ArrayList
      * @throws Exception 
      */
-    public List<Comic> parseComics() throws Exception{
+    public ComicCollection parseComics() throws Exception{
         CSVReader reader = new CSVReader(new FileReader(file));  
         String[] line;
         
@@ -55,10 +54,10 @@ public class ComicCSVReader {
             Queue<String> data = new LinkedList<>(Arrays.asList(line));
             data.add(String.valueOf(++id));
             Comic comic = new ComicBook(data);
-            comicbooks.add(comic);
+            database.addComic(comic);
         }
         reader.close();
 
-        return comicbooks;
+        return database;
     }
 }
