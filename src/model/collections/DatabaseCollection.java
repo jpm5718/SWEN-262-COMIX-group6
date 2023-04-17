@@ -52,11 +52,11 @@ public class DatabaseCollection implements ComicCollection{
     }
 
     @Override
-    public void sort() { sortStrategy.sort(collection); }
+    public ArrayList<Comic> sort(ArrayList<Comic> comics) { return sortStrategy.sort(comics); }
 
     @Override
-    public Map<Integer, Comic> getCollection() {
-        return collection;
+    public ArrayList<Comic> getCollection() {
+        return new ArrayList<>(collection.values());
     }
 
     @Override

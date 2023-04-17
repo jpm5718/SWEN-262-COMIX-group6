@@ -10,11 +10,21 @@ public interface Comic {
     String getIssue();
     String getTitle();
     String getVarDesc();
-    Publisher getPublisher();
+    String getPublisher();
     String getReleaseDate();
     String getFormat();
     String getDateAdded();
     Creators getCreators();
     double getValue();
     int getId();
+    void setSeries(String series);
+    void setIssue(String issue);
+    void setTitle(String title);
+    void setVarDesc(String varDesc);
+    void setPublisher(Publisher publisher);
+    void setReleaseDate(String releaseDate);
+    void setFormat(String format);
+    void setDateAdded(String dateAdded);
+    void setCreators(Creators creators);
+    void setValue(double value);
 }
