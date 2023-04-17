@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
+<<<<<<<<< Temporary merge branch 1
         "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar",
         "c:\\Users\\james\\Downloads\\jackson-annotations-2.15.0-rc1.jar",
         "c:\\Users\\james\\Downloads\\jackson-core-2.15.0-rc1.jar",
@@ -21,7 +22,8 @@
         "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\jar_files_opencsv\\commons-lang3-3.6.jar",
         "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\jar_files_opencsv\\commons-logging-1.2.jar",
         "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\jar_files_opencsv\\commons-text-1.1.jar",
-        "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\jar_files_opencsv\\opencsv-4.1.jar",
+        "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\jar_files_opencsv\\opencsv-4.1.jar"
+=========
         "dependencies/jackson-annotations-2.15.0-rc1.jar",
         "dependencies/jackson-core-2.15.0-rc1.jar",
         "dependencies/jackson-databind-2.15.0-rc1.jar",
