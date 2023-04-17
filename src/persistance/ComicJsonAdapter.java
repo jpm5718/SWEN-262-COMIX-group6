@@ -3,6 +3,8 @@ package src.persistance;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import src.model.collections.Collection;
+import src.model.collections.ComicCollection;
+import src.model.collections.DatabaseCollection;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -40,11 +42,11 @@ public class ComicJsonAdapter implements ComicAdapter {
 
     }
     @Override
-    public Collection importToFormat() {
+    public ComicCollection importToFormat() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Comic[] comicList = mapper.readValue(new File(filename), ComicBook[].class);
-            Collection newCollection = new Collection();
+            ComicCollection newCollection = new DatabaseCollection();
             for (Comic comic : comicList) {
                 newCollection.addComic(comic);
             }
