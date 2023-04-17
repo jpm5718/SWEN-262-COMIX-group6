@@ -13,7 +13,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    private final Map<String, PersonalCollection> personalCollections;
+    private Map<String, PersonalCollection> personalCollections;
     @JsonProperty("username") private String username;
 
     //this is pretty naive. We might want to implement some sort of password hashing

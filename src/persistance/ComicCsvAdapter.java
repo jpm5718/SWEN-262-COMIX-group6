@@ -75,6 +75,7 @@ public class ComicCsvAdapter implements ComicAdapter {
      */
     @Override
     public ComicCollection importToFormat() throws IOException {
+
         try {
             CSVReader reader = new CSVReader(new FileReader(filename));
             String[] line;

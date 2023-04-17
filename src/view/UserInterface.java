@@ -32,7 +32,7 @@ public class UserInterface {
      * add to, remove from, and modify their collection. It
      * will also have options to grade existing comics
      */
-    public void personalCollectionHandler() {
+    public void personalCollectionHandler() throws Exception {
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) View Collections" +
                 "\n\t2) Add New Collection" +
@@ -165,7 +165,7 @@ public class UserInterface {
         }
     }
 
-    public void run() {
+    public void run() throws Exception {
         System.out.println("Choose a command from below:" +
                 "\n\t1) Search the COMIX database" +
                 "\n\t2) Manage Personal Collection");
