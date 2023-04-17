@@ -14,14 +14,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
     private Map<String, PersonalCollection> personalCollections;
-    @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
 
     //this is pretty naive. We might want to implement some sort of password hashing
     @JsonProperty("password") private String password;
 
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
-        this.id = id;
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.username = username;
         this.password = password;
         personalCollections = new HashMap<>();
@@ -56,9 +54,5 @@ public class User {
 
     public String getPassword(){
         return this.password;
-    }
-
-    public int getId(){
-        return this.id;
     }
 }
