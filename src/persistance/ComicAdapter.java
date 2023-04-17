@@ -10,6 +10,6 @@ import src.model.collections.ComicCollection;
 
 public interface ComicAdapter {
     public void exportAsFormat(Collection dataCollection);
-    public ComicCollection importToFormat() throws IOException;
+    public ComicCollection importToFormat() throws Exception;
 
 }
