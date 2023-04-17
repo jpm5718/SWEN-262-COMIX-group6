@@ -72,7 +72,7 @@ public class ComicCsvAdapter implements ComicAdapter {
      * NOTE: much of the code for reading csv files is converted from the old ComcisCSVReader class. Credit to James McGuire for original implementation
      */
     @Override
-    public Collection importToFormat() throws IOException {
+    public Collection importToFormat() throws Exception {
         try {
             CSVReader reader = new CSVReader(new FileReader(filename));
             String[] line;

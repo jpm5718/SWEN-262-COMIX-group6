@@ -8,5 +8,5 @@ import src.model.collections.Collection;
 
 public interface ComicAdapter {
     public void exportAsFormat(Collection dataCollection);
-    public Collection importToFormat();
+    public Collection importToFormat() throws Exception;
 }
