@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
-    @JsonProperty("collection") private Map<String, PersonalCollection> personalCollections;
+    @JsonProperty("collections") private Map<String, PersonalCollection> personalCollections;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
 
@@ -45,6 +45,7 @@ public class User {
         }
     }
 
+    @JsonProperty("collections")
     public Map<String, PersonalCollection> getCollections(){
         return personalCollections;
     }
