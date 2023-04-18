@@ -2,50 +2,28 @@ package src.model.users;
 
 import src.model.collections.PersonalCollection;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    @JsonProperty("collections") private Map<String, PersonalCollection> personalCollections;
+    @JsonProperty("collection") private PersonalCollection collection;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
 
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collection")PersonalCollection collection) {
         this.username = username;
         this.password = password;
-        personalCollections = new HashMap<>();
+        this.collection = collection; 
     }
 
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collections")Map<String, PersonalCollection> personalCollections) {
-        this.username = username;
-        this.password = password;
-        this.personalCollections = personalCollections;
-    }
+    // public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collection")PersonalCollection collection) {
+    //     this.username = username;
+    //     this.password = password;
+    //     this.collection = collection;
+    // }
 
-    public void addPersonalCollection(String name) {
-        PersonalCollection collection = new PersonalCollection(name);
-        personalCollections.put(name, collection);
-    }
-
-    public void removePersonalCollection(String name) {
-        if (personalCollections.remove(name) == null) {
-            System.out.println("Collection \"" + name + "\" does not exist");
-        }
-        else{
-            personalCollections.remove(name);
-            System.out.println(name + " removed successfully");
-        }
-    }
-
-    @JsonProperty("collections")
-    public Map<String, PersonalCollection> getCollections(){
-        return personalCollections;
-    }
-
-    public PersonalCollection getCollectionByName(String name){
-       return personalCollections.get(name);
+    @JsonProperty("collection")
+    public PersonalCollection getCollection(){
+        return collection;
     }
 
     public String getUsername(){
@@ -56,7 +34,7 @@ public class User {
         return password;
     }
 
-    public void setCollections(Map<String, PersonalCollection> personalCollections) {
-        this.personalCollections = personalCollections;
+    public void setCollection(PersonalCollection collection) {
+        this.collection = collection;
     }
 }
