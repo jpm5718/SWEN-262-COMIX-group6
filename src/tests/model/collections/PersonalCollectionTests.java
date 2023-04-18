@@ -23,10 +23,14 @@ import src.model.collections.search.SearchBySeries;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.search.SearchByVarDesc;
 import src.model.collections.sort.SortByDateAdded;
+import src.model.collections.sort.SortByFormat;
+import src.model.collections.sort.SortByIssue;
+import src.model.collections.sort.SortByReleaseDate;
+import src.model.collections.sort.SortBySeries;
+import src.model.collections.sort.SortByTitle;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -41,9 +45,17 @@ public class PersonalCollectionTests {
     }
 
     @Test
-    public void testName() {
+    public void testGetName() {
         PersonalCollection test = new PersonalCollection("Test");
         String expected = "Test";
+        Assertions.assertEquals(expected, test.getName());
+    }
+
+    @Test
+    public void testSetName() {
+        PersonalCollection test = new PersonalCollection("Test");
+        test.setName("tseT");
+        String expected = "tseT";
         Assertions.assertEquals(expected, test.getName());
     }
 
@@ -903,5 +915,228 @@ public class PersonalCollectionTests {
             Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
         }
     }
-}
 
+    @Test
+    public void testSortByFormat() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[2]);
+        test.addComic(comics[1]);
+        test.addComic(comics[3]);
+        test.addComic(comics[0]);
+        test.addComic(comics[4]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortByFormat());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testSortByIssue() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[0]);
+        test.addComic(comics[1]);
+        test.addComic(comics[3]);
+        test.addComic(comics[4]);
+        test.addComic(comics[2]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortByIssue());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testSortByReleaseDate() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[3]);
+        test.addComic(comics[2]);
+        test.addComic(comics[4]);
+        test.addComic(comics[1]);
+        test.addComic(comics[0]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortByReleaseDate());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testSortBySeries() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[1]);
+        test.addComic(comics[2]);
+        test.addComic(comics[3]);
+        test.addComic(comics[0]);
+        test.addComic(comics[4]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortBySeries());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testSortByTit() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[4]);
+        test.addComic(comics[3]);
+        test.addComic(comics[2]);
+        test.addComic(comics[1]);
+        test.addComic(comics[0]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortByTitle());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testGetCollection() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[0]);
+        test.addComic(comics[1]);
+        test.addComic(comics[2]);
+        test.addComic(comics[3]);
+        test.addComic(comics[4]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+        ArrayList<Comic> actual = test.getCollection();
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
+
+    @Test
+    public void testGetNumberOfIssues() {
+        PersonalCollection test = new PersonalCollection("Test");
+        int expected = 5;
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[0]);
+        test.addComic(comics[1]);
+        test.addComic(comics[2]);
+        test.addComic(comics[3]);
+        test.addComic(comics[4]);
+
+        int actual = test.getNumberOfIssues();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetValue() {
+        PersonalCollection test = new PersonalCollection("Test");
+        double expected = 0;
+
+        Comic[] comics = sortGen();
+
+        for (int i = 0; i < comics.length; i++) {
+            expected = expected + comics[i].getValue();
+        }
+
+        test.addComic(comics[0]);
+        test.addComic(comics[1]);
+        test.addComic(comics[2]);
+        test.addComic(comics[3]);
+        test.addComic(comics[4]);
+
+        double actual = test.getValue();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetComic() {
+        PersonalCollection test = new PersonalCollection("Test");
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[0]);
+        test.addComic(comics[1]);
+        test.addComic(comics[2]);
+        test.addComic(comics[3]);
+        test.addComic(comics[4]);
+
+        Comic expected = comics[3];
+
+        Comic actual = test.getComic(comics[3].getId());
+        Assertions.assertEquals(expected.getId(), actual.getId());
+    }
+}

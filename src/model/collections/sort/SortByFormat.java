@@ -6,49 +6,43 @@
 package src.model.collections.sort;
 
 import src.model.comics.Comic;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class SortByFormat implements SortStrategy {
 
     @Override
     public ArrayList<Comic> sort(ArrayList<Comic> comics) {
-        Comic[] comicsArr = (Comic[]) comics.toArray();
-        comicsArr = quickSortHelper(comicsArr);
+        Comic comicsArr[] = new Comic[comics.size()];
 
-        return new ArrayList<>(Arrays.asList(comicsArr));
+        for (int i = 0; i < comicsArr.length; i++) {
+            comicsArr[i] = comics.get(i);
+        }
+
+        insertionSort(comicsArr, comicsArr.length - 1);
+
+        ArrayList<Comic> sorted = new ArrayList<>();
+        Collections.addAll(sorted, comicsArr);
+        
+        return sorted;
     }
 
-    public Comic[] quickSortHelper(Comic[] comics) {
-        quickSort(comics, 0, comics.length - 1);
-        return comics;
-    }
-
-    public void quickSort(Comic[] comics, int start, int end) {
-        if (start >= end) {
+    public void insertionSort(Comic comicsArr[], int n) {
+        
+        if (n <= 1) {
             return;
         }
 
-        Comic pivot = comics[start];
+        insertionSort(comicsArr, n - 1);
 
-        int i = start - 1;
-        int j = end + 1;
+        Comic last = comicsArr[n - 1];
+        int j = n - 2;
 
-        while (i < j) {
-            i++;
-
-            while (comics[i].getFormat().compareTo(pivot.getFormat()) > 0) {
-                j--;
-            }
-
-            if (i < j) {
-                Comic temp = comics[i];
-                comics[i] = comics[j];
-                comics[j] = temp;
-            }
+        while (j >= 0 && comicsArr[j].getFormat().compareTo(last.getFormat()) > 1) {
+            comicsArr[j + 1] = comicsArr[j];
+            j--;
         }
-        quickSort(comics, start, j);
-        quickSort(comics, j + 1, end);
+
+        comicsArr[j + 1] = last;
     }
 }
