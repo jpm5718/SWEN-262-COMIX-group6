@@ -96,8 +96,7 @@ public class Auth {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // hash the jawn
 
         load(); // load existing
-        Map<String, PersonalCollection> collections = new HashMap<>(); // create new collections map
-        User newUser = new User(username, hashedPassword, collections); // create new user
+        User newUser = new User(username, hashedPassword); // create new user
         users.put(newUser.getUsername(), newUser); // add it to map
         save(); // save to file
 
