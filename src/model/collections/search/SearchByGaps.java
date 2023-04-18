@@ -17,31 +17,52 @@ public class SearchByGaps implements SearchStrategy {
         ArrayList<Comic> copy = new ArrayList<>(collection.values());
         ArrayList<Comic> results = new ArrayList<>();
 
-        Comic start = copy.get(0);
+        int start = 0;
         int runSize = 1;
         int gaps = 0;
+        
+        for (int i = 0; i < copy.size() - 1; i++) {
+            System.out.print( "First : " + copy.get(i).getIssue() + " : Second : " + copy.get(i + 1).getIssue() + "\n");
+            if (!(getAscii(copy.get(i).getIssue(), copy.get(i + 1).getIssue()))) {
+                gaps++;
+            }
+            runSize++;
 
-        for (int i = 0; i < copy.size(); i++) {
-            for (int j = 0; getAscii(copy.get(i+j).getIssue(), copy.get(i+j+1).getIssue()) && gaps < 3; j++) {
-                if (!(getAscii(copy.get(i+j).getIssue(), copy.get(i+j+1).getIssue()))) {
-                    gaps++;
+            if (gaps >= 3 || i == copy.size() - 2) {
+                if (runSize >= 12) {
+                    for (int j = 0; j < runSize; j++) {
+                        results.add(copy.get(start + j));
+                    }
                 }
-                runSize++;
-            }
-            if (runSize >= 12) {
-                int startIndex = copy.indexOf(start);
-                for (int j = startIndex; j < startIndex + runSize; j++) {
-                    results.add(copy.get(startIndex + j));
+        
+                if (i != copy.size() - 2) {
+                    start = i + 1;
+                    gaps = 0;
+                    runSize = 1;
                 }
+                
             }
-            start = copy.get(copy.indexOf(start) + runSize);
-            runSize = 1;
+
+            System.out.println("\nGaps : " + gaps + "\nRun Size : " + runSize);
         }
 
         return results;
     }
 
     public boolean getAscii(String current, String next) {
+
+        if (Math.abs(current.length() - next.length()) != 0) {
+            if (Math.abs(current.length() - next.length()) > 1) {
+                return false;
+            }
+
+            int asciiDif = Math.abs(current.charAt(current.length() - 1) - next.charAt(next.length() - 1));
+            if (asciiDif == 1 || asciiDif == 9) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         int currentAscii = 0;
         int nextAscii = 0;
 

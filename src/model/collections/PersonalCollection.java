@@ -223,4 +223,9 @@ public class PersonalCollection implements ComicCollection {
 
         return value;
     }
+
+    @Override
+    public Comic getComic(int id) {
+        return collection.get(id);
+    }
 }
