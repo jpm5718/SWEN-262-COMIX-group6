@@ -1,1 +1,22 @@
-[{"username":"new","password":"$2a$10$hemSjugieR7GZXwhKzAyL.hxMHqu1D5y0zy86JneSqPbAeIxOGwdq","personalCollection":{"name":"new","numberOfIssues":0,"value":0.0,"collection":{}}},{"username":"test","password":"$2a$10$HYC9ZFsyJV33eIHXDTuZNOqcffVrLRgKMfLoKfmnKxsm1d5pBDvZ6","personalCollection":{"name":"test","numberOfIssues":0,"value":0.0,"collection":{}}}]
+[
+    {
+        "username": "new",
+        "password": "$2a$10$hemSjugieR7GZXwhKzAyL.hxMHqu1D5y0zy86JneSqPbAeIxOGwdq",
+        "personalCollection": {
+            "name": "new",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    },
+    {
+        "username": "test",
+        "password": "$2a$10$HYC9ZFsyJV33eIHXDTuZNOqcffVrLRgKMfLoKfmnKxsm1d5pBDvZ6",
+        "personalCollection": {
+            "name": "test",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    }
+]

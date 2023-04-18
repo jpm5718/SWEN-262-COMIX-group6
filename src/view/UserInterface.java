@@ -1,11 +1,14 @@
 package src.view;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
+import src.model.collections.search.SearchBySeries;
+import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.users.Auth;
@@ -79,66 +82,37 @@ public class UserInterface {
                 "\n\t5) Authenticate a Comic");
         int choice = scanner.nextInt();
         switch (choice) {
-            // add a comic manually to a collection
-            case 1:
-                    PersonalCollection collection = user.getCollection(); // gets right collection from
-                                                                                            // the users p.c. map
+            
+        }
+    }
 
-                    // get comic book info
-                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
-                    String series = scanner.nextLine();
-                    System.out.println("And the issue number?");
-                    String issue = scanner.nextLine();
-                    System.out.println("What is the full title?");
-                    String title = scanner.nextLine();
-                    System.out.println("What is the description of the comic?");
-                    String vardesc = scanner.nextLine();
-                    System.out.println("Who is the publisher of the book?");
-                    String publisher = scanner.nextLine();
-                    System.out.println("When was it released (Month, (day), Year)?");
-                    String releasedate = scanner.nextLine();
-                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
-                    String format = scanner.nextLine();
-                    System.out.println("What is today's date (to keep track of date added)?");
-                    String dateadded = scanner.nextLine();
-                    System.out.println("Who are the creators of the comic book?");
-                    String creators = scanner.nextLine();
+    public void databaseHandler(){
+        System.out.println("\nHow would you like to search the database by? " +
+                        "\n\t1)By Series" + 
+                        "\n\t2)By Issue" +
+                        "\n\t3)By Title" +
+                        "\n\t4)By Format" +
+                        "\n\t5)By Publisher" +
+                        "\n\t6)By Description" +
+                        "\n\t7)By Release Date");
+        int searchtypechoice = scanner.nextInt();
 
-                    // create queue to pass thru constructor
-                    Queue<String> data = new LinkedList<>();
-                    data.add(series);
-                    data.add(issue);
-                    data.add(title);
-                    data.add(vardesc);
-                    data.add(publisher);
-                    data.add(releasedate);
-                    data.add(format);
-                    data.add(dateadded);
-                    data.add(creators);
-                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                                    // calculated
-                    data.add(String.valueOf(++currentnum));
+        scanner.nextLine(); //consume nextline char
 
-                    // create new comic and add it
-                    Comic newcomic = new ComicBook(data);
-                    collection.addComic(newcomic);
-                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
-                    break;
+        switch(searchtypechoice){
+            case 1: System.out.println("What series are you searching for? ");
+                    String seriesTerm = scanner.nextLine();
+                    SearchStrategy series = new SearchBySeries();
+                    db.setSearchStrategy(series);
+                    ArrayList<Comic> seriesResult = db.search(seriesTerm, false);
+                    for(Comic entry : seriesResult){
+                        System.out.println(entry.toString());
+                    }
 
-            case 2:
-                System.out.println("What is the comic you would like to grade?");
-                // Comic comic = new ComicBook();
-                // System.out.println("What is the grade of the comic?");
-                // String s = scanner.nextLine();
-                // int grade = Integer.parseInt(s);
-                // collection.gradeComic(comic, grade);
-                // break;
-
-            case 3:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
+                    System.out.println("\nOf these results, enter the id of the coimic you would like to add to your collection!");
+                    int userComicChoice = scanner.nextInt();
+                    Comic toBeAdded = db.getComic(userComicChoice);
+                    user.getCollection().addComic(toBeAdded);
         }
     }
 
@@ -149,7 +123,9 @@ public class UserInterface {
         int choice = scanner.nextInt();
 
         switch (choice) {
-            case 1: System.out.println(db.getComic(35).getSeries());
+            case 1: 
+                databaseHandler();
+                break;
             case 2:
                 personalCollectionHandler();
                 break;
