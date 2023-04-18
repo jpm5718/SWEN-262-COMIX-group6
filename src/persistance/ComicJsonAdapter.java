@@ -42,11 +42,11 @@ public class ComicJsonAdapter implements ComicAdapter {
 
     }
     @Override
-    public ComicCollection importToFormat() {
+    public DatabaseCollection importToFormat() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Comic[] comicList = mapper.readValue(new File(filename), ComicBook[].class);
-            ComicCollection newCollection = new DatabaseCollection();
+            DatabaseCollection newCollection = new DatabaseCollection();
             for (Comic comic : comicList) {
                 newCollection.addComic(comic);
             }
