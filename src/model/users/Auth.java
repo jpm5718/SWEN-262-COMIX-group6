@@ -13,16 +13,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import src.model.collections.PersonalCollection;
+import src.model.comics.Comic;
 
 
 public class Auth {
     Scanner scan = new Scanner(System.in);
     Boolean guest = true;
     Boolean loggedIn = false;
-    private User currentUser;
+    public static User currentUser;
 
     private static ObjectMapper mapper = new ObjectMapper();
     Map<String, User> users;
+
+    public Auth() {
+        if(guest) {
+            currentUser = new User("guest", "guest", null);
+        } else if (loggedIn) {
+            currentUser = users.get(currentUser.getUsername());
+        }
+    }
 
     public User createUser(String username, String password, String name) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -31,15 +40,43 @@ public class Auth {
         return user;
     }
 
+    // public boolean load() throws Exception {
+    //     users = new TreeMap<>();
+
+    //     // load in users from json and store in array
+    //     User[] usersArray = mapper.readValue(new File("data/users.json"), User[].class);
+
+    //     // add existing to local treemap
+    //     for (User user : usersArray) {
+    //         users.put(user.getUsername(), user);
+    //     }
+    //     return true;
+    // }
+
     public boolean load() throws Exception {
         users = new TreeMap<>();
 
-        // load in users from json and store in array
-        User[] usersArray = mapper.readValue(new File("data/users.json"), User[].class);
+        // read the json file
+        JsonNode jsonNode = mapper.readTree(new File("data/users.json"));
+        ArrayNode usersArrayNode = (ArrayNode) jsonNode;
 
-        // add existing to local treemap
-        for (User user : usersArray) {
-            users.put(user.getUsername(), user);
+        // add each user to the local treemap
+        for (JsonNode userNode : usersArrayNode) {
+            String username = userNode.get("username").asText();
+            String password = userNode.get("password").asText();
+
+            PersonalCollection collection = null;
+            JsonNode personalCollectionNode = userNode.get("personalCollection");
+            if (personalCollectionNode != null) {
+                String name = personalCollectionNode.get("name").asText();
+                int numberOfIssues = personalCollectionNode.get("numberOfIssues").asInt();
+                double value = personalCollectionNode.get("value").asDouble();
+                Map<Integer, Comic> coll = personalCollectionNode.get("collection").traverse(mapper).readValueAs(Map.class);
+                collection = new PersonalCollection(coll, name, numberOfIssues, value);
+            }
+
+            User user = new User(username, password, collection);
+            users.put(username, user);
         }
         return true;
     }
