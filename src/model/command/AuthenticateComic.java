@@ -1,25 +1,18 @@
 package src.model.command;
 
-import src.model.comics.AuthenticatedComic;
+import src.model.collections.PersonalCollection;
+import src.model.collections.modifyComicType.AuthenticateStrategy;
 import src.model.comics.SignedComic;
 
 public class AuthenticateComic extends DecoratorCommand {
 
-    public AuthenticateComic(SignedComic signedComic) {
-        super(signedComic);
+    public AuthenticateComic(SignedComic signedComic, PersonalCollection personalCollection) {
+        super(signedComic, personalCollection);
     }
 
     @Override
     protected void onExecute() {
-        decoratedComic = new AuthenticatedComic(comic);
-    }
-
-    @Override
-    protected void onUndo() {
-    }
-
-    @Override
-    protected void onRedo() {
-        decoratedComic = new AuthenticatedComic(comic);
+        personalCollection.setDecoratorStrategy(new AuthenticateStrategy());
+        decoratedComic = personalCollection.decorateComic(comic);
     }
 }

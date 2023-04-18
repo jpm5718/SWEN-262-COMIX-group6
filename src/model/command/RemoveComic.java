@@ -8,7 +8,7 @@ public class RemoveComic implements Command {
     private PersonalCollection collection;
     private Comic comic;
 
-    public RemoveComic(PersonalCollection collection, Comic comic) {       
+    public RemoveComic(Comic comic, PersonalCollection collection) {       
         this.collection = collection;
         this.comic = comic;
     }

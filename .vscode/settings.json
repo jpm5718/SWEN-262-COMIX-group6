@@ -1,7 +1,6 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-<<<<<<< HEAD
         "c:\\Users\\james\\Downloads\\postgresql-42.2.27.jre7.jar",
         "c:\\Users\\james\\Downloads\\jackson-annotations-2.15.0-rc1.jar",
         "c:\\Users\\james\\Downloads\\jackson-core-2.15.0-rc1.jar",
@@ -12,8 +11,7 @@
         "c:\\Programs\\Java Stf\\jackson-annotations-2.15.0-rc1.jar",
         "c:\\Programs\\Java Stf\\jackson-core-2.15.0-rc1.jar",
         "c:\\Programs\\Java Stf\\jackson-databind-2.15.0-rc1.jar",
-        "c:\\Programs\\Java Stf\\opencsv-5.7.1.jar"
-=======
+        "c:\\Programs\\Java Stf\\opencsv-5.7.1.jar",
         "dependencies/jackson-annotations-2.15.0-rc1.jar",
         "dependencies/jackson-core-2.15.0-rc1.jar",
         "dependencies/jackson-databind-2.15.0-rc1.jar",

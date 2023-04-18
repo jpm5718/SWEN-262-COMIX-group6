@@ -1,25 +1,18 @@
 package src.model.command;
 
+import src.model.collections.PersonalCollection;
+import src.model.collections.modifyComicType.SlabStrategy;
 import src.model.comics.GradedComic;
-import src.model.comics.SlabbedComic;
 
 public class SlabComic extends DecoratorCommand {
 
-    public SlabComic(GradedComic comic) {
-        super(comic);
+    public SlabComic(GradedComic comic, PersonalCollection personalCollection) {
+        super(comic, personalCollection);
     }
 
     @Override
     protected void onExecute() {
-        decoratedComic = new SlabbedComic(comic);
-    }
-
-    @Override
-    protected void onUndo() {
-    }
-
-    @Override
-    protected void onRedo() {
-        decoratedComic = new SlabbedComic(comic);
+        personalCollection.setDecoratorStrategy(new SlabStrategy());
+        decoratedComic = personalCollection.decorateComic(comic);
     }
 }
