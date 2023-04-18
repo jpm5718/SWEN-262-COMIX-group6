@@ -1,8 +1,3 @@
-/**
- * @author Dan Corcoran
- */
-
-
 package src.model.users;
 
 import src.model.collections.PersonalCollection;
@@ -13,7 +8,6 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-
     @JsonProperty("collections") private Map<String, PersonalCollection> personalCollections;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;

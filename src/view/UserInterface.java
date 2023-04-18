@@ -17,7 +17,7 @@ import src.model.users.User;
  * This beefy class handles a majority of the PTUI commands.
  * It reads in input from terminal, parses it, and then performs
  * certain actions
- * 
+ *
  * @author James McGuire
  */
 public class UserInterface {
@@ -91,7 +91,7 @@ public class UserInterface {
     }
 
     public void ComicBookHandler() {
-        System.out.println("Choose one of the follwing actions:" +
+        System.out.println("Choose one of the following actions:" +
                 "\n\t1) Add a Comic Book to One of Your Personal Collections (manually)" +
                 "\n\t2) Grade a Comic That is in Your Collection" +
                 "\n\t3) Slab a Comic" +
@@ -101,52 +101,56 @@ public class UserInterface {
         switch (choice) {
             // add a comic manually to a collection
             case 1:
-                System.out.println("First, what is the name of the collection you want to add to?");
-                scanner.nextLine(); // consume character
-                String collectionname = scanner.nextLine();
-                PersonalCollection collection = user.getCollectionByName(collectionname); // gets right collection from
-                                                                                          // the users p.c. map
+                if(user.getCollections().size() > 0) {
+                    System.out.println("First, what is the name of the collection you want to add to?");
+                    scanner.nextLine(); // consume character
+                    String collectionname = scanner.nextLine();
+                    PersonalCollection collection = user.getCollectionByName(collectionname); // gets right collection from
+                                                                                            // the users p.c. map
 
-                // get comic book info
-                System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
-                String series = scanner.nextLine();
-                System.out.println("And the issue number?");
-                String issue = scanner.nextLine();
-                System.out.println("What is the full title?");
-                String title = scanner.nextLine();
-                System.out.println("What is the description of the comic?");
-                String vardesc = scanner.nextLine();
-                System.out.println("Who is the publisher of the book?");
-                String publisher = scanner.nextLine();
-                System.out.println("When was it released (Month, (day), Year)?");
-                String releasedate = scanner.nextLine();
-                System.out.println("What format is it? (comic, graphic novel, etc.)?");
-                String format = scanner.nextLine();
-                System.out.println("What is today's date (to keep track of date added)?");
-                String dateadded = scanner.nextLine();
-                System.out.println("Who are the creators of the comic book?");
-                String creators = scanner.nextLine();
+                    // get comic book info
+                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
+                    String series = scanner.nextLine();
+                    System.out.println("And the issue number?");
+                    String issue = scanner.nextLine();
+                    System.out.println("What is the full title?");
+                    String title = scanner.nextLine();
+                    System.out.println("What is the description of the comic?");
+                    String vardesc = scanner.nextLine();
+                    System.out.println("Who is the publisher of the book?");
+                    String publisher = scanner.nextLine();
+                    System.out.println("When was it released (Month, (day), Year)?");
+                    String releasedate = scanner.nextLine();
+                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
+                    String format = scanner.nextLine();
+                    System.out.println("What is today's date (to keep track of date added)?");
+                    String dateadded = scanner.nextLine();
+                    System.out.println("Who are the creators of the comic book?");
+                    String creators = scanner.nextLine();
 
-                // create queue to pass thru constructor
-                Queue<String> data = new LinkedList<>();
-                data.add(series);
-                data.add(issue);
-                data.add(title);
-                data.add(vardesc);
-                data.add(publisher);
-                data.add(releasedate);
-                data.add(format);
-                data.add(dateadded);
-                data.add(creators);
-                int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                                 // calculated
-                data.add(String.valueOf(++currentnum));
+                    // create queue to pass thru constructor
+                    Queue<String> data = new LinkedList<>();
+                    data.add(series);
+                    data.add(issue);
+                    data.add(title);
+                    data.add(vardesc);
+                    data.add(publisher);
+                    data.add(releasedate);
+                    data.add(format);
+                    data.add(dateadded);
+                    data.add(creators);
+                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
+                                                                    // calculated
+                    data.add(String.valueOf(++currentnum));
 
-                // create new comic and add it
-                Comic newcomic = new ComicBook(data);
-                collection.addComic(newcomic);
-                System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
-                break;
+                    // create new comic and add it
+                    Comic newcomic = new ComicBook(data);
+                    collection.addComic(newcomic);
+                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
+                    break;
+                } else {
+                    System.out.println("You must have at least one collection to add a comic to.");
+                }
 
             case 2:
                 System.out.println("What is the comic you would like to grade?");
