@@ -2,13 +2,15 @@ package src.model.users;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 import org.mindrot.jbcrypt.BCrypt;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import src.model.collections.PersonalCollection;
 
 public class Auth {
     Scanner scan = new Scanner(System.in);
@@ -19,14 +21,13 @@ public class Auth {
     private static ObjectMapper mapper = new ObjectMapper();
     Map<String, User> users;
 
-    public Auth(){
-         currentUser = new User("default", "default");
+    public Auth() {
+         currentUser = new User("guest", "guest");
     }
 
     public User createUser(String username, String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         User user = new User(username, hashedPassword);
-
         return user;
     }
 
@@ -47,6 +48,10 @@ public class Auth {
     public User[] getUsersArray() {
         ArrayList<User> usersArrayList = new ArrayList<>();
         for (User user : users.values()) {
+            // Populate collections data for user
+            Map<String, PersonalCollection> collectionsData = new HashMap<>();
+            collectionsData.putAll(user.getCollections());
+            user.setCollections(collectionsData);
             usersArrayList.add(user);
         }
 
@@ -66,37 +71,33 @@ public class Auth {
         String username = scan.nextLine();
         System.out.println("\nPassword: ");
         String password = scan.nextLine();
-        
+
         load();
         User[] userArray = getUsersArray();
-        
-        currentUser = userArray[0];
-        // for(User user : userArray){
-        //     String storedUsername = user.getUsername();
-        //     String storedpw = user.getPassword();
+        for(User user : userArray){
+            String storedUsername = user.getUsername();
+            String storedpw = user.getPassword();
 
-        //     if(storedUsername.equals(username) && BCrypt.checkpw(password, storedpw)){
-        //         System.out.println("\nLogged in as " + username);
-        //         loggedIn = true;
-        //         guest = false;
-        //         currentUser = createUser(username, password);
-        //     }
-        // }
-        
+            if(storedUsername.equals(username) && BCrypt.checkpw(password, storedpw)){
+                System.out.println("\nLogged in as " + username);
+                loggedIn = true;
+                guest = false;
+                currentUser = users.get(username);
+            }
+        }
     }
 
     public void signUp() throws Exception {
-
         // get info from user
         System.out.println("\nCreate your Username: ");
         String username = scan.nextLine();
         System.out.println("\nCreate your Password: ");
         String password = scan.nextLine();
-
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // hash the jawn
 
         load(); // load existing
-        User newUser = createUser(username, hashedPassword); // create new user
+        Map<String, PersonalCollection> collections = new HashMap<>(); // create new collections map
+        User newUser = new User(username, hashedPassword, collections); // create new user
         users.put(newUser.getUsername(), newUser); // add it to map
         save(); // save to file
 

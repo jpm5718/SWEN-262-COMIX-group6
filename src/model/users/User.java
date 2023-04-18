@@ -25,6 +25,12 @@ public class User {
         personalCollections = new HashMap<>();
     }
 
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, Map<String, PersonalCollection> personalCollections) {
+        this.username = username;
+        this.password = password;
+        this.personalCollections = personalCollections;
+    }
+
     public void addPersonalCollection(String name) {
         PersonalCollection collection = new PersonalCollection(name);
         personalCollections.put(name, collection);
@@ -54,5 +60,9 @@ public class User {
 
     public String getPassword(){
         return this.password;
+    }
+
+    public void setCollections(Map<String, PersonalCollection> personalCollections) {
+        this.personalCollections = personalCollections;
     }
 }
