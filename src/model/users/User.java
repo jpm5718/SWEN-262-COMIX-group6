@@ -13,10 +13,9 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    private Map<String, PersonalCollection> personalCollections;
-    @JsonProperty("username") private String username;
 
-    //this is pretty naive. We might want to implement some sort of password hashing
+    @JsonProperty("collection") private Map<String, PersonalCollection> personalCollections;
+    @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
 
     public User(@JsonProperty("username") String username, @JsonProperty("password") String password) {
@@ -55,11 +54,11 @@ public class User {
     }
 
     public String getUsername(){
-        return this.username;
+        return username;
     }
 
     public String getPassword(){
-        return this.password;
+        return password;
     }
 
     public void setCollections(Map<String, PersonalCollection> personalCollections) {
