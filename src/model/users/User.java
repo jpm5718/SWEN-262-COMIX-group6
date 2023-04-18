@@ -5,23 +5,17 @@ import src.model.collections.PersonalCollection;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    @JsonProperty("collection") private PersonalCollection collection;
+    @JsonProperty("personalCollection") private PersonalCollection collection;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
 
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collection")PersonalCollection collection) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("personalCollection")PersonalCollection collection) {
         this.username = username;
         this.password = password;
-        this.collection = collection; 
+        this.collection = collection;
     }
 
-    // public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collection")PersonalCollection collection) {
-    //     this.username = username;
-    //     this.password = password;
-    //     this.collection = collection;
-    // }
-
-    @JsonProperty("collection")
+    @JsonProperty("personalCollection")
     public PersonalCollection getCollection(){
         return collection;
     }

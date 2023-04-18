@@ -36,7 +36,7 @@ public class UserInterface {
      */
     public void personalCollectionHandler() throws Exception {
         System.out.println("\nPersonal Collection Options" +
-                "\n\t1) View Collections" +
+                "\n\t1) View Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
                 "\n\n\t0) Return to Main Screen" +
                 "\n\t-1) Quit");
@@ -57,9 +57,9 @@ public class UserInterface {
 
             // viewing existing collections
             case 1:
-                System.out.println("The names of your collections are:");
-                PersonalCollection collection = user.getCollection();
-                System.out.println("\t" + collection.getName());
+                // System.out.println("The names of your collections are:");
+                // PersonalCollection collection = user.getCollection();
+                // System.out.println("\t" + collection.getName());
                 personalCollectionHandler();
                 break;
 
@@ -72,7 +72,7 @@ public class UserInterface {
 
     public void ComicBookHandler() {
         System.out.println("Choose one of the following actions:" +
-                "\n\t1) Add a Comic Book to One of Your Personal Collections (manually)" +
+                "\n\t1) Add a Comic Book to Your Personal Collection (manually)" +
                 "\n\t2) Grade a Comic That is in Your Collection" +
                 "\n\t3) Slab a Comic" +
                 "\n\t4) Sign a Comic" +

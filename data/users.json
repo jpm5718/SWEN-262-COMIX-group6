@@ -1,1 +1,16 @@
-[{"username":"test","password":"$2a$10$/yiKWhkrbVtULG0UOpzz0.61Vc1AMK02NfbjvsZz7QAP1C6IuxjP.","collection":{"collection":[],"name":"test","numberOfIssues":0,"value":0.0}}]
+[
+    {
+        "username": "test",
+        "password": "$2a$10$/yiKWhkrbVtULG0UOpzz0.61Vc1AMK02NfbjvsZz7QAP1C6IuxjP.",
+        "personalCollection": {
+            "collection": {
+                "id": 1,
+                "title": "test",
+                "value": "0.0"
+            },
+            "name": "test",
+            "numberOfIssues": 0,
+            "value": 0.0
+        }
+    }
+]
