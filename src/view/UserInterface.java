@@ -4,14 +4,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.users.Auth;
 import src.model.users.User;
-import src.persistance.ComicJsonAdapter;
+import src.persistance.ComicCsvAdapter;
 
 /**
  * This beefy class handles a majority of the PTUI commands.
@@ -24,10 +23,10 @@ public class UserInterface {
     Auth auth = new Auth();
     // reference to current user
     private User user = auth.getCurrentUser();
-    private PersonalCollection userPersonalCollection = user.getCollection();
+    //private PersonalCollection userPersonalCollection = user.getCollection();
     private Scanner scanner = new Scanner(System.in);
-    private ComicJsonAdapter jsonAdapter = new ComicJsonAdapter("data/comics.json");
-    private DatabaseCollection db = jsonAdapter.importToFormat();
+    private ComicCsvAdapter csvreader = new ComicCsvAdapter("data/comics.csv");
+    private DatabaseCollection db = csvreader.importToFormat();
 
     /**
      * This method is called when the user wants to manage
@@ -150,8 +149,7 @@ public class UserInterface {
         int choice = scanner.nextInt();
 
         switch (choice) {
-            case 1: 
-
+            case 1: System.out.println(db.getComic(35));
             case 2:
                 personalCollectionHandler();
                 break;

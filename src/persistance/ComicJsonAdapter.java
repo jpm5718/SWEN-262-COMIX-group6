@@ -25,7 +25,7 @@ import src.model.comics.ComicBook;
 public class ComicJsonAdapter implements ComicAdapter {
     String filename;
     public ComicJsonAdapter(String filename) {
-        filename = "data/" + filename + ".json";
+        this.filename = "data/" + filename + ".json";
     }
     @Override
     public void exportAsFormat(Collection dataCollection) {
@@ -45,7 +45,7 @@ public class ComicJsonAdapter implements ComicAdapter {
     public DatabaseCollection importToFormat() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Comic[] comicList = mapper.readValue(new File(filename), ComicBook[].class);
+            ComicBook[] comicList = mapper.readValue(new File(filename), ComicBook[].class);
             DatabaseCollection newCollection = new DatabaseCollection();
             for (Comic comic : comicList) {
                 newCollection.addComic(comic);
@@ -56,9 +56,6 @@ public class ComicJsonAdapter implements ComicAdapter {
             e.printStackTrace();
             return null;
         }
-        
-
-    }
-    
+    }   
 }
 
