@@ -24,7 +24,7 @@ public class User {
         personalCollections = new HashMap<>();
     }
 
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, Map<String, PersonalCollection> personalCollections) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("collections")Map<String, PersonalCollection> personalCollections) {
         this.username = username;
         this.password = password;
         this.personalCollections = personalCollections;
