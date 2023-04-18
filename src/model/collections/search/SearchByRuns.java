@@ -17,38 +17,57 @@ public class SearchByRuns implements SearchStrategy {
         ArrayList<Comic> copy = new ArrayList<>(collection.values());
         ArrayList<Comic> results = new ArrayList<>();
 
-        Comic start = copy.get(0);
+        int start = 0;
         int runSize = 1;
+        boolean inRun = false;
 
-        for (int i = 0; i < copy.size(); i++) {
-            for (int j = 0; getAscii(copy.get(i+j).getIssue(), copy.get(i+j+1).getIssue()); j++) {
+        for (int i = 0; i < copy.size() - 1; i++) {
+            if ((getAscii(copy.get(i).getIssue(), copy.get(i + 1).getIssue()))) {
+                inRun = true;
                 runSize++;
+            } else {
+                inRun = false;
             }
-            if (runSize >= 12) {
-                int startIndex = copy.indexOf(start);
-                for (int j = startIndex; j < startIndex + runSize; j++) {
-                    results.add(copy.get(startIndex + j));
+            
+            if (!inRun || i == copy.size() - 2) {
+                if (runSize >= 12) {
+                    for (int j = 0; j < runSize; j++) {
+                        results.add(copy.get(start + j));
+                    }
+                }
+
+                if (i != copy.size() - 2) {
+                    start = i + 1;
+                    runSize = 1;
                 }
             }
-            start = copy.get(copy.indexOf(start) + runSize);
-            runSize = 1;
         }
 
         return results;
     }
 
     public boolean getAscii(String current, String next) {
-        int currentAscii = 0;
-        int nextAscii = 0;
+
+        if (Math.abs(current.length() - next.length()) != 0) {
+            if (Math.abs(current.length() - next.length()) > 1) {
+                return false;
+            }
+
+            int asciiDif = Math.abs(current.charAt(current.length() - 1) - next.charAt(next.length() - 1));
+            if (asciiDif == 1 || asciiDif == 9) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         for (int i = 0; i < current.length(); i++) {
-            currentAscii += currentAscii + current.charAt(i);
+            int dif = Math.abs(current.charAt(i) - next.charAt(i));
+            if(dif > 1 && dif != 9) {
+                return false;
+            }
         }
 
-        for (int i = 0; i < next.length(); i++) {
-            nextAscii += nextAscii + next.charAt(i);
-        }
-
-        return (nextAscii - currentAscii == 1);
+        return true;
     }
 }

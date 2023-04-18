@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
@@ -11,6 +12,8 @@ import src.model.collections.search.SearchBySeries;
 import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
+import src.model.command.AddComic;
+import src.model.command.Command;
 import src.model.users.Auth;
 import src.model.users.User;
 import src.persistance.ComicCsvAdapter;
@@ -30,6 +33,8 @@ public class UserInterface {
     private Scanner scanner = new Scanner(System.in);
     private ComicCsvAdapter csvreader = new ComicCsvAdapter("data/comics.csv");
     private DatabaseCollection db = csvreader.importToFormat();
+    private Stack<Command> commandsToUndo = new Stack<Command>();
+    private Stack<Command> commandsToRedo = new Stack<Command>();
 
     /**
      * This method is called when the user wants to manage
@@ -79,7 +84,9 @@ public class UserInterface {
                 "\n\t2) Grade a Comic That is in Your Collection" +
                 "\n\t3) Slab a Comic" +
                 "\n\t4) Sign a Comic" +
-                "\n\t5) Authenticate a Comic");
+                "\n\t5) Authenticate a Comic" +
+                "\n\t6) Undo Action" +
+                "\n\t7) Redo Action");
         int choice = scanner.nextInt();
         switch (choice) {
             

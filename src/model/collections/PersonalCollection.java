@@ -41,7 +41,7 @@ public class PersonalCollection implements ComicCollection {
         collection = new TreeMap<>();
         this.name = name;
 
-        //default strategies are searching and sorting by title
+        //default s4trategies are searching and sorting by title
         searchStrategy = new SearchByTitle();
         sortStrategy = new SortByTitle();
         editStrategy = null;
@@ -122,14 +122,16 @@ public class PersonalCollection implements ComicCollection {
      * @param comic - comic being graded
      * @param grade - the grade applied to the comic
      */
-    public void gradeComic(Comic comic, int grade) {
+    public Comic gradeComic(Comic comic, int grade) {
         try {
             int key = comic.getId();
             comic = collection.get(key);
             comic = new GradedComic(comic, grade);
             collection.replace(key, comic);
+            return comic;
         } catch (Exception e) {
             System.out.println("Error: comic is not in this collection.");
+            return null;
         }
     }
 
@@ -145,14 +147,16 @@ public class PersonalCollection implements ComicCollection {
      * Slabs, signs, or authenticates a comic based on the selected strategy
      * @param comic - comic being decorated
      */
-    public void decorateComic(Comic comic) {
+    public Comic decorateComic(Comic comic) {
         try {
             int key = comic.getId();
             comic = collection.get(key);
             comic = decoratorStrategy.decorate(comic);
             collection.replace(key, comic);
+            return comic;
         } catch (Exception e) {
             System.out.println("Error: comic is not in this collection.");
+            return null;
         }
     }
     /**
@@ -258,5 +262,10 @@ public class PersonalCollection implements ComicCollection {
         }
 
         return value;
+    }
+
+    @Override
+    public Comic getComic(int id) {
+        return collection.get(id);
     }
 }
