@@ -51,10 +51,8 @@ public class CommandTest {
         this.comic = new ComicBook(data);
         database.addComic(comic);
 
-        user = new User("Bill", "Password");
-        user.addPersonalCollection("Hello There");
-        this.collection = user.getPersonalCollections().get("Hello There");
-        assertEquals(user.getPersonalCollections().get("Hello There"), "hi");
+        this.collection = new PersonalCollection("Hello There");
+        user = new User("Bill", "Password", collection);
         System.out.println(collection);
         changes = new HashMap<>();
         changes.put("title", "New Title");

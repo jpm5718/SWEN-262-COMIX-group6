@@ -2,6 +2,7 @@ package src;
 
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
+import src.model.collections.PersonalCollection;
 import src.model.comics.GradedComic;
 import src.model.command.AddComic;
 import src.model.command.Command;
@@ -25,27 +26,27 @@ public class App {
 
         System.out.println("JSON comic file created and seeded");
         // Auth.run();
-        User mike = new User("mike", "mike");
-        mike.addPersonalCollection("big");
-        System.out.println(mike.getPersonalCollections().get("big"));
-        Command add = new AddComic(database.getCollection().get(1), mike.getPersonalCollections().get("big"));
+        PersonalCollection collection = new PersonalCollection("big");
+        User mike = new User("mike", "mike", collection);
+        System.out.println(mike.getCollection());
+        Command add = new AddComic(database.getCollection().get(1), mike.getCollection());
         add.execute();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().toString());
-        Command remove = new RemoveComic(database.getCollection().get(1), mike.getPersonalCollections().get("big"));
+        System.out.println(mike.getCollection().getCollection().toString());
+        Command remove = new RemoveComic(database.getCollection().get(1), mike.getCollection());
         remove.execute();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().toString());
+        System.out.println(mike.getCollection().getCollection().toString());
         remove.undo();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().toString());
+        System.out.println(mike.getCollection().getCollection().toString());
 
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().get(0).getValue());
-        GradeComic sign = new GradeComic(database.getCollection().get(1), 5, mike.getPersonalCollections().get("big"));
+        System.out.println(mike.getCollection().getCollection().get(0).getValue());
+        GradeComic sign = new GradeComic(database.getCollection().get(1), 5, mike.getCollection());
         sign.execute();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().get(0).getValue());
+        System.out.println(mike.getCollection().getCollection().get(0).getValue());
         sign.undo();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().get(0).getValue());
+        System.out.println(mike.getCollection().getCollection().get(0).getValue());
         sign.redo();
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().get(0).getValue());
-        System.out.println(mike.getPersonalCollections().get("big").getCollection().toString());
+        System.out.println(mike.getCollection().getCollection().get(0).getValue());
+        System.out.println(mike.getCollection().getCollection().toString());
 
 
 
