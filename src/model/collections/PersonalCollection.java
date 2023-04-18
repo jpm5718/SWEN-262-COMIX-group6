@@ -17,15 +17,19 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PersonalCollection implements ComicCollection {
 
-    private Map<Integer, Comic> collection;
-    private String name;
+    @JsonProperty("collection") private Map<Integer, Comic> collection;
+    @JsonProperty("name") private String name;
+    @JsonProperty("numberOfIssues") private int numberOfIssues;
+    @JsonProperty("value") private double value;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
     private EditStrategy editStrategy;
     private DecoratorStrategy decoratorStrategy;
-    private int numberOfIssues;
 
     public PersonalCollection(String name) {
         collection = new TreeMap<>();
@@ -37,6 +41,15 @@ public class PersonalCollection implements ComicCollection {
         editStrategy = null;
         decoratorStrategy = null;
         numberOfIssues = 0;
+    }
+
+    @JsonCreator
+    public PersonalCollection(@JsonProperty("collection") Map<Integer, Comic> collection, @JsonProperty("name") String name, 
+    @JsonProperty("numberOfIssues") int numberOfIssues, @JsonProperty("value") double value){
+        this.collection = collection;
+        this.name = name;
+        this.numberOfIssues = numberOfIssues;
+        this.value = value;
     }
 
     /**
@@ -213,7 +226,7 @@ public class PersonalCollection implements ComicCollection {
      * @return - added value of all comics in collection
      */
     public double getValue() {
-        double value = 0;
+        this.value = 0;
 
         for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
             //how's that for a weird looking call. comicEntry.getValue() gets the comic

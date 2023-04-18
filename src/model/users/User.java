@@ -26,10 +26,12 @@ public class User {
         return collection;
     }
 
+    @JsonProperty("username")
     public String getUsername(){
         return username;
     }
 
+    @JsonProperty("password")
     public String getPassword(){
         return password;
     }

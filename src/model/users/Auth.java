@@ -38,7 +38,6 @@ public class Auth {
         for (User user : usersArray) {
             users.put(user.getUsername(), user);
         }
-
         return true;
     }
 

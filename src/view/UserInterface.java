@@ -149,7 +149,7 @@ public class UserInterface {
         int choice = scanner.nextInt();
 
         switch (choice) {
-            case 1: System.out.println(db.getComic(35));
+            case 1: System.out.println(db.getComic(35).getSeries());
             case 2:
                 personalCollectionHandler();
                 break;
