@@ -8,6 +8,7 @@ package src.model.comics;
 import java.util.Objects;
 import java.util.Queue;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ComicBook implements Comic {
@@ -38,6 +39,7 @@ public class ComicBook implements Comic {
         value = 9.99; //base value of comic (assumption)
     }
 
+    @JsonCreator
     public ComicBook(@JsonProperty("title") String title, @JsonProperty("value") double value, @JsonProperty("id") final int id) {
         this.title = title;
         this.id = id;

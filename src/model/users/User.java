@@ -3,6 +3,8 @@ package src.model.users;
 import src.model.collections.PersonalCollection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class User {
     @JsonProperty("personalCollection") private PersonalCollection collection;
@@ -13,6 +15,15 @@ public class User {
         this.username = username;
         this.password = password;
         this.collection = collection;
+    }
+
+    public ObjectNode toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode userNode = mapper.createObjectNode();
+        userNode.put("username", username);
+        userNode.put("password", password);
+        userNode.set("personalCollection", collection.toJson());
+        return userNode;
     }
 
     @JsonProperty("personalCollection")

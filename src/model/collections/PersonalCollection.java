@@ -20,7 +20,9 @@ import java.util.TreeMap;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class PersonalCollection implements ComicCollection {
 
@@ -55,6 +57,23 @@ public class PersonalCollection implements ComicCollection {
         this.numberOfIssues = numberOfIssues;
         this.value = value;
     }
+
+    public ObjectNode toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode collectionNode = mapper.createObjectNode();
+        collectionNode.put("name", name);
+        collectionNode.put("numberOfIssues", numberOfIssues);
+        collectionNode.put("value", value);
+
+        ObjectNode issuesNode = mapper.createObjectNode();
+        for (Map.Entry<Integer, Comic> entry : collection.entrySet()) {
+            issuesNode.set(entry.getKey().toString(), ((PersonalCollection) entry.getValue()).toJson());
+        }
+        collectionNode.set("collection", issuesNode);
+
+        return collectionNode;
+    }
+
 
     /**
      * Adds a comic to the collection and increments the number of issues

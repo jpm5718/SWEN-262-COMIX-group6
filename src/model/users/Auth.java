@@ -7,7 +7,10 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import src.model.collections.PersonalCollection;
 
@@ -49,10 +52,15 @@ public class Auth {
     }
 
     public boolean save() throws Exception {
+        ArrayNode userArrayNode = mapper.createArrayNode();
         User[] userArray = getUsersArray();
-        mapper.writeValue(new File("data/users.json"), userArray);
+        for (User user : userArray) {
+            userArrayNode.add(user.toJson());
+        }
+        mapper.writeValue(new File("data/users.json"), userArrayNode);
         return true;
     }
+
 
     public void logIn() throws Exception {
         System.out.println("\nUsername: ");
@@ -83,15 +91,25 @@ public class Auth {
         String password = scan.nextLine();
         System.out.println("Create collection name: ");
         String collectionName = scan.nextLine();
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // hash the jawn
 
-        load(); // load existing
-        User newUser = createUser(username, password, collectionName); // create new user
-        users.put(newUser.getUsername(), newUser); // add it to map
-        save(); // save to file
+        JsonNode jsonNode = mapper.readTree(new File("data/users.json"));
 
+        if(!jsonNode.isEmpty()){
+            load(); // load existing
+            User newUser = createUser(username, hashedPassword, collectionName); // create new user
+            users.put(username, newUser); // add it to map
+            save(); // save to file
+            currentUser = newUser;
+        } else {
+            users = new TreeMap<>();
+            User newUser = createUser(username, hashedPassword, collectionName); // create new user
+            users.put(username, newUser); // add it to map
+            save(); // save to file
+            currentUser = newUser;
+        }
         loggedIn = true;
         guest = false;
-        currentUser = newUser;
     }
 
     public User getCurrentUser() {
