@@ -3,12 +3,15 @@ package src.view;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
+import src.model.command.AddComic;
+import src.model.command.Command;
 import src.model.users.Auth;
 import src.model.users.User;
 import src.persistance.ComicJsonAdapter;
@@ -28,6 +31,8 @@ public class UserInterface {
     private Scanner scanner = new Scanner(System.in);
     private ComicJsonAdapter jsonAdapter = new ComicJsonAdapter("data/comics.json");
     private DatabaseCollection db = jsonAdapter.importToFormat();
+    private Stack<Command> commandsToUndo = new Stack<Command>();
+    private Stack<Command> commandsToRedo = new Stack<Command>();
 
     /**
      * This method is called when the user wants to manage
@@ -77,7 +82,9 @@ public class UserInterface {
                 "\n\t2) Grade a Comic That is in Your Collection" +
                 "\n\t3) Slab a Comic" +
                 "\n\t4) Sign a Comic" +
-                "\n\t5) Authenticate a Comic");
+                "\n\t5) Authenticate a Comic" +
+                "\n\t6) Undo Action" +
+                "\n\t7) Redo Action");
         int choice = scanner.nextInt();
         switch (choice) {
             // add a comic manually to a collection
@@ -122,7 +129,9 @@ public class UserInterface {
 
                     // create new comic and add it
                     Comic newcomic = new ComicBook(data);
-                    collection.addComic(newcomic);
+                    Command addComicCommand = new AddComic(newcomic, collection);
+                    addComicCommand.execute();
+                    commandsToUndo.add(addComicCommand);
                     System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
                     break;
 
@@ -140,6 +149,17 @@ public class UserInterface {
                 // DecoratorStrategy slab = new SlabStrategy();
                 // collection.setDecoratorStrategy(slab);
                 // slab.decorate(comic);
+
+            case 6:
+                Command undoCommand = commandsToUndo.pop();
+                undoCommand.undo();
+                commandsToRedo.add(undoCommand);
+
+            case 7:
+                Command redoCommand = commandsToRedo.pop();
+                redoCommand.redo();
+                commandsToUndo.add(redoCommand);
+
         }
     }
 
