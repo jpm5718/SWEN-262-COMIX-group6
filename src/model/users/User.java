@@ -33,6 +33,7 @@ public class User {
         }
     }
 
+    @JsonProperty("collections")
     public Map<String, PersonalCollection> getCollections(){
         return personalCollections;
     }
