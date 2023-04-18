@@ -1,3 +1,7 @@
+/**
+ * MAY NEED EDITING
+ */
+
 package src.model.users;
 
 import src.model.collections.PersonalCollection;
