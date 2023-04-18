@@ -15,9 +15,18 @@ import src.model.collections.search.SearchByCreators;
 import src.model.collections.search.SearchByDateAdded;
 import src.model.collections.search.SearchByFormat;
 import src.model.collections.search.SearchByGaps;
+import src.model.collections.search.SearchByIssue;
+import src.model.collections.search.SearchByPublisher;
+import src.model.collections.search.SearchByReleaseDate;
+import src.model.collections.search.SearchByRuns;
+import src.model.collections.search.SearchBySeries;
+import src.model.collections.search.SearchByTitle;
+import src.model.collections.search.SearchByVarDesc;
+import src.model.collections.sort.SortByDateAdded;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -480,7 +489,7 @@ public class PersonalCollectionTests {
             Comic comic = new ComicBook(attributes);
 
             if (i != 5 && i != 7 && i != 11) {
-                test1.addComic(comic);
+                test2.addComic(comic);
             }
         }
 
@@ -489,4 +498,410 @@ public class PersonalCollectionTests {
 
         Assertions.assertTrue(actual.isEmpty());
     }
+
+    @Test
+    public void testSearchByIssue() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 5) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchByIssue());
+        ArrayList<Comic> actual = test.search("5", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("5", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Issue 5", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Issue", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    public void testSearchByPublisher() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 9) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchByPublisher());
+        ArrayList<Comic> actual = test.search("2", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("9", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Publisher 9", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Publisher", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    public void testSearchByReleaseDate() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 1) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchByReleaseDate());
+        ArrayList<Comic> actual = test.search("1", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("1", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Release Date 1", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Release", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    public void testSearchByRuns() {
+        PersonalCollection test1 = new PersonalCollection("Test");
+        PersonalCollection test2 = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+
+        for (int i = 0; i < 15; i ++) {
+
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+
+            test1.addComic(comic);
+        }
+
+
+        test1.setSearchStrategy(new SearchByRuns());
+        ArrayList<Comic> actual = test1.search("Issue", false);
+
+        Assertions.assertEquals(15, actual.size());
+
+        for (int i = 15; i < 25; i++) {
+
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+
+            if (i != 17) {
+                test1.addComic(comic);
+            }
+            
+        }
+        
+        actual = test1.search("Issue", false);
+
+        Assertions.assertFalse(actual.isEmpty());
+        Assertions.assertEquals(17, actual.size());
+
+        for (int i = 0; i < 15; i ++) {
+
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+
+            if (i != 5 && i != 7 && i != 11) {
+                test2.addComic(comic);
+            }
+        }
+
+        test2.setSearchStrategy(new SearchByRuns());
+        actual = test2.search("Issue", false);
+
+        Assertions.assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void testSearchBySeries() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 8) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchBySeries());
+        ArrayList<Comic> actual = test.search("8", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("8", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Series 8", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Series", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    public void testSearchByTitle() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 6) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchByTitle());
+        ArrayList<Comic> actual = test.search("6", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("6", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Title 6", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Title", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    public void testSearchByVarDesc() {
+        PersonalCollection test = new PersonalCollection("Test");
+        Queue<String> attributes = new LinkedList<>();
+        ArrayList<Comic> expected = new ArrayList<>();
+
+        for (int i = 0; i < 10; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            test.addComic(comic);
+            
+            if (i == 3) {
+                expected.add(comic);
+            }
+        }
+
+
+        test.setSearchStrategy(new SearchByVarDesc());
+        ArrayList<Comic> actual = test.search("3", true);
+        Assertions.assertTrue(actual.isEmpty());
+
+        actual = test.search("3", false);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        actual = test.search("Variant Description 3", true);
+
+        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
+
+        expected = test.getCollection();
+
+        actual = test.search("Variant Description", false);
+        Assertions.assertEquals(expected.size(), actual.size());
+    }
+
+    public Comic[] sortGen() {
+        Comic[] comics = new Comic[5];
+        Queue<String> attributes = new LinkedList<>();
+
+        for (int i = 1; i <= 5; i ++) {
+            attributes.add("Series " + i);
+            attributes.add("Issue " + i);
+            attributes.add("Title " + i);
+            attributes.add("Variant Description " + i);
+            attributes.add("Release Date " + i);
+            attributes.add("Format " + i);
+            attributes.add("Date Added " + i);
+            attributes.add("Publisher " + i);
+            attributes.add("Creators " + i);
+            attributes.add("" + i);
+            Comic comic = new ComicBook(attributes);
+            comics[i - 1] = comic;
+        }
+
+        return comics;
+    }
+
+    @Test
+    public void testSortByDateAdded() {
+        PersonalCollection test = new PersonalCollection("Test");
+        ArrayList<Comic> expected = new ArrayList<>();
+
+       Comic[] comics = sortGen();
+
+        test.addComic(comics[3]);
+        test.addComic(comics[2]);
+        test.addComic(comics[4]);
+        test.addComic(comics[1]);
+        test.addComic(comics[0]);
+
+        expected.add(comics[0]);
+        expected.add(comics[1]);
+        expected.add(comics[2]);
+        expected.add(comics[3]);
+        expected.add(comics[4]);
+
+
+        test.setSortStrategy(new SortByDateAdded());
+        ArrayList<Comic> actual = test.sort(test.getCollection());
+
+        for (int i = 0; i < actual.size(); i++) {
+            Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
+        }
+    }
 }
+

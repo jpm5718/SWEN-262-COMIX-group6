@@ -22,7 +22,6 @@ public class SearchByGaps implements SearchStrategy {
         int gaps = 0;
         
         for (int i = 0; i < copy.size() - 1; i++) {
-            System.out.print( "First : " + copy.get(i).getIssue() + " : Second : " + copy.get(i + 1).getIssue() + "\n");
             if (!(getAscii(copy.get(i).getIssue(), copy.get(i + 1).getIssue()))) {
                 gaps++;
             }
@@ -42,8 +41,6 @@ public class SearchByGaps implements SearchStrategy {
                 }
                 
             }
-
-            System.out.println("\nGaps : " + gaps + "\nRun Size : " + runSize);
         }
 
         return results;
@@ -63,17 +60,14 @@ public class SearchByGaps implements SearchStrategy {
                 return false;
             }
         }
-        int currentAscii = 0;
-        int nextAscii = 0;
 
         for (int i = 0; i < current.length(); i++) {
-            currentAscii += currentAscii + current.charAt(i);
+            int dif = Math.abs(current.charAt(i) - next.charAt(i));
+            if(dif > 1 && dif != 9) {
+                return false;
+            }
         }
 
-        for (int i = 0; i < next.length(); i++) {
-            nextAscii += nextAscii + next.charAt(i);
-        }
-
-        return (nextAscii - currentAscii == 1);
+        return true;
     }
 }
