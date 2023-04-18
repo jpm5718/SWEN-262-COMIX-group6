@@ -14,7 +14,7 @@ public class SortByDateAdded implements SortStrategy {
 
     @Override
     public ArrayList<Comic> sort(ArrayList<Comic> comics) {
-        Comic[] comicsArr = (Comic[]) comics.toArray();
+        Comic[] comicsArr = comics.toArray(new Comic[comics.size()]);
         comicsArr = quickSortHelper(comicsArr);
 
         return new ArrayList<>(Arrays.asList(comicsArr));
@@ -38,7 +38,10 @@ public class SortByDateAdded implements SortStrategy {
         while (i < j) {
             i++;
 
-            while (comics[i].getDateAdded().compareTo(pivot.getDateAdded()) > 0) {
+            System.out.println("\ni : " + i + " : j : " + j + "\n");
+            System.out.println("\ncomic1 : " + comics[i].getId() + " : pivot : " + pivot.getId() + "\n");
+
+            while (comics[i].getDateAdded().compareTo(pivot.getDateAdded()) < 0) {
                 j--;
             }
 
