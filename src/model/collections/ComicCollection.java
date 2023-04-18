@@ -25,4 +25,6 @@ public interface ComicCollection {
     ArrayList<Comic> getCollection();
 
     int getNumberOfIssues();
+
+    Comic getComic(int id);
 }

@@ -31,7 +31,7 @@ public class PersonalCollection implements ComicCollection {
         collection = new TreeMap<>();
         this.name = name;
 
-        //default strategies are searching and sorting by title
+        //default s4trategies are searching and sorting by title
         searchStrategy = new SearchByTitle();
         sortStrategy = new SortByTitle();
         editStrategy = null;
@@ -226,5 +226,10 @@ public class PersonalCollection implements ComicCollection {
         }
 
         return value;
+    }
+
+    @Override
+    public Comic getComic(int id) {
+        return collection.get(id);
     }
 }

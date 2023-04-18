@@ -64,7 +64,9 @@ public class DatabaseCollection implements ComicCollection{
         return numberOfIssues;
     }
 
-    public Comic getComic(int id){
+
+    @Override
+    public Comic getComic(int id) {
         return collection.get(id);
     }
 }
