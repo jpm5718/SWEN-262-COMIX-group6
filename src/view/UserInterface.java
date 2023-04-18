@@ -1,20 +1,18 @@
 package src.view;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
-import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
-import src.model.collections.PersonalCollection;
+import src.model.collections.search.SearchBySeries;
+import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
-import src.model.comics.ComicBook;
-import src.model.command.AddComic;
-import src.model.command.Command;
 import src.model.users.Auth;
 import src.model.users.User;
-import src.persistance.ComicJsonAdapter;
+import src.persistance.ComicCsvAdapter;
 
 /**
  * This beefy class handles a majority of the PTUI commands.
@@ -27,12 +25,10 @@ public class UserInterface {
     Auth auth = new Auth();
     // reference to current user
     private User user = auth.getCurrentUser();
-    private PersonalCollection userPersonalCollection = user.getCollection();
+    //private PersonalCollection userPersonalCollection = user.getCollection();
     private Scanner scanner = new Scanner(System.in);
-    private ComicJsonAdapter jsonAdapter = new ComicJsonAdapter("data/comics.json");
-    private DatabaseCollection db = jsonAdapter.importToFormat();
-    private Stack<Command> commandsToUndo = new Stack<Command>();
-    private Stack<Command> commandsToRedo = new Stack<Command>();
+    private ComicCsvAdapter csvreader = new ComicCsvAdapter("data/comics.csv");
+    private DatabaseCollection db = csvreader.importToFormat();
 
     /**
      * This method is called when the user wants to manage
@@ -42,7 +38,7 @@ public class UserInterface {
      */
     public void personalCollectionHandler() throws Exception {
         System.out.println("\nPersonal Collection Options" +
-                "\n\t1) View Collections" +
+                "\n\t1) View Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
                 "\n\n\t0) Return to Main Screen" +
                 "\n\t-1) Quit");
@@ -63,9 +59,9 @@ public class UserInterface {
 
             // viewing existing collections
             case 1:
-                System.out.println("The names of your collections are:");
-                PersonalCollection collection = user.getCollection();
-                System.out.println("\t" + collection.getName());
+                // System.out.println("The names of your collections are:");
+                // PersonalCollection collection = user.getCollection();
+                // System.out.println("\t" + collection.getName());
                 personalCollectionHandler();
                 break;
 
@@ -78,7 +74,7 @@ public class UserInterface {
 
     public void ComicBookHandler() {
         System.out.println("Choose one of the following actions:" +
-                "\n\t1) Add a Comic Book to One of Your Personal Collections (manually)" +
+                "\n\t1) Add a Comic Book to Your Personal Collection (manually)" +
                 "\n\t2) Grade a Comic That is in Your Collection" +
                 "\n\t3) Slab a Comic" +
                 "\n\t4) Sign a Comic" +
@@ -87,83 +83,43 @@ public class UserInterface {
                 "\n\t7) Redo Action");
         int choice = scanner.nextInt();
         switch (choice) {
-            // add a comic manually to a collection
-            case 1:
-                    PersonalCollection collection = user.getCollection(); // gets right collection from
-                                                                                            // the users p.c. map
+            
+        }
+    }
 
-                    // get comic book info
-                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
-                    String series = scanner.nextLine();
-                    System.out.println("And the issue number?");
-                    String issue = scanner.nextLine();
-                    System.out.println("What is the full title?");
-                    String title = scanner.nextLine();
-                    System.out.println("What is the description of the comic?");
-                    String vardesc = scanner.nextLine();
-                    System.out.println("Who is the publisher of the book?");
-                    String publisher = scanner.nextLine();
-                    System.out.println("When was it released (Month, (day), Year)?");
-                    String releasedate = scanner.nextLine();
-                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
-                    String format = scanner.nextLine();
-                    System.out.println("What is today's date (to keep track of date added)?");
-                    String dateadded = scanner.nextLine();
-                    System.out.println("Who are the creators of the comic book?");
-                    String creators = scanner.nextLine();
+    public void databaseHandler(){
+        System.out.println(user.getUsername());
+        System.out.println("\nHow would you like to search the database by? " +
+                        "\n\t1)By Series" + 
+                        "\n\t2)By Issue" +
+                        "\n\t3)By Title" +
+                        "\n\t4)By Format" +
+                        "\n\t5)By Publisher" +
+                        "\n\t6)By Description" +
+                        "\n\t7)By Release Date");
+        int searchtypechoice = scanner.nextInt();
 
-                    // create queue to pass thru constructor
-                    Queue<String> data = new LinkedList<>();
-                    data.add(series);
-                    data.add(issue);
-                    data.add(title);
-                    data.add(vardesc);
-                    data.add(publisher);
-                    data.add(releasedate);
-                    data.add(format);
-                    data.add(dateadded);
-                    data.add(creators);
-                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                                    // calculated
-                    data.add(String.valueOf(++currentnum));
+        scanner.nextLine(); //consume nextline char
 
-                    // create new comic and add it
-                    Comic newcomic = new ComicBook(data);
-                    Command addComicCommand = new AddComic(newcomic, collection);
-                    addComicCommand.execute();
-                    commandsToUndo.add(addComicCommand);
-                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
-                    break;
+        switch(searchtypechoice){
+            case 1: System.out.println("What series are you searching for? ");
+                    String seriesTerm = scanner.nextLine();
+                    SearchStrategy series = new SearchBySeries();
+                    db.setSearchStrategy(series);
+                    ArrayList<Comic> seriesResult = db.search(seriesTerm, false);
+                    for(Comic entry : seriesResult){
+                        System.out.println("Id: " + entry.getId() + ", Series: " + entry.getSeries() + ", Title: " + entry.getTitle());
+                    }
 
-            case 2:
-                System.out.println("What is the comic you would like to grade?");
-                // Comic comic = new ComicBook();
-                // System.out.println("What is the grade of the comic?");
-                // String s = scanner.nextLine();
-                // int grade = Integer.parseInt(s);
-                // collection.gradeComic(comic, grade);
-                // break;
-
-            case 3:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
-
-            case 6:
-                Command undoCommand = commandsToUndo.pop();
-                undoCommand.undo();
-                commandsToRedo.add(undoCommand);
-
-            case 7:
-                Command redoCommand = commandsToRedo.pop();
-                redoCommand.redo();
-                commandsToUndo.add(redoCommand);
-
+                    System.out.println("\nOf these results, enter the id of the coimic you would like to add to your collection!");
+                    int userComicChoice = scanner.nextInt();
+                    Comic toBeAdded = db.getComic(userComicChoice);
+                    user.getCollection().addComic(toBeAdded);
         }
     }
 
     public void run() throws Exception {
+        auth.run();
         System.out.println("Choose a command from below:" +
                 "\n\t1) Search the COMIX database" +
                 "\n\t2) Manage Personal Collection");
@@ -171,7 +127,8 @@ public class UserInterface {
 
         switch (choice) {
             case 1: 
-
+                databaseHandler();
+                break;
             case 2:
                 personalCollectionHandler();
                 break;

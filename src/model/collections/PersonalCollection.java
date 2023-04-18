@@ -10,6 +10,7 @@ import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
+import src.model.comics.ComicDeserializer;
 import src.model.collections.editComic.EditStrategy;
 
 import java.util.ArrayList;
@@ -17,15 +18,24 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 public class PersonalCollection implements ComicCollection {
 
+    @JsonProperty("collection")
+    @JsonDeserialize(using = ComicDeserializer.class)
     private Map<Integer, Comic> collection;
-    private String name;
+    @JsonProperty("name") private String name;
+    @JsonProperty("numberOfIssues") private int numberOfIssues;
+    @JsonProperty("value") private double value;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
     private EditStrategy editStrategy;
     private DecoratorStrategy decoratorStrategy;
-    private int numberOfIssues;
 
     public PersonalCollection(String name) {
         collection = new TreeMap<>();
@@ -38,6 +48,32 @@ public class PersonalCollection implements ComicCollection {
         decoratorStrategy = null;
         numberOfIssues = 0;
     }
+
+    @JsonCreator
+    public PersonalCollection(@JsonProperty("collection") Map<Integer, Comic> collection, @JsonProperty("name") String name,
+    @JsonProperty("numberOfIssues") int numberOfIssues, @JsonProperty("value") double value){
+        this.collection = collection;
+        this.name = name;
+        this.numberOfIssues = numberOfIssues;
+        this.value = value;
+    }
+
+    public ObjectNode toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode collectionNode = mapper.createObjectNode();
+        collectionNode.put("name", name);
+        collectionNode.put("numberOfIssues", numberOfIssues);
+        collectionNode.put("value", value);
+
+        ObjectNode issuesNode = mapper.createObjectNode();
+        for (Map.Entry<Integer, Comic> entry : collection.entrySet()) {
+            issuesNode.set(entry.getKey().toString(), ((PersonalCollection) entry.getValue()).toJson());
+        }
+        collectionNode.set("collection", issuesNode);
+
+        return collectionNode;
+    }
+
 
     /**
      * Adds a comic to the collection and increments the number of issues
@@ -217,7 +253,7 @@ public class PersonalCollection implements ComicCollection {
      * @return - added value of all comics in collection
      */
     public double getValue() {
-        double value = 0;
+        this.value = 0;
 
         for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
             //how's that for a weird looking call. comicEntry.getValue() gets the comic
