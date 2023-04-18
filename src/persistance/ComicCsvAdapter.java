@@ -15,6 +15,8 @@ import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
 import src.model.collections.Collection;
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
@@ -34,9 +36,10 @@ import src.model.comics.ComicBook;
 
 
 public class ComicCsvAdapter implements ComicAdapter {
-    String filename;
+    private String filename;
+    
     public ComicCsvAdapter(String filename) {
-        filename = "data/" + filename + ".csv";
+        this.filename = filename;
     }
 
     /*
@@ -74,29 +77,29 @@ public class ComicCsvAdapter implements ComicAdapter {
      * NOTE: much of the code for reading csv files is converted from the old ComcisCSVReader class. Credit to James McGuire for original implementation
      */
     @Override
-    public ComicCollection importToFormat() throws Exception {
-
+    public DatabaseCollection importToFormat() {
         try {
             CSVReader reader = new CSVReader(new FileReader(filename));
             String[] line;
             //skip first three lines of the csv file
             reader.readNext();
+            reader.readNext();
+            reader.readNext();
+
             int id = 0;
-            ComicCollection newCollection = new DatabaseCollection();
+            DatabaseCollection newCollection = new DatabaseCollection();
             while((line = reader.readNext()) != null){
                 Queue<String> data = new LinkedList<>(Arrays.asList(line));
                 data.add(String.valueOf(++id));
-                Comic comic = new ComicBook(data);
+                ComicBook comic = new ComicBook(data);
                 newCollection.addComic(comic);
             }
             reader.close();
             return newCollection;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }  
-        
     }
-    
 }

@@ -1,1 +1,32 @@
-[{"username":"test","password":"$2a$10$QP/xgJytap83Hwa/cbUZ.OhHhpj2KBr3ptG37wHOPwFRhFe4vusE6","collection":{"collection":[],"name":"first","numberOfIssues":0,"value":0.0}}]
+[
+    {
+        "username": "james",
+        "password": "$2a$10$GfIBzMw1Jve53si2R4rEC.Sa/dxxIfCGdsBXN0xhknKtIuZO244S2",
+        "personalCollection": {
+            "name": "first",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    },
+    {
+        "username": "new",
+        "password": "$2a$10$hemSjugieR7GZXwhKzAyL.hxMHqu1D5y0zy86JneSqPbAeIxOGwdq",
+        "personalCollection": {
+            "name": "new",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    },
+    {
+        "username": "test",
+        "password": "$2a$10$HYC9ZFsyJV33eIHXDTuZNOqcffVrLRgKMfLoKfmnKxsm1d5pBDvZ6",
+        "personalCollection": {
+            "name": "test",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    }
+]
