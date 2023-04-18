@@ -10,6 +10,7 @@ import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
+import src.model.comics.ComicDeserializer;
 import src.model.collections.editComic.EditStrategy;
 
 import java.util.ArrayList;
@@ -19,10 +20,13 @@ import java.util.TreeMap;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class PersonalCollection implements ComicCollection {
 
-    @JsonProperty("collection") private Map<Integer, Comic> collection;
+    @JsonProperty("collection")
+    @JsonDeserialize(using = ComicDeserializer.class)
+    private Map<Integer, Comic> collection;
     @JsonProperty("name") private String name;
     @JsonProperty("numberOfIssues") private int numberOfIssues;
     @JsonProperty("value") private double value;
@@ -44,7 +48,7 @@ public class PersonalCollection implements ComicCollection {
     }
 
     @JsonCreator
-    public PersonalCollection(@JsonProperty("collection") Map<Integer, Comic> collection, @JsonProperty("name") String name, 
+    public PersonalCollection(@JsonProperty("collection") Map<Integer, Comic> collection, @JsonProperty("name") String name,
     @JsonProperty("numberOfIssues") int numberOfIssues, @JsonProperty("value") double value){
         this.collection = collection;
         this.name = name;

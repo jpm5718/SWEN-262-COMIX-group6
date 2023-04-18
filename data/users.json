@@ -3,11 +3,7 @@
         "username": "test",
         "password": "$2a$10$/yiKWhkrbVtULG0UOpzz0.61Vc1AMK02NfbjvsZz7QAP1C6IuxjP.",
         "personalCollection": {
-            "collection": {
-                "id": 1,
-                "title": "test",
-                "value": "0.0"
-            },
+            "collection": {"1":{"title": "test1", "value": 0.0}, "2":{"title": "test2", "value": 0.0}, "3":{ "title": "test3", "value": 0.0}},
             "name": "test",
             "numberOfIssues": 0,
             "value": 0.0

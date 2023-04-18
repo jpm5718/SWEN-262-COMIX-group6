@@ -8,19 +8,21 @@ package src.model.comics;
 import java.util.Objects;
 import java.util.Queue;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ComicBook implements Comic {
 
     private String series;
     private String issue;
-    private String title;
+    @JsonProperty("title") private String title;
     private String varDesc;
     private String releaseDate;
     private String format;
     private String dateAdded;
     private Publisher publisher;
     private Creators creators;
-    private double value;
-    private final int id;
+    @JsonProperty("value") private double value;
+    @JsonProperty("id") private final int id;
 
     public ComicBook(Queue<String> attributes) {
         series = attributes.poll();
@@ -34,6 +36,12 @@ public class ComicBook implements Comic {
         creators = new Creators(attributes.poll());
         id = Integer.parseInt(Objects.requireNonNull(attributes.poll()));
         value = 9.99; //base value of comic (assumption)
+    }
+
+    public ComicBook(@JsonProperty("title") String title, @JsonProperty("value") double value, @JsonProperty("id") final int id) {
+        this.title = title;
+        this.id = id;
+        this.value = value;
     }
 
     @Override
