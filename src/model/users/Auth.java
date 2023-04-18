@@ -2,7 +2,6 @@ package src.model.users;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -11,6 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import src.model.collections.PersonalCollection;
+
 
 public class Auth {
     Scanner scan = new Scanner(System.in);
@@ -21,13 +21,10 @@ public class Auth {
     private static ObjectMapper mapper = new ObjectMapper();
     Map<String, User> users;
 
-    public Auth() {
-         currentUser = new User("guest", "guest");
-    }
-
-    public User createUser(String username, String password) {
+    public User createUser(String username, String password, String name) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        User user = new User(username, hashedPassword);
+        PersonalCollection collection = new PersonalCollection(name);
+        User user = new User(username, hashedPassword, collection);
         return user;
     }
 
@@ -46,15 +43,7 @@ public class Auth {
     }
 
     public User[] getUsersArray() {
-        ArrayList<User> usersArrayList = new ArrayList<>();
-        for (User user : users.values()) {
-            // Populate collections data for user
-            Map<String, PersonalCollection> collectionsData = new HashMap<>();
-            collectionsData.putAll(user.getCollections());
-            user.setCollections(collectionsData);
-            usersArrayList.add(user);
-        }
-
+        ArrayList<User> usersArrayList = new ArrayList<>(users.values());
         User[] userArray = new User[usersArrayList.size()];
         usersArrayList.toArray(userArray);
         return userArray;
@@ -93,10 +82,11 @@ public class Auth {
         String username = scan.nextLine();
         System.out.println("\nCreate your Password: ");
         String password = scan.nextLine();
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // hash the jawn
+        System.out.println("Create collection name: ");
+        String collectionName = scan.nextLine();
 
         load(); // load existing
-        User newUser = new User(username, hashedPassword); // create new user
+        User newUser = createUser(username, password, collectionName); // create new user
         users.put(newUser.getUsername(), newUser); // add it to map
         save(); // save to file
 
