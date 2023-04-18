@@ -14,7 +14,7 @@ public class App {
        Auth auth = new Auth();
        UserInterface ui = new UserInterface();
 
-       auth.run();
+       //auth.run();
        ui.run();
 
         //database = reader.parseComics();

@@ -20,16 +20,16 @@ public class Auth {
     Scanner scan = new Scanner(System.in);
     Boolean guest = true;
     Boolean loggedIn = false;
-    public static User currentUser;
+    public User currentUser;
 
     private static ObjectMapper mapper = new ObjectMapper();
     Map<String, User> users;
 
     public Auth() {
-        if(guest) {
-            currentUser = new User("guest", "guest", null);
-        } else if (loggedIn) {
+        if(loggedIn) {
             currentUser = users.get(currentUser.getUsername());
+        } else if (guest) {
+            currentUser = new User("guest", "guest", null);
         }
     }
 

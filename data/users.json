@@ -1,5 +1,15 @@
 [
     {
+        "username": "james",
+        "password": "$2a$10$GfIBzMw1Jve53si2R4rEC.Sa/dxxIfCGdsBXN0xhknKtIuZO244S2",
+        "personalCollection": {
+            "name": "first",
+            "numberOfIssues": 0,
+            "value": 0.0,
+            "collection": {}
+        }
+    },
+    {
         "username": "new",
         "password": "$2a$10$hemSjugieR7GZXwhKzAyL.hxMHqu1D5y0zy86JneSqPbAeIxOGwdq",
         "personalCollection": {

@@ -88,6 +88,7 @@ public class UserInterface {
     }
 
     public void databaseHandler(){
+        System.out.println(user.getUsername());
         System.out.println("\nHow would you like to search the database by? " +
                         "\n\t1)By Series" + 
                         "\n\t2)By Issue" +
@@ -107,7 +108,7 @@ public class UserInterface {
                     db.setSearchStrategy(series);
                     ArrayList<Comic> seriesResult = db.search(seriesTerm, false);
                     for(Comic entry : seriesResult){
-                        System.out.println(entry.toString());
+                        System.out.println("Id: " + entry.getId() + ", Series: " + entry.getSeries() + ", Title: " + entry.getTitle());
                     }
 
                     System.out.println("\nOf these results, enter the id of the coimic you would like to add to your collection!");
@@ -118,6 +119,7 @@ public class UserInterface {
     }
 
     public void run() throws Exception {
+        auth.run();
         System.out.println("Choose a command from below:" +
                 "\n\t1) Search the COMIX database" +
                 "\n\t2) Manage Personal Collection");
