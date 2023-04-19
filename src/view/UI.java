@@ -27,10 +27,13 @@ import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.comics.GradedComic;
+import src.model.comics.SignedComic;
 import src.model.command.AddComic;
+import src.model.command.AuthenticateComic;
 import src.model.command.Command;
 import src.model.command.GradeComic;
 import src.model.command.RemoveComic;
+import src.model.command.SignComic;
 import src.model.command.SlabComic;
 import src.model.users.User;
 import src.persistance.ComicCSVReader;
@@ -51,7 +54,7 @@ public class UI {
     static Stack<Command> commandsToUndo = new Stack<Command>();
     static Stack<Command> commandsToRedo = new Stack<Command>();
 
-    public static boolean signIn() {
+    public static void signIn() {
         System.out.println("\nUsername: ");
         String username = scan.nextLine();
         System.out.println("\nPassword: ");
@@ -63,25 +66,23 @@ public class UI {
                 currentUser = users.get(username);
                 loggedIn = true;
                 guest = false;
-                return true;
+                manageUser();
             } else {
                 while (true) {
                     System.out.println("Invalid Password. Please enter again or type 1 to exit.\nInput:");
                     String input = scan.nextLine();
                     if (input.equals("1")) {
-                        return false;
                     } else if (users.get(username).getPassword().equals(password)) {
                             System.out.println("\nLogged in as " + username);
                             currentUser = users.get(username);
                             loggedIn = true;
                             guest = false;
-                            return true;
+                            manageUser();
                     }
                 }
             }
         } else {
             System.out.println("Invalid Input");
-            return false;
         }
     }
 
@@ -209,14 +210,15 @@ public class UI {
         User user = new User(username, password, new PersonalCollection(collName));
         currentUser = user;
         users.put(username, user);
+        manageUser();
     }
 
     public static void manageUser(){
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) INSERT" +
-                "\n\n\t0) Return to Main Screen" +
-                "\n\t-1) Quit");
+                "\n\t3) Logout" +
+                "\n\t4) Quit");
         int choice = scanner.nextInt();
         switch (choice) {
             // close out of program
@@ -228,6 +230,12 @@ public class UI {
                     e.printStackTrace();
                 }
                 break;
+            
+            case 3:
+                currentUser = null;
+                guest = true;
+                loggedIn = false;
+                manageStart();
 
         }
     }
@@ -338,6 +346,46 @@ public class UI {
         }
     }
 
+    public static void signComicHandler() {
+        System.out.println("Enter a Comic ID from below to sign from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            System.out.println();
+            System.out.println("Series: " + comic.getSeries());
+            System.out.println("Issue Number: " + comic.getIssue());
+            System.out.println("Story Title: " + comic.getSeries());
+            System.out.println("ID: " + comic.getId());            
+        }
+        System.out.print("ID of Comic to sign: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        Command signComicCommand = new SignComic(choice, currentUser.getCollection());
+        signComicCommand.execute();
+        commandsToUndo.add(signComicCommand);
+    }
+
+    public static void authenticateComicHandler() {
+        System.out.println("Enter a Comic ID from below to authenticate from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            if (comic instanceof SignedComic) {
+                System.out.println();
+                System.out.println("Series: " + comic.getSeries());
+                System.out.println("Issue Number: " + comic.getIssue());
+                System.out.println("Story Title: " + comic.getSeries());
+                System.out.println("ID: " + comic.getId());    
+            }
+        }
+        System.out.print("ID of Comic to authenticate: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        if (choice instanceof SignedComic) {
+            Command authenticateComicCommand = new AuthenticateComic((SignedComic) choice, currentUser.getCollection());
+            authenticateComicCommand.execute();
+            commandsToUndo.add(authenticateComicCommand);
+        } else {
+            System.out.println("Invalid choice");
+        }
+    }
+
     public static void ComicBookHandler() {
         System.out.println("Choose one of the following actions:" +
                 "\n\t1) Add a Comic Book (manually)" +
@@ -416,17 +464,11 @@ public class UI {
                 break;
             
             case 6:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
+                signComicHandler();
                 break;
             
             case 7:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
+                authenticateComicHandler();
                 break;
 
             case 8:
@@ -459,14 +501,9 @@ public class UI {
         int command = scan.nextInt();
         scan.nextLine(); // add this line to consume the newline character
         if (command == 1) {
-            boolean signedIn = signIn();
-            if (signedIn==false) {
-                manageStart();
-                System.out.println(currentUser);
-            }
+            signIn();
         } else if (command == 2) {
             manageSignUp();
-            manageUser();
         
         } else if (command == 3) {
             guest = true;
