@@ -129,78 +129,93 @@ public class UI {
                 "\n\t11) Search by Title" +
                 "\n\t12) Search by Var Description");
         int choice = scanner.nextInt();
+
+        System.out.println("Which match results would you like to view?" +
+                "\n\t1) Exact Matches" +
+                "\n\t2) Partial Matches");
+        int matchChoice = scanner.nextInt();
+        boolean exactMatch = false;
+        if (matchChoice == 1) {
+            exactMatch = true;
+        } else if (matchChoice == 2) {
+            exactMatch = false;
+        } else {
+            System.out.println("Invalid Input");
+            searchCollectionHandler(collection);
+        }
+
         switch (choice) {
             case 1:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByComicType());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 2:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByCreators());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 3:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByDateAdded());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 4:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByFormat());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 5:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByGaps());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 6:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByIssue());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 7:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByPublisher());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 8:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByReleaseDate());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 9:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByRuns());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 10:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchBySeries());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 11:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByTitle());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
             case 12:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByVarDesc());
-                results = collection.search(input, false);
+                results = collection.search(input, exactMatch);
                 break;
         }
         for (Comic comic : results) {
@@ -260,17 +275,10 @@ public class UI {
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\n\t0) Return to Main Screen" +
-                "\n\t-1) Quit");
+                "\n\t3) Go Back" +
+                "\n\t4) Quit");
         int choice = scanner.nextInt();
         switch (choice) {
-            // close out of program
-            case -1:
-                break;
-
-            // back to main screen
-            case 0:
-                break;
 
             // viewing existing collections
             case 1:
@@ -281,6 +289,14 @@ public class UI {
             // comic book actions
             case 2:
                 ComicBookHandler();
+                break;
+            
+            case 3:
+                break;
+
+            case 4:
+                System.out.println("Goodbye!");
+                System.exit(0);
                 break;
         }
     }
