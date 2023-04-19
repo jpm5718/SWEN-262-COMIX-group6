@@ -91,6 +91,7 @@ public class UI {
             }
         } else {
             System.out.println("Invalid Input");
+            manageStart();
         }
     }
 
