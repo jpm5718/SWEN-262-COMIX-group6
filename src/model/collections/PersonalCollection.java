@@ -73,11 +73,14 @@ public class PersonalCollection implements ComicCollection {
      */
     public void addComic(Queue<String> attributes) {
         Comic comic = new ComicBook(attributes);
-        if (!collection.contains(comic.getId())) {
-            collection.set(comic.getId(), comic);
-            numberOfIssues++;
-        } else {
-            System.out.println("Comic is already in collection\n");
+        System.out.println();
+        for(Comic c : collection){
+            if(c.getId() == comic.getId()){
+                System.out.println("Comic is already in collection!");
+            } else{
+                collection.add(comic);
+                numberOfIssues++;
+            }
         }
     }
 
