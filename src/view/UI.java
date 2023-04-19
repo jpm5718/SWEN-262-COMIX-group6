@@ -83,13 +83,17 @@ public class UI {
 
     public static void manageGuest() {
         // System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Browse Collection\n\t2) Search Collection\n\t3) Search Database");
-        System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Search Database");
+        System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Search Database\n\t2) View Database");
         int choice = scanner.nextInt();
         switch (choice) {
             // close out of program
             case 1:
                 searchCollectionHandler(database);
                 break;
+            case 2:
+                for (Comic comic : database.getCollection()) {
+                    System.out.println(comic.getTitle());
+                }
         }
 
 
@@ -225,7 +229,7 @@ public class UI {
 
     public static void personalCollectionHandler() throws Exception {
         System.out.println("\nPersonal Collection Options" +
-                "\n\t1) View Collections" +
+                "\n\t1) Search Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
                 "\n\n\t0) Return to Main Screen" +
                 "\n\t-1) Quit");
@@ -241,9 +245,7 @@ public class UI {
 
             // viewing existing collections
             case 1:
-                System.out.print("The names of your collection is:");
-                PersonalCollection collection = currentUser.getCollection();
-                System.out.println("\t" + collection.getName());
+                searchCollectionHandler(currentUser.getCollection());
                 personalCollectionHandler();
                 break;
 
