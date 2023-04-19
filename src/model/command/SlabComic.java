@@ -24,6 +24,6 @@ public class SlabComic extends DecoratorCommand {
     @Override
     protected void onExecute() {
         personalCollection.setDecoratorStrategy(new SlabStrategy());
-        decoratedComic = personalCollection.decorateComic(comic);
+        decoratedComic = personalCollection.decorateComic(comic.getId());
     }
 }
