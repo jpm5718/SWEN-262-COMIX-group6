@@ -26,8 +26,12 @@ import src.model.collections.search.SearchByVarDesc;
 import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
+import src.model.comics.GradedComic;
 import src.model.command.AddComic;
 import src.model.command.Command;
+import src.model.command.GradeComic;
+import src.model.command.RemoveComic;
+import src.model.command.SlabComic;
 import src.model.users.User;
 import src.persistance.ComicCSVReader;
 
@@ -204,6 +208,7 @@ public class UI {
         String collName = scan.nextLine();
         User user = new User(username, password, new PersonalCollection(collName));
         currentUser = user;
+        users.put(username, user);
     }
 
     public static void manageUser(){
@@ -227,7 +232,7 @@ public class UI {
         }
     }
 
-    public static void personalCollectionHandler() throws Exception {
+    public static void personalCollectionHandler() {
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
@@ -259,6 +264,7 @@ public class UI {
     public static void addFromDatabaseHandler() {
         System.out.println("Enter a Comic ID from below to add to your collection:");
         for (Comic comic : database.getCollection()) {
+            System.out.println();
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
@@ -271,20 +277,79 @@ public class UI {
         addComicCommand.execute();
         commandsToUndo.add(addComicCommand);
         System.out.println(choice.getTitle() + " has been added to " + currentUser.getCollection().getName());
-        ComicBookHandler();
+    }
+
+    public static void removeComicHandler() {
+        System.out.println("Enter a Comic ID from below to remove from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            System.out.println();
+            System.out.println("Series: " + comic.getSeries());
+            System.out.println("Issue Number: " + comic.getIssue());
+            System.out.println("Story Title: " + comic.getSeries());
+            System.out.println("ID: " + comic.getId());            
+        }
+        System.out.print("ID of Comic to remove: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        Command removeComicCommand = new RemoveComic(choice, currentUser.getCollection());
+        removeComicCommand.execute();
+        commandsToUndo.add(removeComicCommand);
+    }
+
+    public static void gradeComicHandler() {
+        System.out.println("Enter a Comic ID from below to grade from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            System.out.println();
+            System.out.println("Series: " + comic.getSeries());
+            System.out.println("Issue Number: " + comic.getIssue());
+            System.out.println("Story Title: " + comic.getSeries());
+            System.out.println("ID: " + comic.getId());            
+        }
+        System.out.print("ID of Comic to grade: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        System.out.print("Grade of the comic: ");
+        input = scan.nextInt();
+        Command gradeComicCommand = new GradeComic(choice, input, currentUser.getCollection());
+        gradeComicCommand.execute();
+        commandsToUndo.add(gradeComicCommand);
+    }
+
+    public static void slabComicHandler() {
+        System.out.println("Enter a Comic ID from below to slab from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            if (comic instanceof GradedComic) {
+                System.out.println();
+                System.out.println("Series: " + comic.getSeries());
+                System.out.println("Issue Number: " + comic.getIssue());
+                System.out.println("Story Title: " + comic.getSeries());
+                System.out.println("ID: " + comic.getId());    
+            }
+        }
+        System.out.print("ID of Comic to slab: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        if (choice instanceof GradedComic) {
+            Command slabComicCommand = new SlabComic((GradedComic) choice, currentUser.getCollection());
+            slabComicCommand.execute();
+            commandsToUndo.add(slabComicCommand);
+        } else {
+            System.out.println("Invalid choice");
+        }
     }
 
     public static void ComicBookHandler() {
         System.out.println("Choose one of the following actions:" +
-                "\n\t1) Add a Comic Book to Your Personal Collection (manually)" +
-                "\n\t2) Add a Comic Book to Your Personal Collection (from database)" +
-                "\n\t3) Grade a Comic That is in Your Collection" +
-                "\n\t4) Slab a Comic" +
-                "\n\t5) Sign a Comic" +
-                "\n\t6) Authenticate a Comic" +
-                "\n\t7) Undo Action" +
-                "\n\t8) Redo Action" +
-                "\n\t9) Go Back");
+                "\n\t1) Add a Comic Book (manually)" +
+                "\n\t2) Add a Comic Book (from database)" +
+                "\n\t3) Remove a Comic" +
+                "\n\t4) Grade a Comic" +
+                "\n\t5) Slab a Comic" +
+                "\n\t6) Sign a Comic" +
+                "\n\t7) Authenticate a Comic" +
+                "\n\t8) Undo Action" +
+                "\n\t9) Redo Action" +
+                "\n\t10) Go Back");
         int choice = scanner.nextInt();
         switch (choice) {
             // add a comic manually to a collection
@@ -339,26 +404,15 @@ public class UI {
                 break;
 
             case 3:
-                System.out.println("What is the comic you would like to grade?");
-                // Comic comic = new ComicBook();
-                // System.out.println("What is the grade of the comic?");
-                // String s = scanner.nextLine();
-                // int grade = Integer.parseInt(s);
-                // collection.gradeComic(comic, grade);
+                removeComicHandler();
                 break;
 
             case 4:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
+                gradeComicHandler();
                 break;
-            
+
             case 5:
-                System.out.println("What comic are you slabbing?");
-                // DecoratorStrategy slab = new SlabStrategy();
-                // collection.setDecoratorStrategy(slab);
-                // slab.decorate(comic);
+                slabComicHandler();
                 break;
             
             case 6:
@@ -367,21 +421,28 @@ public class UI {
                 // collection.setDecoratorStrategy(slab);
                 // slab.decorate(comic);
                 break;
-
+            
             case 7:
+                System.out.println("What comic are you slabbing?");
+                // DecoratorStrategy slab = new SlabStrategy();
+                // collection.setDecoratorStrategy(slab);
+                // slab.decorate(comic);
+                break;
+
+            case 8:
                 Command undoCommand = commandsToUndo.pop();
                 undoCommand.undo();
                 commandsToRedo.add(undoCommand);
                 break;
 
-            case 8:
+            case 9:
                 Command redoCommand = commandsToRedo.pop();
                 redoCommand.redo();
                 commandsToUndo.add(redoCommand);
                 break;
             
-            case 9:
-                manageUser();
+            case 10:
+                personalCollectionHandler();
                 break;
 
         }
