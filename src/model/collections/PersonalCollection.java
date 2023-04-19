@@ -10,25 +10,17 @@ import src.model.collections.search.SearchByTitle;
 import src.model.collections.sort.SortByTitle;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
-import src.model.comics.ComicDeserializer;
 import src.model.collections.editComic.EditStrategy;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Queue;
-import java.util.TreeMap;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class PersonalCollection implements ComicCollection {
 
-    @JsonProperty("collection")
-    @JsonDeserialize(using = ComicDeserializer.class)
-    private Map<Integer, Comic> collection;
+    @JsonProperty("collection") private ArrayList<Comic> collection;
     @JsonProperty("name") private String name;
     @JsonProperty("numberOfIssues") private int numberOfIssues;
     @JsonProperty("value") private double value;
@@ -38,7 +30,7 @@ public class PersonalCollection implements ComicCollection {
     private DecoratorStrategy decoratorStrategy;
 
     public PersonalCollection(String name) {
-        collection = new TreeMap<>();
+        collection = new ArrayList<>();
         this.name = name;
 
         //default s4trategies are searching and sorting by title
@@ -50,30 +42,13 @@ public class PersonalCollection implements ComicCollection {
     }
 
     @JsonCreator
-    public PersonalCollection(@JsonProperty("collection") Map<Integer, Comic> collection, @JsonProperty("name") String name,
+    public PersonalCollection(@JsonProperty("collection")ArrayList<Comic> collection, @JsonProperty("name") String name,
     @JsonProperty("numberOfIssues") int numberOfIssues, @JsonProperty("value") double value){
         this.collection = collection;
         this.name = name;
         this.numberOfIssues = numberOfIssues;
         this.value = value;
     }
-
-    public ObjectNode toJson() {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode collectionNode = mapper.createObjectNode();
-        collectionNode.put("name", name);
-        collectionNode.put("numberOfIssues", numberOfIssues);
-        collectionNode.put("value", value);
-
-        ObjectNode issuesNode = mapper.createObjectNode();
-        for (Map.Entry<Integer, Comic> entry : collection.entrySet()) {
-            issuesNode.set(entry.getKey().toString(), ((PersonalCollection) entry.getValue()).toJson());
-        }
-        collectionNode.set("collection", issuesNode);
-
-        return collectionNode;
-    }
-
 
     /**
      * Adds a comic to the collection and increments the number of issues
@@ -82,8 +57,9 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public void addComic(Comic comic) {
-        if (!collection.containsKey(comic.getId())) {
-            collection.put(comic.getId(), comic);
+        if (!collection.contains(comic.getId())) {
+            collection.set(comic.getId(), comic);
+            //collection.replace(comic.getId(), comic);
             numberOfIssues++;
         } else {
             System.out.println("Comic is already in collection\n");
@@ -97,8 +73,8 @@ public class PersonalCollection implements ComicCollection {
      */
     public void addComic(Queue<String> attributes) {
         Comic comic = new ComicBook(attributes);
-        if (!collection.containsKey(comic.getId())) {
-            collection.put(comic.getId(), comic);
+        if (!collection.contains(comic.getId())) {
+            collection.set(comic.getId(), comic);
             numberOfIssues++;
         } else {
             System.out.println("Comic is already in collection\n");
@@ -127,7 +103,7 @@ public class PersonalCollection implements ComicCollection {
             int key = comic.getId();
             comic = collection.get(key);
             comic = new GradedComic(comic, grade);
-            collection.replace(key, comic);
+            collection.set(key, comic);
             return comic;
         } catch (Exception e) {
             System.out.println("Error: comic is not in this collection.");
@@ -152,7 +128,7 @@ public class PersonalCollection implements ComicCollection {
             int key = comic.getId();
             comic = collection.get(key);
             comic = decoratorStrategy.decorate(comic);
-            collection.replace(key, comic);
+            collection.set(key, comic);
             return comic;
         } catch (Exception e) {
             System.out.println("Error: comic is not in this collection.");
@@ -173,7 +149,7 @@ public class PersonalCollection implements ComicCollection {
      * @param attribute - the new attribute being added or modified
      */
     public void editComic(Comic comic, String attribute) {
-        collection.replace(comic.getId(), editStrategy.edit(comic, attribute));
+        collection.set(comic.getId(), editStrategy.edit(comic, attribute));
     }
 
     /**
@@ -236,7 +212,7 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public ArrayList<Comic> getCollection() {
-        return new ArrayList<>(collection.values());
+        return collection;
     }
 
     /**
@@ -252,17 +228,17 @@ public class PersonalCollection implements ComicCollection {
      * Calculates and returns the value of the entire collection
      * @return - added value of all comics in collection
      */
-    public double getValue() {
-        this.value = 0;
+    // public double getValue() {
+    //     this.value = 0;
 
-        for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
-            //how's that for a weird looking call. comicEntry.getValue() gets the comic
-            //comicEntry.getValue().getValue() gets the value of the comic
-            value = value + comicEntry.getValue().getValue();
-        }
+    //     for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
+    //         //how's that for a weird looking call. comicEntry.getValue() gets the comic
+    //         //comicEntry.getValue().getValue() gets the value of the comic
+    //         value = value + comicEntry.getValue().getValue();
+    //     }
 
-        return value;
-    }
+    //     return value;
+    // }
 
     @Override
     public Comic getComic(int id) {

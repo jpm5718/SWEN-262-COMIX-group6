@@ -10,31 +10,41 @@ import src.model.comics.ComicBook;
 import src.model.comics.Creators;
 import src.model.comics.Publisher;
 import src.model.users.User;
+import src.persistance.UserFileDAO;
 
 public class PTUI {
-    private static ObjectMapper mapper = new ObjectMapper(); 
-    private static String filename = "data/test.json";
+    // ObjectMapper mapper = new ObjectMapper(); 
+    // String filename = "data/test.json";
 
-    static PersonalCollection pc = new PersonalCollection("testPersonalCollection");
-    static User testuser = new User("username", "password", pc);
+    // public void saveToJson(){
+    //     try{
+    //         mapper.writeValue(new File(filename), testuser);     
+    //     } catch(IOException e){System.out.println(e.getMessage());}
+    // }
 
-    public static void saveToJson(){
-        try{
-            mapper.writeValue(new File(filename), testuser);     
-        } catch(IOException e){System.out.println(e.getMessage());}
-    }
-
-    public static void loadFromJson(){
-        try{
-            User readInUser = mapper.readValue(new File(filename), User.class);
-            System.out.println(readInUser.getUsername());
-        } catch(IOException e){System.out.println(e.getMessage());}
-    }
-
+    // public void loadFromJson(){
+    //     try{
+    //         User[] readInUsers = mapper.readValue(new File(filename), User[].class);
+    //         System.out.println(readInUsers[0].getUsername());
+    //     } catch(IOException e){System.out.println(e.getMessage());}
+    // }
+ 
     
     public static void main(String[] args) throws Exception {
-        pc.addComic(new ComicBook("series", "1", "title", "decs", "date1", "format",
-            "date2", new Publisher("pub"), new Creators("creators"), 0, 0));
-        saveToJson();
+        UserFileDAO dao = new UserFileDAO("data/test.json", new ObjectMapper());
+
+        PersonalCollection pc = new PersonalCollection("jamesCollection");
+        PersonalCollection pc2 = new PersonalCollection("danCollection");
+
+        User user1 = new User("james", "james", pc);
+        User user2 = new User("dan", "dan", pc2);
+
+        dao.addUser(user1);
+        dao.addUser(user2);
+
+        User[] users = dao.getUsers();
+        for(User u : users){
+            System.out.println(u.getCollection().getName());
+        }
     }
 }

@@ -16,13 +16,13 @@ import java.util.TreeMap;
 
 public class DatabaseCollection implements ComicCollection{
 
-    private Map<Integer, Comic> collection;
+    private ArrayList<Comic> collection;
     private SearchStrategy searchStrategy;
     private SortStrategy sortStrategy;
     private int numberOfIssues;
 
     public DatabaseCollection() {
-        collection = new TreeMap<>();
+        collection = new ArrayList<>();
 
         //default strategies are searching and sorting by title
         searchStrategy = new SearchByTitle();
@@ -32,7 +32,7 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public void addComic(Comic comic) {
-        collection.put(comic.getId(), comic);
+        collection.set(comic.getId(), comic);
         numberOfIssues++;
     }
 
@@ -56,7 +56,7 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public ArrayList<Comic> getCollection() {
-        return new ArrayList<>(collection.values());
+        return collection;
     }
 
     @Override

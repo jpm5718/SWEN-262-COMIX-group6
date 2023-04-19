@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class SearchByVarDesc implements SearchStrategy {
     @Override
-    public ArrayList<Comic> search(Map<Integer, Comic> collection, String term, boolean exactMatch) {
+    public ArrayList<Comic> search(ArrayList<Comic> collection, String term, boolean exactMatch) {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
