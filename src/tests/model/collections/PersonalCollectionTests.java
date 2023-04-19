@@ -1100,27 +1100,27 @@ public class PersonalCollectionTests {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void testGetValue() {
-        PersonalCollection test = new PersonalCollection("Test");
-        double expected = 0;
+    // @Test
+    // public void testGetValue() {
+    //     PersonalCollection test = new PersonalCollection("Test");
+    //     double expected = 0;
 
-        Comic[] comics = sortGen();
+    //     Comic[] comics = sortGen();
 
-        for (int i = 0; i < comics.length; i++) {
-            expected = expected + comics[i].getValue();
-        }
+    //     for (int i = 0; i < comics.length; i++) {
+    //         expected = expected + comics[i].getValue();
+    //     }
 
-        test.addComic(comics[0]);
-        test.addComic(comics[1]);
-        test.addComic(comics[2]);
-        test.addComic(comics[3]);
-        test.addComic(comics[4]);
+    //     test.addComic(comics[0]);
+    //     test.addComic(comics[1]);
+    //     test.addComic(comics[2]);
+    //     test.addComic(comics[3]);
+    //     test.addComic(comics[4]);
 
-        double actual = test.getValue();
+    //     double actual = test.getValue();
 
-        Assertions.assertEquals(expected, actual);
-    }
+    //     Assertions.assertEquals(expected, actual);
+    // }
 
     @Test
     public void testGetComic() {

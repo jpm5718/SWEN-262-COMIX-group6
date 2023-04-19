@@ -8,7 +8,6 @@ package src.model.collections.search;
 import src.model.comics.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchByComicType implements SearchStrategy {
 
@@ -16,7 +15,7 @@ public class SearchByComicType implements SearchStrategy {
     public ArrayList<Comic> search(ArrayList<Comic> collection, String term, boolean exactMatch) {
         ArrayList<Comic> results = new ArrayList<>();
 
-        for (Comic comic : collection.values()) {
+        for (Comic comic : collection) {
             switch (term.toLowerCase()) {
                 case "slabbed":
                     if ((comic instanceof SlabbedComic)) {

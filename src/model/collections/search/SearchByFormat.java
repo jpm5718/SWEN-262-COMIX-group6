@@ -8,7 +8,6 @@ package src.model.collections.search;
 import src.model.comics.Comic;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchByFormat implements SearchStrategy {
 
@@ -17,13 +16,13 @@ public class SearchByFormat implements SearchStrategy {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getFormat().equals(term)) {
                     results.add(comic);
                 }
             }
         } else {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getFormat().contains(term)) {
                     results.add(comic);
                 }

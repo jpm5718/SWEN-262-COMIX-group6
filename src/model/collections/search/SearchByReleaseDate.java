@@ -8,7 +8,6 @@ package src.model.collections.search;
 import src.model.comics.Comic;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchByReleaseDate implements SearchStrategy {
 
@@ -17,13 +16,13 @@ public class SearchByReleaseDate implements SearchStrategy {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getReleaseDate().equals(term)) {
                     results.add(comic);
                 }
             }
         } else {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getReleaseDate().contains(term)) {
                     results.add(comic);
                 }

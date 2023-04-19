@@ -9,7 +9,6 @@ import src.model.comics.Comic;
 import src.model.comics.Creators;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class SearchByCreators implements SearchStrategy {
@@ -19,7 +18,7 @@ public class SearchByCreators implements SearchStrategy {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 Creators creators = comic.getCreators();
                 for (String creator : creators.getCreators()) {
                     if (creator.equals(term)) {
@@ -28,7 +27,7 @@ public class SearchByCreators implements SearchStrategy {
                 }
             }
         } else {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 Creators creators = comic.getCreators();
                 for (String creator : creators.getCreators()) {
                     if (creator.contains(term)) {

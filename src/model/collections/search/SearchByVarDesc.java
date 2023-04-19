@@ -8,7 +8,6 @@ package src.model.collections.search;
 import src.model.comics.Comic;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchByVarDesc implements SearchStrategy {
     @Override
@@ -16,13 +15,13 @@ public class SearchByVarDesc implements SearchStrategy {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getVarDesc().equals(term)) {
                     results.add(comic);
                 }
             }
         } else {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getVarDesc().contains(term)) {
                     results.add(comic);
                 }

@@ -7,7 +7,6 @@ package src.model.collections.search;
 import src.model.comics.Comic;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SearchByPublisher implements SearchStrategy {
     @Override
@@ -15,13 +14,13 @@ public class SearchByPublisher implements SearchStrategy {
         ArrayList<Comic> results = new ArrayList<>();
 
         if (exactMatch) {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getPublisher().equals(term)) {
                     results.add(comic);
                 }
             }
         } else {
-            for (Comic comic : collection.values()) {
+            for (Comic comic : collection) {
                 if (comic.getPublisher().contains(term)) {
                     results.add(comic);
                 }
