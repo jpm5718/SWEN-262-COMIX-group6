@@ -3,10 +3,45 @@
         "username": "james",
         "password": "james",
         "personalCollection": {
-            "collection": [],
+            "collection": [
+                {
+                    "series": "series",
+                    "issue": "issue",
+                    "title": "titel",
+                    "varDesc": "desc",
+                    "releaseDate": "egrev",
+                    "format": "orih",
+                    "dateAdded": "comic",
+                    "publisher": "today",
+                    "creators": {
+                        "creators": [
+                            "creators"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 1
+                },
+                {
+                    "series": "kgergvrweb",
+                    "issue": "werbw4gv",
+                    "title": "ewrgwev",
+                    "varDesc": "wergverv",
+                    "releaseDate": "wergv",
+                    "format": "wegrw",
+                    "dateAdded": "wergewrg",
+                    "publisher": "wergv",
+                    "creators": {
+                        "creators": [
+                            "werg"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 2
+                }
+            ],
             "name": "JamesCollection",
-            "numberOfIssues": 0,
-            "value": 0.0
+            "numberOfIssues": 2,
+            "value": 19.98
         }
     }
 ]

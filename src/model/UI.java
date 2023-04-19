@@ -100,7 +100,7 @@ public class UI {
         int choice = scan.nextInt();
         switch (choice) {
             // close out of program
-            case -1: dao.save();
+            case -1: 
                 System.exit(0);
                     break;
 
@@ -198,6 +198,7 @@ public class UI {
                     // Command addComicCommand = new AddComic(newcomic, currenentCollection);
                     // addComicCommand.execute();
                     // commandsToUndo.add(addComicCommand);
+                    dao.save();
                     System.out.println("Comic has been added to " + currenentCollection.getName());
                     break;
             case 2:
