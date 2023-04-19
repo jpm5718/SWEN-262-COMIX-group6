@@ -57,13 +57,14 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public void addComic(Comic comic) {
-        if (!collection.contains(comic.getId())) {
-            collection.set(comic.getId(), comic);
-            //collection.replace(comic.getId(), comic);
-            numberOfIssues++;
-        } else {
-            System.out.println("Comic is already in collection\n");
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                System.out.println("Error: Comic is already in collection\n");
+                return;
+            }
         }
+        collection.add(comic);
+        numberOfIssues++;
     }
 
     /**
@@ -73,15 +74,14 @@ public class PersonalCollection implements ComicCollection {
      */
     public void addComic(Queue<String> attributes) {
         Comic comic = new ComicBook(attributes);
-        System.out.println();
-        for(Comic c : collection){
-            if(c.getId() == comic.getId()){
-                System.out.println("Comic is already in collection!");
-            } else{
-                collection.add(comic);
-                numberOfIssues++;
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                System.out.println("Error: Comic is already in collection\n");
+                return;
             }
         }
+        collection.add(comic);
+        numberOfIssues++;
     }
 
     /**
@@ -91,8 +91,14 @@ public class PersonalCollection implements ComicCollection {
      * @param comic - comic being removed
      */
     public void removeComic(Comic comic) {
-        collection.remove(comic.getId());
-        numberOfIssues--;
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                collection.remove(collComic);
+                numberOfIssues--;
+                return;
+            }
+        }
+        System.out.println("Error: comic is not in this collection.");
     }
 
     /**
@@ -102,16 +108,16 @@ public class PersonalCollection implements ComicCollection {
      * @param grade - the grade applied to the comic
      */
     public Comic gradeComic(Comic comic, int grade) {
-        try {
-            int key = comic.getId();
-            comic = collection.get(key);
-            comic = new GradedComic(comic, grade);
-            collection.set(key, comic);
-            return comic;
-        } catch (Exception e) {
-            System.out.println("Error: comic is not in this collection.");
-            return null;
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                int index = collection.indexOf(collComic);
+                comic = new GradedComic(comic, grade);
+                collection.set(index, comic);
+                return comic;
+            }
         }
+        System.out.println("Error: comic is not in this collection.");
+        return null;
     }
 
     /**
@@ -127,17 +133,19 @@ public class PersonalCollection implements ComicCollection {
      * @param comic - comic being decorated
      */
     public Comic decorateComic(Comic comic) {
-        try {
-            int key = comic.getId();
-            comic = collection.get(key);
-            comic = decoratorStrategy.decorate(comic);
-            collection.set(key, comic);
-            return comic;
-        } catch (Exception e) {
-            System.out.println("Error: comic is not in this collection.");
-            return null;
+
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                int index = collection.indexOf(collComic);
+                comic = decoratorStrategy.decorate(comic);
+                collection.set(index, comic);
+                return comic;
+            }
         }
+        System.out.println("Error: comic is not in this collection.");
+        return null;
     }
+
     /**
      * Sets the algorithm for editing a comic in the collection
      * @param editStrategy - concrete strategy
@@ -152,7 +160,15 @@ public class PersonalCollection implements ComicCollection {
      * @param attribute - the new attribute being added or modified
      */
     public void editComic(Comic comic, String attribute) {
-        collection.set(comic.getId(), editStrategy.edit(comic, attribute));
+        for (Comic collComic : collection) {
+            if (comic.getId() == collComic.getId()) {
+                int index = collection.indexOf(collComic);
+                comic = editStrategy.edit(comic, attribute);
+                collection.set(index, comic);
+                return;
+            }
+        }
+        System.out.println("Error: comic is not in this collection.");
     }
 
     /**
@@ -185,12 +201,21 @@ public class PersonalCollection implements ComicCollection {
     }
 
     /**
-     * Sorts the collection according to the chosen algorithm
+     * Sorts the collection (can be a search reduced collection) according to the chosen algorithm
      * @return
      */
     @Override
     public ArrayList<Comic> sort(ArrayList<Comic> comics) {
         return sortStrategy.sort(comics);
+    }
+
+    /**
+     * Sorts the entire collection according to the chosen algorithm
+     * @return
+     */
+    @Override
+    public ArrayList<Comic> sort() {
+        return sortStrategy.sort(collection);
     }
 
     /**
@@ -231,20 +256,22 @@ public class PersonalCollection implements ComicCollection {
      * Calculates and returns the value of the entire collection
      * @return - added value of all comics in collection
      */
-    // public double getValue() {
-    //     this.value = 0;
-
-    //     for (Map.Entry<Integer, Comic> comicEntry : collection.entrySet()) {
-    //         //how's that for a weird looking call. comicEntry.getValue() gets the comic
-    //         //comicEntry.getValue().getValue() gets the value of the comic
-    //         value = value + comicEntry.getValue().getValue();
-    //     }
-
-    //     return value;
-    // }
+    public double getValue() {
+        this.value = 0;
+        for (Comic comic : collection) {
+            value = value + comic.getValue();
+        }
+        return value;
+    }
 
     @Override
     public Comic getComic(int id) {
-        return collection.get(id);
+        for (Comic comic : collection) {
+            if (comic.getId() == id) {
+                return comic;
+            }
+        }
+        System.out.println("Error: comic is not in this collection.");
+        return null;
     }
 }

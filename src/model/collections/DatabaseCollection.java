@@ -11,8 +11,6 @@ import src.model.collections.sort.SortStrategy;
 import src.model.comics.Comic;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class DatabaseCollection implements ComicCollection{
 
@@ -32,7 +30,7 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public void addComic(Comic comic) {
-        collection.set(comic.getId(), comic);
+        collection.add(comic);
         numberOfIssues++;
     }
 
@@ -55,6 +53,11 @@ public class DatabaseCollection implements ComicCollection{
     public ArrayList<Comic> sort(ArrayList<Comic> comics) { return sortStrategy.sort(comics); }
 
     @Override
+    public ArrayList<Comic> sort() {
+        return sortStrategy.sort(collection);
+    }
+
+    @Override
     public ArrayList<Comic> getCollection() {
         return collection;
     }
@@ -67,6 +70,12 @@ public class DatabaseCollection implements ComicCollection{
 
     @Override
     public Comic getComic(int id) {
-        return collection.get(id);
+        for (Comic comic : collection) {
+            if (comic.getId() == id) {
+                return comic;
+            }
+        }
+        System.out.println("Error: comic is not in this collection.");
+        return null;
     }
 }
