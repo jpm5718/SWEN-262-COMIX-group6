@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import src.model.collections.DatabaseCollection;
-import src.model.collections.exportComic.CSVExport;
 import src.model.collections.exportComic.Export;
+import src.model.collections.exportComic.JSONExport;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
-
-public class CSVExportTest {
+public class JSONExportTest {
     @Test
     public void testExport() throws IOException {
          DatabaseCollection test = new DatabaseCollection();
@@ -33,8 +32,7 @@ public class CSVExportTest {
              Comic comic = new ComicBook(attributes);
              test.addComic(comic);
          }
-
-         Export testExport = new CSVExport("test");
+         Export testExport = new JSONExport("test2");
          testExport.exportCollection(test);
     }
 }
