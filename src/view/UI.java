@@ -120,74 +120,74 @@ public class UI {
             case 1:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByComicType());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByComicType());
+                results = collection.search(input, false);
                 break;
             case 2:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByCreators());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByCreators());
+                results = collection.search(input, false);
                 break;
             case 3:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByDateAdded());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByDateAdded());
+                results = collection.search(input, false);
                 break;
             case 4:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByFormat());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByFormat());
+                results = collection.search(input, false);
                 break;
             case 5:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByGaps());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByGaps());
+                results = collection.search(input, false);
                 break;
             case 6:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByIssue());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByIssue());
+                results = collection.search(input, false);
                 break;
             case 7:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByPublisher());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByPublisher());
+                results = collection.search(input, false);
                 break;
             case 8:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByReleaseDate());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByReleaseDate());
+                results = collection.search(input, false);
                 break;
             case 9:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByRuns());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByRuns());
+                results = collection.search(input, false);
                 break;
             case 10:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchBySeries());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchBySeries());
+                results = collection.search(input, false);
                 break;
             case 11:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByTitle());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByTitle());
+                results = collection.search(input, false);
                 break;
             case 12:
                 System.out.print("Search Term: ");
                 input = scan.nextLine();
-                database.setSearchStrategy(new SearchByVarDesc());
-                results = database.search(input, false);
+                collection.setSearchStrategy(new SearchByVarDesc());
+                results = collection.search(input, false);
                 break;
         }
         for (Comic comic : results) {
@@ -209,7 +209,7 @@ public class UI {
     public static void manageUser(){
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
-                "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
+                "\n\t2) INSERT" +
                 "\n\n\t0) Return to Main Screen" +
                 "\n\t-1) Quit");
         int choice = scanner.nextInt();
@@ -256,15 +256,35 @@ public class UI {
         }
     }
 
+    public static void addFromDatabaseHandler() {
+        System.out.println("Enter a Comic ID from below to add to your collection:");
+        for (Comic comic : database.getCollection()) {
+            System.out.println("Series: " + comic.getSeries());
+            System.out.println("Issue Number: " + comic.getIssue());
+            System.out.println("Story Title: " + comic.getSeries());
+            System.out.println("ID: " + comic.getId());            
+        }
+        System.out.print("ID of Comic to add: ");
+        int input = scan.nextInt();
+        Comic choice = database.getComic(input);
+        Command addComicCommand = new AddComic(choice, currentUser.getCollection());
+        addComicCommand.execute();
+        commandsToUndo.add(addComicCommand);
+        System.out.println(choice.getTitle() + " has been added to " + currentUser.getCollection().getName());
+        ComicBookHandler();
+    }
+
     public static void ComicBookHandler() {
         System.out.println("Choose one of the following actions:" +
-                "\n\t1) Add a Comic Book to One of Your Personal Collections (manually)" +
-                "\n\t2) Grade a Comic That is in Your Collection" +
-                "\n\t3) Slab a Comic" +
-                "\n\t4) Sign a Comic" +
-                "\n\t5) Authenticate a Comic" +
-                "\n\t6) Undo Action" +
-                "\n\t7) Redo Action");
+                "\n\t1) Add a Comic Book to Your Personal Collection (manually)" +
+                "\n\t2) Add a Comic Book to Your Personal Collection (from database)" +
+                "\n\t3) Grade a Comic That is in Your Collection" +
+                "\n\t4) Slab a Comic" +
+                "\n\t5) Sign a Comic" +
+                "\n\t6) Authenticate a Comic" +
+                "\n\t7) Undo Action" +
+                "\n\t8) Redo Action" +
+                "\n\t9) Go Back");
         int choice = scanner.nextInt();
         switch (choice) {
             // add a comic manually to a collection
@@ -314,33 +334,58 @@ public class UI {
                     commandsToUndo.add(addComicCommand);
                     System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
                     break;
-
             case 2:
+                addFromDatabaseHandler();
+                break;
+
+            case 3:
                 System.out.println("What is the comic you would like to grade?");
                 // Comic comic = new ComicBook();
                 // System.out.println("What is the grade of the comic?");
                 // String s = scanner.nextLine();
                 // int grade = Integer.parseInt(s);
                 // collection.gradeComic(comic, grade);
-                // break;
+                break;
 
-            case 3:
+            case 4:
                 System.out.println("What comic are you slabbing?");
                 // DecoratorStrategy slab = new SlabStrategy();
                 // collection.setDecoratorStrategy(slab);
                 // slab.decorate(comic);
-
+                break;
+            
+            case 5:
+                System.out.println("What comic are you slabbing?");
+                // DecoratorStrategy slab = new SlabStrategy();
+                // collection.setDecoratorStrategy(slab);
+                // slab.decorate(comic);
+                break;
+            
             case 6:
+                System.out.println("What comic are you slabbing?");
+                // DecoratorStrategy slab = new SlabStrategy();
+                // collection.setDecoratorStrategy(slab);
+                // slab.decorate(comic);
+                break;
+
+            case 7:
                 Command undoCommand = commandsToUndo.pop();
                 undoCommand.undo();
                 commandsToRedo.add(undoCommand);
+                break;
 
-            case 7:
+            case 8:
                 Command redoCommand = commandsToRedo.pop();
                 redoCommand.redo();
                 commandsToUndo.add(redoCommand);
+                break;
+            
+            case 9:
+                manageUser();
+                break;
 
         }
+        ComicBookHandler();
     }
 
     public static void manageStart() {
