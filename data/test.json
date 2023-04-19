@@ -1,0 +1,28 @@
+{
+    "username": "username",
+    "password": "password",
+    "personalCollection": {
+        "collection": [
+            {
+                "series": "series",
+                "issue": "1",
+                "title": "title",
+                "varDesc": "decs",
+                "releaseDate": "date1",
+                "format": "format",
+                "dateAdded": "date2",
+                "publisher": "pub",
+                "creators": {
+                    "creators": [
+                        "creators"
+                    ]
+                },
+                "value": 0.0,
+                "id": 0
+            }
+        ],
+        "name": "testPersonalCollection",
+        "numberOfIssues": 1,
+        "value": 0.0
+    }
+}
