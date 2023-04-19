@@ -187,7 +187,7 @@ public class PersonalCollectionTests {
 
         Comic comic1 = new ComicBook(attributes);
         test.addComic(comic1);
-        test.gradeComic(comic1, 8);
+        test.gradeComic(comic1.getId(), 8);
 
         double expected = (Math.log10(8) * 9.99);
         double actual = test.getComic(comic1.getId()).getValue();
@@ -214,12 +214,13 @@ public class PersonalCollectionTests {
         test.addComic(comic1);
 
         test.setDecoratorStrategy(new SignStrategy());
-        test.decorateComic(comic1);
+        test.decorateComic(comic1.getId());
         double expected = (9.99 * 1.05);
         double actual = test.getComic(comic1.getId()).getValue();
         Assertions.assertEquals(expected, actual);
+        System.out.println(actual);
 
-        test.decorateComic(comic1);
+        test.decorateComic(comic1.getId());
         expected = (expected * 1.05);
         actual = test.getComic(comic1.getId()).getValue();
         Assertions.assertEquals(expected, actual);
@@ -275,7 +276,7 @@ public class PersonalCollectionTests {
             test.addComic(comic);
 
             if (i % 4 == 0) {
-                test.gradeComic(comic, i);
+                test.gradeComic(comic.getId(), i);
                 expected.add(comic);
             }
         }

@@ -19,10 +19,14 @@ public class SortByReleaseDate implements SortStrategy {
             comicsArr[i] = comics.get(i);
         }
 
-        insertionSort(comicsArr, comicsArr.length - 1);
+        insertionSort(comicsArr, comicsArr.length);
 
         ArrayList<Comic> sorted = new ArrayList<>();
         Collections.addAll(sorted, comicsArr);
+
+        for (int i = 0; i < comicsArr.length; i++) {
+            System.out.println("\n" + comicsArr[i].getReleaseDate());
+        }
         
         return sorted;
     }
@@ -38,7 +42,7 @@ public class SortByReleaseDate implements SortStrategy {
         Comic last = comicsArr[n - 1];
         int j = n - 2;
 
-        while (j >= 0 && comicsArr[j].getReleaseDate().compareTo(last.getReleaseDate()) > 1) {
+        while (j >= 0 && comicsArr[j].getReleaseDate().compareTo(last.getReleaseDate()) > 0) {
             comicsArr[j + 1] = comicsArr[j];
             j--;
         }

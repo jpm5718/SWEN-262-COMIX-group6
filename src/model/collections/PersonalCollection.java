@@ -107,10 +107,10 @@ public class PersonalCollection implements ComicCollection {
      * @param comic - comic being graded
      * @param grade - the grade applied to the comic
      */
-    public Comic gradeComic(Comic comic, int grade) {
-        for (Comic collComic : collection) {
-            if (comic.getId() == collComic.getId()) {
-                int index = collection.indexOf(collComic);
+    public Comic gradeComic(int id, int grade) {
+        for (Comic comic : collection) {
+            if (id == comic.getId()) {
+                int index = collection.indexOf(comic);
                 comic = new GradedComic(comic, grade);
                 collection.set(index, comic);
                 return comic;
@@ -132,11 +132,10 @@ public class PersonalCollection implements ComicCollection {
      * Slabs, signs, or authenticates a comic based on the selected strategy
      * @param comic - comic being decorated
      */
-    public Comic decorateComic(Comic comic) {
-
-        for (Comic collComic : collection) {
-            if (comic.getId() == collComic.getId()) {
-                int index = collection.indexOf(collComic);
+    public Comic decorateComic(int id) {
+        for (Comic comic : collection) {
+            if (id == comic.getId()) {
+                int index = collection.indexOf(comic);
                 comic = decoratorStrategy.decorate(comic);
                 collection.set(index, comic);
                 return comic;
