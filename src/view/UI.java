@@ -11,6 +11,14 @@ import java.util.Stack;
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
+import src.model.collections.editComic.CreatorsEditor;
+import src.model.collections.editComic.DateAddedEditor;
+import src.model.collections.editComic.EditPublisher;
+import src.model.collections.editComic.FormatEditor;
+import src.model.collections.editComic.IssueEditor;
+import src.model.collections.editComic.ReleaseDateEditor;
+import src.model.collections.editComic.SeriesEditor;
+import src.model.collections.editComic.VarDescEditor;
 import src.model.collections.search.SearchByComicType;
 import src.model.collections.search.SearchByCreators;
 import src.model.collections.search.SearchByDateAdded;
@@ -197,6 +205,7 @@ public class UI {
         }
         for (Comic comic : results) {
             System.out.println(comic.getTitle());
+            System.out.println();
         }
     }
 
@@ -216,7 +225,7 @@ public class UI {
     public static void manageUser(){
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
-                "\n\t2) INSERT" +
+                "\n\t2) Search Database" +
                 "\n\t3) Logout" +
                 "\n\t4) Quit");
         int choice = scanner.nextInt();
@@ -226,16 +235,23 @@ public class UI {
                 try {
                     personalCollectionHandler();
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+
                 }
                 break;
-            
+            case 2:
+                searchCollectionHandler(database);
+                manageUser();
+                break;
             case 3:
                 currentUser = null;
                 guest = true;
                 loggedIn = false;
                 manageStart();
+                break;
+            case 4:
+                System.out.println("Goodbye!");
+                System.exit(0);
+                break;
 
         }
     }
@@ -267,6 +283,52 @@ public class UI {
                 ComicBookHandler();
                 break;
         }
+    }
+
+    public static void addManuallyHandler() {
+        PersonalCollection collection = currentUser.getCollection();
+
+                    // get comic book info
+                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
+                    String series = scanner.nextLine();
+                    System.out.println("And the issue number?");
+                    String issue = scanner.nextLine();
+                    System.out.println("What is the full title?");
+                    String title = scanner.nextLine();
+                    System.out.println("What is the description of the comic?");
+                    String vardesc = scanner.nextLine();
+                    System.out.println("Who is the publisher of the book?");
+                    String publisher = scanner.nextLine();
+                    System.out.println("When was it released (Month, (day), Year)?");
+                    String releasedate = scanner.nextLine();
+                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
+                    String format = scanner.nextLine();
+                    System.out.println("What is today's date (to keep track of date added)?");
+                    String dateadded = scanner.nextLine();
+                    System.out.println("Who are the creators of the comic book?");
+                    String creators = scanner.nextLine();
+
+                    // create queue to pass thru constructor
+                    Queue<String> data = new LinkedList<>();
+                    data.add(series);
+                    data.add(issue);
+                    data.add(title);
+                    data.add(vardesc);
+                    data.add(publisher);
+                    data.add(releasedate);
+                    data.add(format);
+                    data.add(dateadded);
+                    data.add(creators);
+                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
+                                                                    // calculated
+                    data.add(String.valueOf(++currentnum));
+
+                    // create new comic and add it
+                    Comic newcomic = new ComicBook(data);
+                    Command addComicCommand = new AddComic(newcomic, collection);
+                    addComicCommand.execute();
+                    commandsToUndo.add(addComicCommand);
+                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
     }
 
     public static void addFromDatabaseHandler() {
@@ -302,6 +364,61 @@ public class UI {
         Command removeComicCommand = new RemoveComic(choice, currentUser.getCollection());
         removeComicCommand.execute();
         commandsToUndo.add(removeComicCommand);
+    }
+
+    public static void editComicHandler() {
+        PersonalCollection collection = currentUser.getCollection();
+        System.out.println("Enter a Comic ID from below to edit from your collection:");
+        for (Comic comic : currentUser.getCollection().getCollection()) {
+            System.out.println();
+            System.out.println("Series: " + comic.getSeries());
+            System.out.println("Issue Number: " + comic.getIssue());
+            System.out.println("Story Title: " + comic.getSeries());
+            System.out.println("ID: " + comic.getId());            
+        }
+        System.out.print("ID of Comic to edit: ");
+        int input = scan.nextInt();
+        Comic choice = currentUser.getCollection().getComic(input);
+        System.out.println("Which field of the Comic would you like to modify? " +
+            "\n\t1) Creators" +
+            "\n\t2) Date Added" +
+            "\n\t3) Publisher" +
+            "\n\t4) Format" +
+            "\n\t5) Issue" +
+            "\n\t6) Release Date" +
+            "\n\t7) Series" +
+            "\n\t8) Description");
+        input = scan.nextInt();
+        switch (input) {
+            case 1:
+                collection.setEditStrategy(new CreatorsEditor());
+                break;
+            case 2:
+                collection.setEditStrategy(new DateAddedEditor());
+                break;
+            case 3:
+                collection.setEditStrategy(new EditPublisher());
+                break;
+            case 4:
+                collection.setEditStrategy(new FormatEditor());
+                break;
+            case 5:
+                collection.setEditStrategy(new IssueEditor());
+                break;
+            case 6:
+                collection.setEditStrategy(new ReleaseDateEditor());
+                break;
+            case 7:
+                collection.setEditStrategy(new SeriesEditor());
+                break;
+            case 8:
+                collection.setEditStrategy(new VarDescEditor());
+                break; 
+        }
+
+        System.out.print("Replacement for field: ");
+        String line = scan.nextLine();
+        collection.editComic(choice, line);
     }
 
     public static void gradeComicHandler() {
@@ -391,62 +508,20 @@ public class UI {
                 "\n\t1) Add a Comic Book (manually)" +
                 "\n\t2) Add a Comic Book (from database)" +
                 "\n\t3) Remove a Comic" +
-                "\n\t4) Grade a Comic" +
-                "\n\t5) Slab a Comic" +
-                "\n\t6) Sign a Comic" +
-                "\n\t7) Authenticate a Comic" +
-                "\n\t8) Undo Action" +
-                "\n\t9) Redo Action" +
-                "\n\t10) Go Back");
+                "\n\t4) Edit a Comic" +
+                "\n\t5) Grade a Comic" +
+                "\n\t6) Slab a Comic" +
+                "\n\t7) Sign a Comic" +
+                "\n\t8) Authenticate a Comic" +
+                "\n\t9) Undo Action" +
+                "\n\t10) Redo Action" +
+                "\n\t11) Go Back");
         int choice = scanner.nextInt();
         switch (choice) {
             // add a comic manually to a collection
             case 1:
-                    PersonalCollection collection = currentUser.getCollection(); // gets right collection from
-                                                                                            // the users p.c. map
-
-                    // get comic book info
-                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
-                    String series = scanner.nextLine();
-                    System.out.println("And the issue number?");
-                    String issue = scanner.nextLine();
-                    System.out.println("What is the full title?");
-                    String title = scanner.nextLine();
-                    System.out.println("What is the description of the comic?");
-                    String vardesc = scanner.nextLine();
-                    System.out.println("Who is the publisher of the book?");
-                    String publisher = scanner.nextLine();
-                    System.out.println("When was it released (Month, (day), Year)?");
-                    String releasedate = scanner.nextLine();
-                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
-                    String format = scanner.nextLine();
-                    System.out.println("What is today's date (to keep track of date added)?");
-                    String dateadded = scanner.nextLine();
-                    System.out.println("Who are the creators of the comic book?");
-                    String creators = scanner.nextLine();
-
-                    // create queue to pass thru constructor
-                    Queue<String> data = new LinkedList<>();
-                    data.add(series);
-                    data.add(issue);
-                    data.add(title);
-                    data.add(vardesc);
-                    data.add(publisher);
-                    data.add(releasedate);
-                    data.add(format);
-                    data.add(dateadded);
-                    data.add(creators);
-                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                                    // calculated
-                    data.add(String.valueOf(++currentnum));
-
-                    // create new comic and add it
-                    Comic newcomic = new ComicBook(data);
-                    Command addComicCommand = new AddComic(newcomic, collection);
-                    addComicCommand.execute();
-                    commandsToUndo.add(addComicCommand);
-                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
-                    break;
+                addManuallyHandler();
+                break;
             case 2:
                 addFromDatabaseHandler();
                 break;
@@ -454,36 +529,40 @@ public class UI {
             case 3:
                 removeComicHandler();
                 break;
-
+            
             case 4:
-                gradeComicHandler();
+                editComicHandler();
                 break;
 
             case 5:
+                gradeComicHandler();
+                break;
+
+            case 6:
                 slabComicHandler();
                 break;
             
-            case 6:
+            case 7:
                 signComicHandler();
                 break;
             
-            case 7:
+            case 8:
                 authenticateComicHandler();
                 break;
 
-            case 8:
+            case 9:
                 Command undoCommand = commandsToUndo.pop();
                 undoCommand.undo();
                 commandsToRedo.add(undoCommand);
                 break;
 
-            case 9:
+            case 10:
                 Command redoCommand = commandsToRedo.pop();
                 redoCommand.redo();
                 commandsToUndo.add(redoCommand);
                 break;
             
-            case 10:
+            case 11:
                 personalCollectionHandler();
                 break;
 
@@ -498,13 +577,13 @@ public class UI {
             System.out.println("Error Loading");
         }
         System.out.println("Welcome to COMIX!!\n\nChoose a command\n\t1) Login\n\t2) Sign up\n\t3) Guest mode");
-        int command = scan.nextInt();
-        scan.nextLine(); // add this line to consume the newline character
+        String commandString = scan.nextLine();
+        int command = Integer.parseInt(commandString);
+        // scan.next(); // add this line to consume the newline character
         if (command == 1) {
             signIn();
         } else if (command == 2) {
             manageSignUp();
-        
         } else if (command == 3) {
             guest = true;
             manageGuest();
