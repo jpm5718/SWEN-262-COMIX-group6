@@ -25,6 +25,6 @@ public class GradeComic extends DecoratorCommand {
      */
     @Override
     protected void onExecute() {
-        decoratedComic = personalCollection.gradeComic(comic, grade);
+        decoratedComic = personalCollection.gradeComic(comic.getId(), grade);
     }
 }

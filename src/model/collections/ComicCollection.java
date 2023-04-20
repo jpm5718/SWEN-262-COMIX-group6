@@ -22,6 +22,8 @@ public interface ComicCollection {
 
     ArrayList<Comic> sort(ArrayList<Comic> comics);
 
+    ArrayList<Comic> sort();
+
     ArrayList<Comic> getCollection();
 
     int getNumberOfIssues();
