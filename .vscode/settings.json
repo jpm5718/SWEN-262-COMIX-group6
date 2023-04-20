@@ -30,7 +30,8 @@
         "dependencies/junit-platform-console-standalone-1.7.0-M1.jar",
         "dependencies/json-simple-1.1.jar",
         "dependencies/jBCrypt-0.4.3.jar",
-        "c:\\Users\\Anthony MacKay\\Desktop\\cs_swen\\Classes\\spring 2023\\sw_subsystems\\downloads\\javax.xml.bind.jar\\javax.xml.bind.jar",
-        "c:\\Users\\seitk\\Downloads\\javax.xml.bind.jar"
+        "dependencies/javax.xml.bind.jar",
+        "dependencies/jackson-dataformat-xml-2.15.0-rc3.jar",
+        "dependencies/stax2-api-4.2.1.jar"
     ]
 }

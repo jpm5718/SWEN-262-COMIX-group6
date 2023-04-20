@@ -19,7 +19,7 @@
 
 //     String filename;
 //     public ComicXmlAdapter(String filename) {
-//         this.filename = "data/" + filename + ".xml";
+//         this.filename = filename;
 //     }
 
 //     @Override
@@ -32,11 +32,12 @@
 //         } catch (Exception e) {
 //             e.printStackTrace();
 //         }
-
+   
 //     }
 
 //     @Override
-//     public ComicCollection importToFormat() throws Exception {
+//     public DatabaseCollection importToFormat() throws Exception {
+n
 //         try {
 //             JAXBContext context = JAXBContext.newInstance(ComicBook[].class);
 //             Unmarshaller unmarsh = context.createUnmarshaller();
