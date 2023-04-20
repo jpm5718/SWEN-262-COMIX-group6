@@ -8,19 +8,22 @@ package src.model.comics;
 import java.util.Objects;
 import java.util.Queue;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ComicBook implements Comic {
 
-    private String series;
-    private String issue;
-    private String title;
-    private String varDesc;
-    private String releaseDate;
-    private String format;
-    private String dateAdded;
-    private Publisher publisher;
-    private Creators creators;
-    private double value;
-    private final int id;
+    @JsonProperty("series") private String series;
+    @JsonProperty("issue") private String issue;
+    @JsonProperty("title") private String title;
+    @JsonProperty("varDesc") private String varDesc;
+    @JsonProperty("releaseDate") private String releaseDate;
+    @JsonProperty("format") private String format;
+    @JsonProperty("dateAdded") private String dateAdded;
+    @JsonProperty("publisher") private Publisher publisher;
+    @JsonProperty("creators") private Creators creators;
+    @JsonProperty("value") private double value;
+    @JsonProperty("id") private int id;
 
     public ComicBook(Queue<String> attributes) {
         series = attributes.poll();
@@ -36,6 +39,24 @@ public class ComicBook implements Comic {
         value = 9.99; //base value of comic (assumption)
     }
 
+    @JsonCreator
+    public ComicBook(@JsonProperty("series") String series, @JsonProperty("issue") String issue, @JsonProperty("title") String title,
+            @JsonProperty("varDesc") String varDesc, @JsonProperty("releaseDate") String releaseDate, @JsonProperty("format") String format,
+            @JsonProperty("dateAdded") String dateAdded, @JsonProperty("publisher") Publisher publisher, @JsonProperty("creators") Creators creators,
+            @JsonProperty("value") double value, @JsonProperty("id") int id) {
+        this.series = series;
+        this.issue = issue;
+        this.title = title;
+        this.varDesc = varDesc;
+        this.releaseDate = releaseDate;
+        this.format = format;
+        this.dateAdded = dateAdded;
+        this.publisher = publisher;
+        this.creators = creators;
+        this.value = value;
+        this.id = id;
+    }
+        
     @Override
     public String getSeries() { return series; }
 

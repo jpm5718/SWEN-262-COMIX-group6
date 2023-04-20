@@ -24,6 +24,6 @@ public class AuthenticateComic extends DecoratorCommand {
     @Override
     protected void onExecute() {
         personalCollection.setDecoratorStrategy(new AuthenticateStrategy());
-        decoratedComic = personalCollection.decorateComic(comic);
+        decoratedComic = personalCollection.decorateComic(comic.getId());
     }
 }

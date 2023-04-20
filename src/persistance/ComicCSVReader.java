@@ -31,7 +31,7 @@ public class ComicCSVReader {
         this.file = filename;
     }
 
-    ComicCollection database = new DatabaseCollection();
+    DatabaseCollection database = new DatabaseCollection();
 
     /**
      * Creates a csv reader that reads in data line by line, and creates a 
@@ -40,7 +40,7 @@ public class ComicCSVReader {
      * @return the comicbooks ArrayList
      * @throws Exception 
      */
-    public ComicCollection parseComics() throws Exception{
+    public DatabaseCollection parseComics() throws Exception{
         CSVReader reader = new CSVReader(new FileReader(file));  
         String[] line;
         

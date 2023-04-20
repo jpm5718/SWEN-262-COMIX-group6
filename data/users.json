@@ -1,1 +1,98 @@
-[{"username":"test","password":"$2a$10$QP/xgJytap83Hwa/cbUZ.OhHhpj2KBr3ptG37wHOPwFRhFe4vusE6","collection":{"collection":[],"name":"first","numberOfIssues":0,"value":0.0}}]
+[
+    {
+        "username": "alik",
+        "password": "alik",
+        "personalCollection": {
+            "collection": [
+                {
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
+                    "creators": {
+                        "creators": [
+                            "1"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 1
+                },
+                {
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
+                    "creators": {
+                        "creators": [
+                            "1"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 2
+                },
+                {
+                    "series": "234234",
+                    "issue": "2342",
+                    "title": "424324",
+                    "varDesc": "234234",
+                    "releaseDate": "234234",
+                    "format": "24234",
+                    "dateAdded": "234234",
+                    "publisher": "234234",
+                    "creators": {
+                        "creators": [
+                            "23424"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 3
+                },
+                {
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
+                    "creators": {
+                        "creators": [
+                            "1"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 4
+                },
+                {
+                    "series": "wetwrt",
+                    "issue": "ertert",
+                    "title": "ertet",
+                    "varDesc": "etet",
+                    "releaseDate": "ertet",
+                    "format": "etet",
+                    "dateAdded": "etet",
+                    "publisher": "ete",
+                    "creators": {
+                        "creators": [
+                            "alik james"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 5
+                }
+            ],
+            "name": "alik",
+            "numberOfIssues": 5,
+            "value": 49.95
+        }
+    }
+]

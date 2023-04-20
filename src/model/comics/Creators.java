@@ -1,11 +1,17 @@
 package src.model.comics;
 
-public class Creators implements SpecialComicAttribute {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class Creators implements SpecialComicAttribute {
+    @JsonProperty("creators")
     private String[] creators;
 
     public Creators(String creators) {
         setCreators(creators);
+    }
+
+    public Creators(@JsonProperty("creators") String[] creators) {
+        this.creators = creators;
     }
 
     public void setCreators(String creators) {
