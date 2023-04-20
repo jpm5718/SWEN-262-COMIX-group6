@@ -685,7 +685,7 @@
  
  
          test.setSortStrategy(new SortByDateAdded());
-         ArrayList<Comic> actual = test.sort(test.getCollection());
+         ArrayList<Comic> actual = test.sort();
  
          for (int i = 0; i < actual.size(); i++) {
              Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());
