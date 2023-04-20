@@ -14,7 +14,8 @@ public interface Comic {
     String getReleaseDate();
     String getFormat();
     String getDateAdded();
-    Creators getCreators();
+    String getCreators();
+    Creators getCreatorsObj();
     double getValue();
     int getId();
     void setSeries(String series);
@@ -27,4 +28,5 @@ public interface Comic {
     void setDateAdded(String dateAdded);
     void setCreators(Creators creators);
     void setValue(double value);
+    String toString();
 }

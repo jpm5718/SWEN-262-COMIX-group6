@@ -30,10 +30,10 @@ public class ComicBook implements Comic {
         issue = attributes.poll();
         title = attributes.poll();
         varDesc = attributes.poll();
+        publisher = new Publisher(attributes.poll());
         releaseDate = attributes.poll();
         format = attributes.poll();
         dateAdded = attributes.poll();
-        publisher = new Publisher(attributes.poll());
         creators = new Creators(attributes.poll());
         id = Integer.parseInt(Objects.requireNonNull(attributes.poll()));
         value = 9.99; //base value of comic (assumption)
@@ -82,7 +82,12 @@ public class ComicBook implements Comic {
     public String getPublisher() { return publisher.getName(); }
 
     @Override
-    public Creators getCreators() {
+    public String getCreators() {
+        return creators.toString();
+    }
+
+    @Override
+    public Creators getCreatorsObj() {
         return creators;
     }
 
@@ -144,5 +149,13 @@ public class ComicBook implements Comic {
     @Override
     public void setValue(double value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        String result = "Comic " + id +":\nSeries: " + series + "\nIssue: " + issue + "\nTitle: " + title + "\nDescription: " 
+        + varDesc + "\nPublisher: " + getPublisher() + "\nRelease Date: " + releaseDate + "\nFormat: " + format + "\nDate Added: " 
+        + dateAdded + "\nCreators: " + getCreators() + "\nValue: " + value + "\n\n------------------------------------------------------\n";
+        return result;
     }
 }
