@@ -100,7 +100,7 @@ public class UI {
                 break;
             case 2:
                 for (Comic comic : database.getCollection()) {
-                    System.out.println(comic.getTitle());
+                    System.out.println(comic);
                 }
         }
 
@@ -214,7 +214,7 @@ public class UI {
                 break;
         }
         for (Comic comic : results) {
-            System.out.println(comic.getTitle());
+            System.out.println(comic);
             System.out.println();
         }
     }
@@ -346,11 +346,7 @@ public class UI {
     public static void addFromDatabaseHandler() throws IOException {
         System.out.println("Enter a Comic ID from below to add to your collection:");
         for (Comic comic : database.getCollection()) {
-            System.out.println();
-            System.out.println("Series: " + comic.getSeries());
-            System.out.println("Issue Number: " + comic.getIssue());
-            System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());
+            System.out.println(comic);
         }
         System.out.print("ID of Comic to add: ");
         int input = scan.nextInt();
@@ -365,11 +361,7 @@ public class UI {
     public static void removeComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to remove from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
-            System.out.println();
-            System.out.println("Series: " + comic.getSeries());
-            System.out.println("Issue Number: " + comic.getIssue());
-            System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());
+            System.out.println(comic);
         }
         System.out.print("ID of Comic to remove: ");
         int input = scan.nextInt();
@@ -384,11 +376,7 @@ public class UI {
         PersonalCollection collection = currentUser.getCollection();
         System.out.println("Enter a Comic ID from below to edit from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
-            System.out.println();
-            System.out.println("Series: " + comic.getSeries());
-            System.out.println("Issue Number: " + comic.getIssue());
-            System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());
+            System.out.println(comic);
         }
         System.out.print("ID of Comic to edit: ");
         int input = scan.nextInt();
@@ -439,11 +427,7 @@ public class UI {
     public static void gradeComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to grade from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
-            System.out.println();
-            System.out.println("Series: " + comic.getSeries());
-            System.out.println("Issue Number: " + comic.getIssue());
-            System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());
+            System.out.println(comic);
         }
         System.out.print("ID of Comic to grade: ");
         int input = scan.nextInt();
@@ -460,11 +444,7 @@ public class UI {
         System.out.println("Enter a Comic ID from below to slab from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             if (comic instanceof GradedComic) {
-                System.out.println();
-                System.out.println("Series: " + comic.getSeries());
-                System.out.println("Issue Number: " + comic.getIssue());
-                System.out.println("Story Title: " + comic.getSeries());
-                System.out.println("ID: " + comic.getId());
+                System.out.println(comic);
             }
         }
         System.out.print("ID of Comic to slab: ");
@@ -483,11 +463,7 @@ public class UI {
     public static void signComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to sign from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
-            System.out.println();
-            System.out.println("Series: " + comic.getSeries());
-            System.out.println("Issue Number: " + comic.getIssue());
-            System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());
+            System.out.println(comic);
         }
         System.out.print("ID of Comic to sign: ");
         int input = scan.nextInt();
@@ -502,11 +478,7 @@ public class UI {
         System.out.println("Enter a Comic ID from below to authenticate from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             if (comic instanceof SignedComic) {
-                System.out.println();
-                System.out.println("Series: " + comic.getSeries());
-                System.out.println("Issue Number: " + comic.getIssue());
-                System.out.println("Story Title: " + comic.getSeries());
-                System.out.println("ID: " + comic.getId());
+                System.out.println(comic);
             }
         }
         System.out.print("ID of Comic to authenticate: ");
