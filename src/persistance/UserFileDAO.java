@@ -22,17 +22,35 @@ public class UserFileDAO {
         load();
     }
 
-    public boolean load() throws IOException{
+    // public boolean load() throws IOException{
+    //     users = new TreeMap<>();
+
+    //     User[] userArray = mapper.readValue(new File(filename), User[].class);
+
+    //     for(User u : userArray){
+    //         users.put(u.getUsername(), u);
+    //     }
+
+    //     return true;
+    // }
+    public boolean load() throws IOException {
         users = new TreeMap<>();
+        File file = new File(filename);
 
-        User[] userArray = mapper.readValue(new File(filename), User[].class);
+        if (file.exists() && file.length() > 0) {
+            User[] userArray = mapper.readValue(file, User[].class);
 
-        for(User u : userArray){
-            users.put(u.getUsername(), u);
+            for (User u : userArray) {
+                users.put(u.getUsername(), u);
+            }
+
+            return true;
+        } else {
+            return false;
         }
-
-        return true;
     }
+
+
 
     public User[] convertMapToArray(){
         ArrayList<User> userAList = new ArrayList<>();
@@ -49,7 +67,7 @@ public class UserFileDAO {
     public boolean save() throws IOException{
         User[] userArray = convertMapToArray();
         mapper.writeValue(new File(filename), userArray);
-        
+
         return true;
     }
 

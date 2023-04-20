@@ -17,9 +17,10 @@ import java.util.Queue;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class PersonalCollection implements ComicCollection {
-
+    @JsonDeserialize(contentUsing = ComicDeserializer.class)
     @JsonProperty("collection") private ArrayList<Comic> collection;
     @JsonProperty("name") private String name;
     @JsonProperty("numberOfIssues") private int numberOfIssues;
@@ -30,6 +31,7 @@ public class PersonalCollection implements ComicCollection {
     private DecoratorStrategy decoratorStrategy;
 
     public PersonalCollection(String name) {
+
         collection = new ArrayList<>();
         this.name = name;
 

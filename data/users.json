@@ -1,47 +1,98 @@
 [
     {
-        "username": "james",
-        "password": "james",
+        "username": "alik",
+        "password": "alik",
         "personalCollection": {
             "collection": [
                 {
-                    "series": "series",
-                    "issue": "issue",
-                    "title": "titel",
-                    "varDesc": "desc",
-                    "releaseDate": "egrev",
-                    "format": "orih",
-                    "dateAdded": "comic",
-                    "publisher": "today",
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
                     "creators": {
                         "creators": [
-                            "creators"
+                            "1"
                         ]
                     },
                     "value": 9.99,
                     "id": 1
                 },
                 {
-                    "series": "kgergvrweb",
-                    "issue": "werbw4gv",
-                    "title": "ewrgwev",
-                    "varDesc": "wergverv",
-                    "releaseDate": "wergv",
-                    "format": "wegrw",
-                    "dateAdded": "wergewrg",
-                    "publisher": "wergv",
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
                     "creators": {
                         "creators": [
-                            "werg"
+                            "1"
                         ]
                     },
                     "value": 9.99,
                     "id": 2
+                },
+                {
+                    "series": "234234",
+                    "issue": "2342",
+                    "title": "424324",
+                    "varDesc": "234234",
+                    "releaseDate": "234234",
+                    "format": "24234",
+                    "dateAdded": "234234",
+                    "publisher": "234234",
+                    "creators": {
+                        "creators": [
+                            "23424"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 3
+                },
+                {
+                    "series": "1",
+                    "issue": "1",
+                    "title": "1",
+                    "varDesc": "1",
+                    "releaseDate": "1",
+                    "format": "1",
+                    "dateAdded": "1",
+                    "publisher": "1",
+                    "creators": {
+                        "creators": [
+                            "1"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 4
+                },
+                {
+                    "series": "wetwrt",
+                    "issue": "ertert",
+                    "title": "ertet",
+                    "varDesc": "etet",
+                    "releaseDate": "ertet",
+                    "format": "etet",
+                    "dateAdded": "etet",
+                    "publisher": "ete",
+                    "creators": {
+                        "creators": [
+                            "alik james"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 5
                 }
             ],
-            "name": "JamesCollection",
-            "numberOfIssues": 2,
-            "value": 19.98
+            "name": "alik",
+            "numberOfIssues": 5,
+            "value": 49.95
         }
     }
 ]

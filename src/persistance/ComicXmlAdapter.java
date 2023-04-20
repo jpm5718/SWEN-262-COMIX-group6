@@ -32,11 +32,11 @@ public class ComicXmlAdapter implements ComicAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     @Override
-    public ComicCollection importToFormat() throws Exception {
+    public DatabaseCollection importToFormat() throws Exception {
         try {
             JAXBContext context = JAXBContext.newInstance(ComicBook[].class);
             Unmarshaller unmarsh = context.createUnmarshaller();
@@ -51,5 +51,5 @@ public class ComicXmlAdapter implements ComicAdapter {
         }
         return null;
     }
-    
+
 }
