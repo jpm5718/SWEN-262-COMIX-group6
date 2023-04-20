@@ -61,7 +61,7 @@ public class UI {
         } catch(IOException e){System.out.println(e.getMessage());}
     }
 
-    static ComicCSVReader reader = new ComicCSVReader("data/comics.csv");
+    static ComicCSVReader reader = new ComicCSVReader("comics");
     static ComicCollection database;
 
     static Stack<Command> commandsToUndo = new Stack<Command>();
@@ -69,7 +69,7 @@ public class UI {
 
     public static boolean signIn() throws IOException{
         User[] users = dao.getUsers();
-        
+
         System.out.print("Username: ");
         String username = scan.nextLine();
         System.out.print("Password: ");
@@ -285,7 +285,7 @@ public class UI {
             case 2:
                 ComicBookHandler();
                 break;
-            
+
             case 3:
                 break;
 
@@ -350,7 +350,7 @@ public class UI {
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());            
+            System.out.println("ID: " + comic.getId());
         }
         System.out.print("ID of Comic to add: ");
         int input = scan.nextInt();
@@ -369,7 +369,7 @@ public class UI {
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());            
+            System.out.println("ID: " + comic.getId());
         }
         System.out.print("ID of Comic to remove: ");
         int input = scan.nextInt();
@@ -388,7 +388,7 @@ public class UI {
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());            
+            System.out.println("ID: " + comic.getId());
         }
         System.out.print("ID of Comic to edit: ");
         int input = scan.nextInt();
@@ -427,7 +427,7 @@ public class UI {
                 break;
             case 8:
                 collection.setEditStrategy(new VarDescEditor());
-                break; 
+                break;
         }
 
         System.out.print("Replacement for field: ");
@@ -443,7 +443,7 @@ public class UI {
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());            
+            System.out.println("ID: " + comic.getId());
         }
         System.out.print("ID of Comic to grade: ");
         int input = scan.nextInt();
@@ -464,7 +464,7 @@ public class UI {
                 System.out.println("Series: " + comic.getSeries());
                 System.out.println("Issue Number: " + comic.getIssue());
                 System.out.println("Story Title: " + comic.getSeries());
-                System.out.println("ID: " + comic.getId());    
+                System.out.println("ID: " + comic.getId());
             }
         }
         System.out.print("ID of Comic to slab: ");
@@ -487,7 +487,7 @@ public class UI {
             System.out.println("Series: " + comic.getSeries());
             System.out.println("Issue Number: " + comic.getIssue());
             System.out.println("Story Title: " + comic.getSeries());
-            System.out.println("ID: " + comic.getId());            
+            System.out.println("ID: " + comic.getId());
         }
         System.out.print("ID of Comic to sign: ");
         int input = scan.nextInt();
@@ -506,7 +506,7 @@ public class UI {
                 System.out.println("Series: " + comic.getSeries());
                 System.out.println("Issue Number: " + comic.getIssue());
                 System.out.println("Story Title: " + comic.getSeries());
-                System.out.println("ID: " + comic.getId());    
+                System.out.println("ID: " + comic.getId());
             }
         }
         System.out.print("ID of Comic to authenticate: ");
@@ -548,7 +548,7 @@ public class UI {
             case 3:
                 removeComicHandler();
                 break;
-            
+
             case 4:
                 editComicHandler();
                 break;
@@ -560,11 +560,11 @@ public class UI {
             case 6:
                 slabComicHandler();
                 break;
-            
+
             case 7:
                 signComicHandler();
                 break;
-            
+
             case 8:
                 authenticateComicHandler();
                 break;
@@ -582,7 +582,7 @@ public class UI {
                 commandsToUndo.add(redoCommand);
                 dao.save();
                 break;
-            
+
             case 11:
                 personalCollectionHandler();
                 break;

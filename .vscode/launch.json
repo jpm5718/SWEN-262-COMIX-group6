@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "UI",
+            "request": "launch",
+            "mainClass": "src.view.UI",
+            "projectName": "SWEN-262-COMIX-group6_5379e885"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
