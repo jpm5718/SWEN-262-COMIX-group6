@@ -25,6 +25,6 @@ public class SignComic extends DecoratorCommand {
     protected void onExecute() {
         System.out.println(personalCollection);
         personalCollection.setDecoratorStrategy(new SignStrategy());
-        decoratedComic = personalCollection.decorateComic(comic);
+        decoratedComic = personalCollection.decorateComic(comic.getId());
     }
 }
