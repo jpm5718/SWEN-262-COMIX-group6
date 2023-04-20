@@ -1,15 +1,15 @@
 package src.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import src.model.collections.ComicCollection;
-import src.model.collections.DatabaseCollection;
 import src.model.collections.PersonalCollection;
 import src.model.collections.editComic.CreatorsEditor;
 import src.model.collections.editComic.DateAddedEditor;
@@ -31,7 +31,6 @@ import src.model.collections.search.SearchByRuns;
 import src.model.collections.search.SearchBySeries;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.search.SearchByVarDesc;
-import src.model.collections.search.SearchStrategy;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.comics.GradedComic;
@@ -45,16 +44,22 @@ import src.model.command.SignComic;
 import src.model.command.SlabComic;
 import src.model.users.User;
 import src.persistance.ComicCSVReader;
+import src.persistance.UserFileDAO;
 
 public class UI {
 
     static Scanner scan = new Scanner(System.in);
     static Scanner scanner = new Scanner(System.in);
-    static Boolean guest = true;
-    static Boolean loggedIn = false;
+
     static User currentUser;
-    static HashMap<String, User> users = new HashMap<>();
-    static PersonalCollection guestCollection;
+
+    static UserFileDAO dao;
+
+    static{
+        try{
+            dao = new UserFileDAO("data/users.json", new ObjectMapper());
+        } catch(IOException e){System.out.println(e.getMessage());}
+    }
 
     static ComicCSVReader reader = new ComicCSVReader("data/comics.csv");
     static ComicCollection database;
@@ -62,37 +67,26 @@ public class UI {
     static Stack<Command> commandsToUndo = new Stack<Command>();
     static Stack<Command> commandsToRedo = new Stack<Command>();
 
-    public static void signIn() {
-        System.out.println("\nUsername: ");
+    public static boolean signIn() throws IOException{
+        User[] users = dao.getUsers();
+        
+        System.out.print("Username: ");
         String username = scan.nextLine();
-        System.out.println("\nPassword: ");
+        System.out.print("Password: ");
         String password = scan.nextLine();
 
-        if (users.keySet().contains(username)) {
-            if (users.get(username).getPassword().equals(password)) {
-                System.out.println("\nLogged in as " + username);
-                currentUser = users.get(username);
-                loggedIn = true;
-                guest = false;
-                manageUser();
-            } else {
-                while (true) {
-                    System.out.println("Invalid Password. Please enter again or type 1 to exit.\nInput:");
-                    String input = scan.nextLine();
-                    if (input.equals("1")) {
-                    } else if (users.get(username).getPassword().equals(password)) {
-                            System.out.println("\nLogged in as " + username);
-                            currentUser = users.get(username);
-                            loggedIn = true;
-                            guest = false;
-                            manageUser();
-                    }
-                }
+        for(User u : users){
+            if(u.getUsername().equals(username) && u.getPassword().equals(password)){
+                System.out.println("\n\tLogged in as " + u.getUsername());
+                currentUser = u;
+                return true;
             }
-        } else {
-            System.out.println("Invalid Input");
-            manageStart();
+            else{
+                System.out.println("Invalid username or password. Redirecting back to home screen.");
+                manageStart();
+            }
         }
+        return false;
     }
 
     public static void manageGuest() {
@@ -225,20 +219,22 @@ public class UI {
         }
     }
 
-    public static void manageSignUp() {
-        System.out.print("Username: ");
-        String username = scan.nextLine();
-        System.out.print("Password: ");
-        String password = scan.nextLine();
-        System.out.print("Collection Name: ");
-        String collName = scan.nextLine();
-        User user = new User(username, password, new PersonalCollection(collName));
+    public static boolean manageSignUp() throws IOException{
+        System.out.print("Enter username: ");
+        String newUsername = scan.nextLine();
+        System.out.print("Enter new password: ");
+        String newPassword = scan.nextLine();
+        System.out.print("Enter collection name: ");
+        String newCollName = scan.nextLine();
+
+        User user = new User(newUsername, newPassword, new PersonalCollection(newCollName));
+        dao.addUser(user);
         currentUser = user;
-        users.put(username, user);
-        manageUser();
+
+        return true;
     }
 
-    public static void manageUser(){
+    public static void manageUser() throws IOException{
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) Search Database" +
@@ -260,8 +256,6 @@ public class UI {
                 break;
             case 3:
                 currentUser = null;
-                guest = true;
-                loggedIn = false;
                 manageStart();
                 break;
             case 4:
@@ -272,7 +266,7 @@ public class UI {
         }
     }
 
-    public static void personalCollectionHandler() {
+    public static void personalCollectionHandler() throws IOException{
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
@@ -302,7 +296,7 @@ public class UI {
         }
     }
 
-    public static void addManuallyHandler() {
+    public static void addManuallyHandler() throws IOException{
         PersonalCollection collection = currentUser.getCollection();
 
                     // get comic book info
@@ -346,9 +340,10 @@ public class UI {
                     addComicCommand.execute();
                     commandsToUndo.add(addComicCommand);
                     System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
+                    dao.save();
     }
 
-    public static void addFromDatabaseHandler() {
+    public static void addFromDatabaseHandler() throws IOException {
         System.out.println("Enter a Comic ID from below to add to your collection:");
         for (Comic comic : database.getCollection()) {
             System.out.println();
@@ -364,9 +359,10 @@ public class UI {
         addComicCommand.execute();
         commandsToUndo.add(addComicCommand);
         System.out.println(choice.getTitle() + " has been added to " + currentUser.getCollection().getName());
+        dao.save();
     }
 
-    public static void removeComicHandler() {
+    public static void removeComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to remove from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println();
@@ -381,9 +377,10 @@ public class UI {
         Command removeComicCommand = new RemoveComic(choice, currentUser.getCollection());
         removeComicCommand.execute();
         commandsToUndo.add(removeComicCommand);
+        dao.save();
     }
 
-    public static void editComicHandler() {
+    public static void editComicHandler() throws IOException {
         PersonalCollection collection = currentUser.getCollection();
         System.out.println("Enter a Comic ID from below to edit from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
@@ -436,9 +433,10 @@ public class UI {
         System.out.print("Replacement for field: ");
         String line = scan.nextLine();
         collection.editComic(choice, line);
+        dao.save();
     }
 
-    public static void gradeComicHandler() {
+    public static void gradeComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to grade from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println();
@@ -455,9 +453,10 @@ public class UI {
         Command gradeComicCommand = new GradeComic(choice, input, currentUser.getCollection());
         gradeComicCommand.execute();
         commandsToUndo.add(gradeComicCommand);
+        dao.save();
     }
 
-    public static void slabComicHandler() {
+    public static void slabComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to slab from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             if (comic instanceof GradedComic) {
@@ -478,9 +477,10 @@ public class UI {
         } else {
             System.out.println("Invalid choice");
         }
+        dao.save();
     }
 
-    public static void signComicHandler() {
+    public static void signComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to sign from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println();
@@ -495,9 +495,10 @@ public class UI {
         Command signComicCommand = new SignComic(choice, currentUser.getCollection());
         signComicCommand.execute();
         commandsToUndo.add(signComicCommand);
+        dao.save();
     }
 
-    public static void authenticateComicHandler() {
+    public static void authenticateComicHandler() throws IOException{
         System.out.println("Enter a Comic ID from below to authenticate from your collection:");
         for (Comic comic : currentUser.getCollection().getCollection()) {
             if (comic instanceof SignedComic) {
@@ -518,9 +519,10 @@ public class UI {
         } else {
             System.out.println("Invalid choice");
         }
+        dao.save();
     }
 
-    public static void ComicBookHandler() {
+    public static void ComicBookHandler() throws IOException{
         System.out.println("Choose one of the following actions:" +
                 "\n\t1) Add a Comic Book (manually)" +
                 "\n\t2) Add a Comic Book (from database)" +
@@ -571,12 +573,14 @@ public class UI {
                 Command undoCommand = commandsToUndo.pop();
                 undoCommand.undo();
                 commandsToRedo.add(undoCommand);
+                dao.save();
                 break;
 
             case 10:
                 Command redoCommand = commandsToRedo.pop();
                 redoCommand.redo();
                 commandsToUndo.add(redoCommand);
+                dao.save();
                 break;
             
             case 11:
@@ -587,7 +591,7 @@ public class UI {
         ComicBookHandler();
     }
 
-    public static void manageStart() {
+    public static void manageStart() throws IOException {
         try {
             database = reader.parseComics();
         } catch (Exception e) {
@@ -599,16 +603,16 @@ public class UI {
         // scan.next(); // add this line to consume the newline character
         if (command == 1) {
             signIn();
+            manageUser();
         } else if (command == 2) {
             manageSignUp();
+            manageUser();
         } else if (command == 3) {
-            guest = true;
             manageGuest();
         }
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException{
         manageStart();
     }
 }

@@ -94,5 +94,71 @@
             "numberOfIssues": 5,
             "value": 49.95
         }
+    },
+    {
+        "username": "anthony",
+        "password": "please work",
+        "personalCollection": {
+            "collection": [],
+            "name": "PLEASE",
+            "numberOfIssues": 0,
+            "value": 0.0
+        }
+    },
+    {
+        "username": "erik",
+        "password": "erik",
+        "personalCollection": {
+            "collection": [
+                {
+                    "series": "",
+                    "issue": "111111",
+                    "title": "1111",
+                    "varDesc": "1111",
+                    "releaseDate": "1111",
+                    "format": "1111",
+                    "dateAdded": "1111",
+                    "publisher": "1111",
+                    "creators": {
+                        "creators": [
+                            "1111"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 1
+                }
+            ],
+            "name": "erik",
+            "numberOfIssues": 1,
+            "value": 9.99
+        }
+    },
+    {
+        "username": "james",
+        "password": "james",
+        "personalCollection": {
+            "collection": [
+                {
+                    "series": "",
+                    "issue": "dddddddd",
+                    "title": "dddddddddd",
+                    "varDesc": "ddddd",
+                    "releaseDate": "ddddd",
+                    "format": "ddddd",
+                    "dateAdded": "ddddd",
+                    "publisher": "ddddd",
+                    "creators": {
+                        "creators": [
+                            "dddddd"
+                        ]
+                    },
+                    "value": 9.99,
+                    "id": 1
+                }
+            ],
+            "name": "james",
+            "numberOfIssues": 1,
+            "value": 9.99
+        }
     }
 ]
