@@ -18,21 +18,15 @@ public class SearchByCreators implements SearchStrategy {
         if (exactMatch) {
             for (Comic comic : collection) {
                 String creators = comic.getCreators();
-                String[] s = creators.split("|");
-                for (String string : s) {
-                    if (string.equals(term)) {
-                        results.add(comic);
-                    }
-                }
+                if (creators.equals(term + " | ")) {
+                    results.add(comic);
+                } 
             }
         } else {
             for (Comic comic : collection) {
                 String creators = comic.getCreators();
-                String[] s = creators.split("|");
-                for (String string : s) {
-                    if (string.contains(term)) {
-                        results.add(comic);
-                    }
+                if (creators.contains(term)) {
+                    results.add(comic);
                 }
             }
         }
