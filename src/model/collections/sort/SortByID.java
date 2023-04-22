@@ -1,15 +1,11 @@
-/**
- * @author Dan Corcoran
- */
-
-
 package src.model.collections.sort;
 
-import src.model.comics.Comic;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SortByFormat implements SortStrategy {
+import src.model.comics.Comic;
+
+public class SortByID implements SortStrategy {
 
     @Override
     public ArrayList<Comic> sort(ArrayList<Comic> comics) {
@@ -38,7 +34,7 @@ public class SortByFormat implements SortStrategy {
         Comic last = comicsArr[n - 1];
         int j = n - 2;
 
-        while (j >= 0 && comicsArr[j].getFormat().compareTo(last.getFormat()) > 0) {
+        while (j >= 0 && comicsArr[j].getId() > last.getId()) {
             comicsArr[j + 1] = comicsArr[j];
             j--;
         }

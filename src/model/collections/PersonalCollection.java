@@ -7,7 +7,7 @@ package src.model.collections;
 import src.model.collections.modifyComicType.DecoratorStrategy;
 import src.model.collections.search.SearchStrategy;
 import src.model.collections.search.SearchByTitle;
-import src.model.collections.sort.SortByTitle;
+import src.model.collections.sort.SortByID;
 import src.model.collections.sort.SortStrategy;
 import src.model.comics.*;
 import src.model.collections.editComic.EditStrategy;
@@ -35,9 +35,9 @@ public class PersonalCollection implements ComicCollection {
         collection = new ArrayList<>();
         this.name = name;
 
-        //default s4trategies are searching and sorting by title
+        //default strategies are searching by title and sorting by ID
         searchStrategy = new SearchByTitle();
-        sortStrategy = new SortByTitle();
+        sortStrategy = new SortByID();
         editStrategy = null;
         decoratorStrategy = null;
         numberOfIssues = 0;
@@ -241,7 +241,8 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public ArrayList<Comic> getCollection() {
-        return collection;
+        setSortStrategy(new SortByID());
+        return sortStrategy.sort(collection);
     }
 
     /**

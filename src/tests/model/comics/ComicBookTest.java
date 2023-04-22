@@ -58,7 +58,7 @@ public class ComicBookTest {
         assertEquals(expected_releaseDate, comic.getReleaseDate());
         assertEquals(expected_format, comic.getFormat());
         assertEquals(expected_dateAdded, comic.getDateAdded());
-        assertEquals(expected_creators, comic.getCreators());
+        assertEquals(expected_creators + " | ", comic.getCreators());
         assertEquals(Integer.parseInt(expected_id), comic.getId());
     }
 }

@@ -87,11 +87,6 @@ public class ComicBook implements Comic {
     }
 
     @Override
-    public Creators getCreatorsObj() {
-        return creators;
-    }
-
-    @Override
     public double getValue() {
         return value;
     }
