@@ -50,10 +50,10 @@
          attributes.add("Issue 1");
          attributes.add("Title 1");
          attributes.add("Variant Description 1");
+         attributes.add("Publisher 1");
          attributes.add("Release Date 1");
          attributes.add("Format 1");
          attributes.add("Date Added 1");
-         attributes.add("Publisher 1");
          attributes.add("Creators 1");
          attributes.add("111");
  
@@ -79,10 +79,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -125,10 +125,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -171,10 +171,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -218,10 +218,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -243,10 +243,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -268,10 +268,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -298,10 +298,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -344,10 +344,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -390,10 +390,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -437,10 +437,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -460,10 +460,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -485,10 +485,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -515,10 +515,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -561,10 +561,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -607,10 +607,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -651,10 +651,10 @@
              attributes.add("Issue " + i);
              attributes.add("Title " + i);
              attributes.add("Variant Description " + i);
+             attributes.add("Publisher " + i);
              attributes.add("Release Date " + i);
              attributes.add("Format " + i);
              attributes.add("Date Added " + i);
-             attributes.add("Publisher " + i);
              attributes.add("Creators " + i);
              attributes.add("" + i);
              Comic comic = new ComicBook(attributes);
@@ -685,7 +685,7 @@
  
  
          test.setSortStrategy(new SortByDateAdded());
-         ArrayList<Comic> actual = test.sort(test.getCollection());
+         ArrayList<Comic> actual = test.sort();
  
          for (int i = 0; i < actual.size(); i++) {
              Assertions.assertEquals(expected.get(i).getId(), actual.get(i).getId());

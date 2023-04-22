@@ -19,7 +19,7 @@ public class SortByTitle implements SortStrategy {
             comicsArr[i] = comics.get(i);
         }
 
-        insertionSort(comicsArr, comicsArr.length - 1);
+        insertionSort(comicsArr, comicsArr.length);
 
         ArrayList<Comic> sorted = new ArrayList<>();
         Collections.addAll(sorted, comicsArr);
@@ -38,7 +38,7 @@ public class SortByTitle implements SortStrategy {
         Comic last = comicsArr[n - 1];
         int j = n - 2;
 
-        while (j >= 0 && comicsArr[j].getTitle().compareTo(last.getTitle()) > 1) {
+        while (j >= 0 && comicsArr[j].getTitle().compareTo(last.getTitle()) > 0) {
             comicsArr[j + 1] = comicsArr[j];
             j--;
         }

@@ -28,7 +28,7 @@ public class ComicCSVReader {
      * @param filename file path of the csv file to be read in
      */
     public ComicCSVReader(String filename){
-        this.file = filename;
+        this.file = "data/" + filename + ".csv";
     }
 
     DatabaseCollection database = new DatabaseCollection();

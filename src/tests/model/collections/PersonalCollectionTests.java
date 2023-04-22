@@ -68,10 +68,10 @@ public class PersonalCollectionTests {
         attributes.add("Issue 1");
         attributes.add("Title 1");
         attributes.add("Variant Description 1");
+        attributes.add("Publisher 1");
         attributes.add("Release Date 1");
         attributes.add("Format 1");
         attributes.add("Date Added 1");
-        attributes.add("Publisher 1");
         attributes.add("Creators 1");
         attributes.add("111");
 
@@ -95,10 +95,10 @@ public class PersonalCollectionTests {
         attributes.add("Issue 1");
         attributes.add("Title 1");
         attributes.add("Variant Description 1");
+        attributes.add("Publisher 1");
         attributes.add("Release Date 1");
         attributes.add("Format 1");
         attributes.add("Date Added 1");
-        attributes.add("Publisher 1");
         attributes.add("Creators 1");
         attributes.add("111");
 
@@ -145,10 +145,10 @@ public class PersonalCollectionTests {
         attributes.add("Issue 2");
         attributes.add("Title 2");
         attributes.add("Variant Description 2");
+        attributes.add("Publisher 2");
         attributes.add("Release Date 2");
         attributes.add("Format 2");
         attributes.add("Date Added 2");
-        attributes.add("Publisher 2");
         attributes.add("Creators 2");
         attributes.add("222");
 
@@ -178,16 +178,16 @@ public class PersonalCollectionTests {
         attributes.add("Issue 1");
         attributes.add("Title 1");
         attributes.add("Variant Description 1");
+        attributes.add("Publisher 1");
         attributes.add("Release Date 1");
         attributes.add("Format 1");
         attributes.add("Date Added 1");
-        attributes.add("Publisher 1");
         attributes.add("Creators 1");
         attributes.add("111");
 
         Comic comic1 = new ComicBook(attributes);
         test.addComic(comic1);
-        test.gradeComic(comic1, 8);
+        test.gradeComic(comic1.getId(), 8);
 
         double expected = (Math.log10(8) * 9.99);
         double actual = test.getComic(comic1.getId()).getValue();
@@ -203,10 +203,10 @@ public class PersonalCollectionTests {
         attributes.add("Issue 1");
         attributes.add("Title 1");
         attributes.add("Variant Description 1");
+        attributes.add("Publisher 1");
         attributes.add("Release Date 1");
         attributes.add("Format 1");
         attributes.add("Date Added 1");
-        attributes.add("Publisher 1");
         attributes.add("Creators 1");
         attributes.add("111");
 
@@ -214,12 +214,13 @@ public class PersonalCollectionTests {
         test.addComic(comic1);
 
         test.setDecoratorStrategy(new SignStrategy());
-        test.decorateComic(comic1);
+        test.decorateComic(comic1.getId());
         double expected = (9.99 * 1.05);
         double actual = test.getComic(comic1.getId()).getValue();
         Assertions.assertEquals(expected, actual);
+        System.out.println(actual);
 
-        test.decorateComic(comic1);
+        test.decorateComic(comic1.getId());
         expected = (expected * 1.05);
         actual = test.getComic(comic1.getId()).getValue();
         Assertions.assertEquals(expected, actual);
@@ -234,10 +235,10 @@ public class PersonalCollectionTests {
         attributes.add("Issue 1");
         attributes.add("Title 1");
         attributes.add("Variant Description 1");
+        attributes.add("Publisher 1");
         attributes.add("Release Date 1");
         attributes.add("Format 1");
         attributes.add("Date Added 1");
-        attributes.add("Publisher 1");
         attributes.add("Creators 1");
         attributes.add("111");
 
@@ -265,17 +266,17 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
             test.addComic(comic);
 
             if (i % 4 == 0) {
-                test.gradeComic(comic, i);
+                test.gradeComic(comic.getId(), i);
                 expected.add(comic);
             }
         }
@@ -303,10 +304,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -329,7 +330,7 @@ public class PersonalCollectionTests {
 
         actual = test.search("Creators 3", true);
 
-        Assertions.assertEquals(expected.size(), actual.size());
+        Assertions.assertEquals(expected.size(), actual.size(), "Creators: " + test.getComic(3).getCreators());
         Assertions.assertEquals(expected.get(0).getId(), actual.get(0).getId());
 
         expected = test.getCollection();
@@ -349,10 +350,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -395,10 +396,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -442,10 +443,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -467,10 +468,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -492,10 +493,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -522,10 +523,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -568,10 +569,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -614,10 +615,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -661,10 +662,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -684,10 +685,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -709,10 +710,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -739,10 +740,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -785,10 +786,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -831,10 +832,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
@@ -875,10 +876,10 @@ public class PersonalCollectionTests {
             attributes.add("Issue " + i);
             attributes.add("Title " + i);
             attributes.add("Variant Description " + i);
+            attributes.add("Publisher " + i);
             attributes.add("Release Date " + i);
             attributes.add("Format " + i);
             attributes.add("Date Added " + i);
-            attributes.add("Publisher " + i);
             attributes.add("Creators " + i);
             attributes.add("" + i);
             Comic comic = new ComicBook(attributes);
