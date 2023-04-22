@@ -298,56 +298,57 @@ public class UI {
 
     public static void addManuallyHandler() throws IOException{
         PersonalCollection collection = currentUser.getCollection();
+        scanner.nextLine();
 
-                    // get comic book info
-                    System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
-                    String series = scanner.nextLine();
-                    System.out.println("And the issue number?");
-                    String issue = scanner.nextLine();
-                    System.out.println("What is the full title?");
-                    String title = scanner.nextLine();
-                    System.out.println("What is the description of the comic?");
-                    String vardesc = scanner.nextLine();
-                    System.out.println("Who is the publisher of the book?");
-                    String publisher = scanner.nextLine();
-                    System.out.println("When was it released (Month, (day), Year)?");
-                    String releasedate = scanner.nextLine();
-                    System.out.println("What format is it? (comic, graphic novel, etc.)?");
-                    String format = scanner.nextLine();
-                    System.out.println("What is today's date (to keep track of date added)?");
-                    String dateadded = scanner.nextLine();
-                    System.out.println("Who are the creators of the comic book?");
-                    String creators = scanner.nextLine();
+        // get comic book info
+        System.out.println("Next, we must get the comic book information...\nWhat is the series title?");
+        String series = scanner.nextLine();
+        System.out.println("And the issue number?");
+        String issue = scanner.nextLine();
+        System.out.println("What is the full title?");
+        String title = scanner.nextLine();
+        System.out.println("What is the description of the comic?");
+        String vardesc = scanner.nextLine();
+        System.out.println("Who is the publisher of the book?");
+        String publisher = scanner.nextLine();
+        System.out.println("When was it released (Month, (day), Year)?");
+        String releasedate = scanner.nextLine();
+        System.out.println("What format is it? (comic, graphic novel, etc.)?");
+        String format = scanner.nextLine();
+        System.out.println("What is today's date (to keep track of date added)?");
+        String dateadded = scanner.nextLine();
+        System.out.println("Who are the creators of the comic book?");
+        String creators = scanner.nextLine();
 
-                    // create queue to pass thru constructor
-                    Queue<String> data = new LinkedList<>();
-                    data.add(series);
-                    data.add(issue);
-                    data.add(title);
-                    data.add(vardesc);
-                    data.add(publisher);
-                    data.add(releasedate);
-                    data.add(format);
-                    data.add(dateadded);
-                    data.add(creators);
-                    int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                                    // calculated
-                    data.add(String.valueOf(++currentnum));
+        // create queue to pass thru constructor
+        Queue<String> data = new LinkedList<>();
+        data.add(series);
+        data.add(issue);
+        data.add(title);
+        data.add(vardesc);
+        data.add(publisher);
+        data.add(releasedate);
+        data.add(format);
+        data.add(dateadded);
+        data.add(creators);
+        int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
+                                                        // calculated
+        data.add(String.valueOf(++currentnum));
 
-                    // create new comic and add it
-                    Comic newcomic = new ComicBook(data);
-                    Command addComicCommand = new AddComic(newcomic, collection);
-                    addComicCommand.execute();
-                    commandsToUndo.add(addComicCommand);
-                    System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
-                    dao.save();
+        // create new comic and add it
+        Comic newcomic = new ComicBook(data);
+        Command addComicCommand = new AddComic(newcomic, collection);
+        addComicCommand.execute();
+        commandsToUndo.add(addComicCommand);
+        System.out.println(newcomic.getTitle() + " has been added to " + collection.getName());
+        dao.save();
     }
 
     public static void addFromDatabaseHandler() throws IOException {
         System.out.println("Enter a Comic ID from below to add to your collection:");
-        for (Comic comic : database.getCollection()) {
-            System.out.println(comic);
-        }
+        // for (Comic comic : database.getCollection()) {
+        //     System.out.println(comic);
+        // }
         System.out.print("ID of Comic to add: ");
         int input = scan.nextInt();
         Comic choice = database.getComic(input);

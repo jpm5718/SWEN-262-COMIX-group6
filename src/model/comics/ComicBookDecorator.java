@@ -59,11 +59,6 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public Creators getCreatorsObj() {
-        return comic.getCreatorsObj();
-    }
-
-    @Override
     public double getValue() {
         return comic.getValue();
     }

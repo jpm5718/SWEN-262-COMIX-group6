@@ -15,7 +15,6 @@ public interface Comic {
     String getFormat();
     String getDateAdded();
     String getCreators();
-    Creators getCreatorsObj();
     double getValue();
     int getId();
     void setSeries(String series);
