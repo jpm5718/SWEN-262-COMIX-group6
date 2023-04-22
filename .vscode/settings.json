@@ -33,5 +33,6 @@
         "dependencies/javax.xml.bind.jar",
         "dependencies/jackson-dataformat-xml-2.15.0-rc3.jar",
         "dependencies/stax2-api-4.2.1.jar"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

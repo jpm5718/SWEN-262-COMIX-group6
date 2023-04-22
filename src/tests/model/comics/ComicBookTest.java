@@ -39,10 +39,11 @@ public class ComicBookTest {
         data.add(expected_issue);
         data.add(expected_title);
         data.add(expected_varDesc);
-        data.add(expected_publisher);
+        
         data.add(expected_releaseDate);
         data.add(expected_format);
         data.add(expected_dateAdded);
+        data.add(expected_publisher);
         data.add(expected_creators);
         data.add(expected_id);
 
@@ -58,7 +59,7 @@ public class ComicBookTest {
         assertEquals(expected_releaseDate, comic.getReleaseDate());
         assertEquals(expected_format, comic.getFormat());
         assertEquals(expected_dateAdded, comic.getDateAdded());
-        assertEquals(expected_creators, comic.getCreators());
+        assertEquals(expected_creators, comic.getCreators().toString());
         assertEquals(Integer.parseInt(expected_id), comic.getId());
     }
 }

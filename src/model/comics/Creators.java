@@ -21,4 +21,18 @@ public class Creators implements SpecialComicAttribute {
     public String[] getCreators() {
         return creators;
     }
+
+    /*
+     * 
+     */
+    @Override
+    public String toString() {
+        String returnString = "";
+        String[] creators = getCreators();
+        for (String index : creators) {
+            returnString = returnString + index + ", ";
+        }
+        returnString = returnString.substring(0, returnString.length()-2);
+        return returnString;
+    }
 }

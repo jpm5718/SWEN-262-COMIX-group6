@@ -29,7 +29,7 @@ public class CSVExport implements Export {
 
     @Override
     public void exportCollection(ComicCollection comics) throws IOException {
-        String header[] = {"Series","Issue","Full Title","Variant Description","Publisher","Release Date","Format","Added Date","Creators"};
+        String header[] = {"Series","Issue","Full Title","Variant Description","Publisher","Release Date","Format","Added Date","Creators","id"};
         writer.writeNext(header);
         for (Comic comic: comics.getCollection()) {
             String nextLine[] = {
@@ -41,18 +41,21 @@ public class CSVExport implements Export {
                 comic.getReleaseDate().toString(), 
                 comic.getFormat().toString(), 
                 comic.getDateAdded().toString(), 
-                comic.getCreators().toString()
+                comic.getCreators().toString(),
+                String.valueOf(comic.getId())
             };
             writer.writeNext(nextLine);
         }
         writer.flush();
-
-        //Verify that file works
-        BufferedReader br = new BufferedReader(new FileReader(fileDest));
+        /*
+         * BufferedReader br = new BufferedReader(new FileReader(fileDest));
         String line;
         while ((line = br.readLine()) != null) {
             System.out.println(line);
         }
         br.close();
+         */
+        //Verify that file works
+        
     }
 }
