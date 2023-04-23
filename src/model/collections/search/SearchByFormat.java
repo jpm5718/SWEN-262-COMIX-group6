@@ -17,13 +17,13 @@ public class SearchByFormat implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getFormat().equals(term)) {
+                if (comic.getFormat().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getFormat().contains(term)) {
+                if (comic.getFormat().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }

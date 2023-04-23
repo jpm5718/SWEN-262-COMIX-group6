@@ -17,13 +17,13 @@ public class SearchByDateAdded implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getDateAdded().equals(term)) {
+                if (comic.getDateAdded().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getDateAdded().contains(term)) {
+                if (comic.getDateAdded().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }

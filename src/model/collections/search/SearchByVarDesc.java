@@ -16,13 +16,13 @@ public class SearchByVarDesc implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getVarDesc().equals(term)) {
+                if (comic.getVarDesc().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getVarDesc().contains(term)) {
+                if (comic.getVarDesc().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
