@@ -392,6 +392,7 @@ public class UI {
             "\n\t7) Series" +
             "\n\t8) Description");
         input = scan.nextInt();
+        scan.nextLine(); // consume the end of line character
         switch (input) {
             case 1:
                 collection.setEditStrategy(new CreatorsEditor());
@@ -422,6 +423,7 @@ public class UI {
         System.out.print("Replacement for field: ");
         String line = scan.nextLine();
         collection.editComic(choice, line);
+        System.out.println("Field has been modified");
         dao.save();
     }
 
