@@ -140,13 +140,14 @@ public class UI {
                 "\n\t10) Search by Series" +
                 "\n\t11) Search by Title" +
                 "\n\t12) Search by Var Description" +
-                "\n\t13) Quit");
+                "\n\t13) Back" + 
+                "\n\t14) Quit");
 
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 13) {
+            if (choice < 1 || choice > 14) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -154,7 +155,14 @@ public class UI {
             searchCollectionHandler(collection);
         }
 
-        if (choice == 13) {
+        if(choice == 13){
+            if(collection != database)
+                personalCollectionHandler();
+            else    
+                manageUser();
+        }
+
+        if (choice == 14) {
                 System.out.println("Goodbye!");
                 System.exit(0);
         }
@@ -250,22 +258,25 @@ public class UI {
                 break;
         }
         for (Comic comic : results) {
-            System.out.println(comic);
+            System.out.println("\n" + comic);
             System.out.println();
         }
-        System.out.print("\nEnter the id of the comic you would like to add to \n" + 
-        "or enter 0 to go back. ");
-        int idChoice = scanner.nextInt();
-        if(idChoice != 0){
-            Comic choiceComic = database.getComic(idChoice);
-            Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
-            addComicCommand.execute();
-            commandsToUndo.add(addComicCommand);
-            System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
-            dao.save();
+
+        if(collection == database){
+            System.out.print("\nEnter the id of the comic you would like to add to \n" + 
+            "or enter 0 to go back. ");
+            int idChoice = scanner.nextInt();
+            if(idChoice != 0){
+                Comic choiceComic = database.getComic(idChoice);
+                Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
+                addComicCommand.execute();
+                commandsToUndo.add(addComicCommand);
+                System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
+                dao.save();
+            }
+            else    
+                searchCollectionHandler(collection);
         }
-        else    
-            searchCollectionHandler(collection);
     }
 
     public static boolean manageSignUp() throws IOException{
@@ -288,13 +299,14 @@ public class UI {
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) Search Database" +
-                "\n\t3) Logout" +
-                "\n\t4) Quit");
+                "\n\t3) View Entire Database" +
+                "\n\t4) Logout" +
+                "\n\t5) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 4) {
+            if (choice < 1 || choice > 5) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -314,11 +326,15 @@ public class UI {
                 searchCollectionHandler(database);
                 manageUser();
                 break;
-            case 3:
+            case 3: 
+                for(Comic c : database.getCollection()){
+                    System.out.println(c);
+                }
+            case 4:
                 currentUser = null;
                 manageStart();
                 break;
-            case 4:
+            case 5:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -401,17 +417,21 @@ public class UI {
     }
 
     public static void personalCollectionHandler() throws IOException{
-        System.out.println("\nPersonal Collection Options" +
+        double val = currentUser.getCollection().getValue();
+
+        System.out.println("\nPersonal Collection Options (No. of issues: " + currentUser.getCollection().getNumberOfIssues() + 
+                ", Total value: $" + String.format("%.2f", val) + ")" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Sort Collection" +
                 "\n\t3) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\t4) Go Back" +
-                "\n\t5) Quit");
+                "\n\t4) View Collection" +
+                "\n\t5) Go Back" +
+                "\n\t6) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 5) {
+            if (choice < 1 || choice > 6) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -435,11 +455,21 @@ public class UI {
                 ComicBookHandler();
                 break;
 
-            case 4:
-                manageUser();
+            case 4: 
+                PersonalCollection pc = currentUser.getCollection();
+                pc.setSortStrategy(new SortByID());
+
+                for(Comic c : pc.sort()){
+                    System.out.println(c);
+                }
+                personalCollectionHandler();
                 break;
 
             case 5:
+                manageUser();
+                break;
+
+            case 6:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
