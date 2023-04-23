@@ -481,9 +481,9 @@ public class UI {
 
     public static void addFromDatabaseHandler() throws IOException {
         System.out.println("Enter a Comic ID from below to add to your collection:");
-        for (Comic comic : database.getCollection()) {
-            System.out.println(comic);
-        }
+        // for (Comic comic : database.getCollection()) {
+        //     System.out.println(comic);
+        // }
         try {
             System.out.print("ID of Comic to add: ");
             String commandString = scan.nextLine();
