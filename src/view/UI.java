@@ -31,6 +31,13 @@ import src.model.collections.search.SearchByRuns;
 import src.model.collections.search.SearchBySeries;
 import src.model.collections.search.SearchByTitle;
 import src.model.collections.search.SearchByVarDesc;
+import src.model.collections.sort.SortByDateAdded;
+import src.model.collections.sort.SortByFormat;
+import src.model.collections.sort.SortByID;
+import src.model.collections.sort.SortByIssue;
+import src.model.collections.sort.SortByReleaseDate;
+import src.model.collections.sort.SortBySeries;
+import src.model.collections.sort.SortByTitle;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.comics.GradedComic;
@@ -266,12 +273,61 @@ public class UI {
         }
     }
 
+    public static void sortCollectionHandler(ComicCollection collection) {
+        ArrayList<Comic> results = null;
+        System.out.println("Choose one of the following actions:" +
+                "\n\t1) Sort by Date Added" +
+                "\n\t2) Sort by Format" +
+                "\n\t3) Sort by ID" +
+                "\n\t4) Sort by Issue" +
+                "\n\t5) Sort by Release Date" +
+                "\n\t6) Sort by Series" +
+                "\n\t7) Sort by Title");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                collection.setSortStrategy(new SortByDateAdded());
+                results = collection.sort();
+                break;
+            case 2:
+                collection.setSortStrategy(new SortByFormat());
+                results = collection.sort();
+                break;
+            case 3:
+                collection.setSortStrategy(new SortByID());
+                results = collection.sort();
+                break;
+            case 4:
+                collection.setSortStrategy(new SortByIssue());
+                results = collection.sort();
+                break;
+            case 5:
+                collection.setSortStrategy(new SortByReleaseDate());
+                results = collection.sort();
+                break;
+            case 6:
+                collection.setSortStrategy(new SortBySeries());
+                results = collection.sort();
+                break;
+            case 7:
+                collection.setSortStrategy(new SortByTitle());
+                results = collection.sort();
+                break;
+        }
+        for (Comic comic : results) {
+            System.out.println(comic);
+            System.out.println();
+        }
+    }
+
     public static void personalCollectionHandler() throws IOException{
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) Search Collection" +
-                "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\t3) Go Back" +
-                "\n\t4) Quit");
+                "\n\t2) Sort Collection" +
+                "\n\t3) Comic Book Actions (add, remove, edit, etc.)" +
+                "\n\t4) Go Back" +
+                "\n\t5) Quit");
         int choice = scanner.nextInt();
         switch (choice) {
 
@@ -281,15 +337,18 @@ public class UI {
                 personalCollectionHandler();
                 break;
 
-            // comic book actions
             case 2:
+                sortCollectionHandler(currentUser.getCollection());
+
+            // comic book actions
+            case 3:
                 ComicBookHandler();
                 break;
 
-            case 3:
+            case 4:
                 break;
 
-            case 4:
+            case 5:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
