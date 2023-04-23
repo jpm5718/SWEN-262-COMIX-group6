@@ -19,6 +19,14 @@ import src.model.collections.editComic.IssueEditor;
 import src.model.collections.editComic.ReleaseDateEditor;
 import src.model.collections.editComic.SeriesEditor;
 import src.model.collections.editComic.VarDescEditor;
+import src.model.collections.exportComic.CSVExport;
+import src.model.collections.exportComic.Export;
+import src.model.collections.exportComic.JSONExport;
+import src.model.collections.exportComic.XMLExport;
+import src.model.collections.importComic.CSVImport;
+import src.model.collections.importComic.Import;
+import src.model.collections.importComic.JSONImport;
+import src.model.collections.importComic.XMLImport;
 import src.model.collections.search.SearchByComicType;
 import src.model.collections.search.SearchByCreators;
 import src.model.collections.search.SearchByDateAdded;
@@ -297,9 +305,11 @@ public class UI {
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) Search Database" +
-                "\n\t3) View Entire Database" +
-                "\n\t4) Logout" +
-                "\n\t5) Quit");
+                "\n\t3) Export Database" +
+                "\n\t4) Import Database" +
+                "\n\t5) View Entire Database" +
+                "\n\t6) Logout" +
+                "\n\t7) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
@@ -324,15 +334,22 @@ public class UI {
                 searchCollectionHandler(database);
                 manageUser();
                 break;
-            case 3: 
+            case 3:
+                ExportHandler(database);
+                break;
+            case 4:
+                ImportHandler(database, 1);
+                break;
+            case 5: 
                 for(Comic c : database.getCollection()){
                     System.out.println(c);
                 }
-            case 4:
+                break;
+            case 6:
                 currentUser = null;
                 manageStart();
                 break;
-            case 5:
+            case 7:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -422,14 +439,16 @@ public class UI {
                 "\n\t1) Search Collection" +
                 "\n\t2) Sort Collection" +
                 "\n\t3) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\t4) View Collection" +
-                "\n\t5) Go Back" +
-                "\n\t6) Quit");
+                "\n\t4) Export Personal Collection (csv, json, or xml)" +
+                "\n\t5) Import to Personal Collection (csv, json, xml)" +       
+                "\n\t6) View Collection" +
+                "\n\t7) Go Back" +
+                "\n\t8) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 6) {
+            if (choice < 1 || choice > 8) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -447,13 +466,20 @@ public class UI {
             case 2:
                 sortCollectionHandler(currentUser.getCollection());
                 break;
-
-            // comic book actions
+            
             case 3:
                 ComicBookHandler();
                 break;
 
-            case 4: 
+            case 4:
+                ExportHandler(currentUser.getCollection());
+                break;
+
+            case 5:
+                ImportHandler(currentUser.getCollection(), 2);
+                break;
+                
+            case 6: 
                 PersonalCollection pc = currentUser.getCollection();
                 pc.setSortStrategy(new SortByID());
 
@@ -463,15 +489,72 @@ public class UI {
                 personalCollectionHandler();
                 break;
 
-            case 5:
+            case 7:
                 manageUser();
                 break;
 
-            case 6:
+            case 8:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
         }
+    }
+
+    public static void ExportHandler(ComicCollection collection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Export in?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name your file: ");
+        String filename = scanner.nextLine();
+
+        switch(choice) {
+            case 1: 
+                Export csvExporter = new CSVExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 2:
+                Export jsonExport = new JSONExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 3:
+                Export xmlExporter = new XMLExport(filename);
+                xmlExporter.exportCollection(collection);
+                break;
+
+        } 
+
+    }
+
+    public static void ImportHandler(ComicCollection collection, int type) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Import from?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name of file Importing (EXCLUDING .csv, .json, .xml): ");
+        String filename = scanner.nextLine();
+
+        switch (choice) {
+            case 1: 
+                Import csvImporter = new CSVImport(filename);
+                csvImporter.importCollection(type);
+                break;
+            case 2:
+                Import jsonImporter = new JSONImport(filename);
+                jsonImporter.importCollection(type);
+                break;
+            case 3:
+                Import xmlImporter = new XMLImport(filename);
+                xmlImporter.importCollection(type);
+                break;
+        }
+
     }
 
     public static void addManuallyHandler() throws IOException{
