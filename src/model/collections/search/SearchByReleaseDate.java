@@ -17,13 +17,13 @@ public class SearchByReleaseDate implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getReleaseDate().equals(term)) {
+                if (comic.getReleaseDate().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getReleaseDate().contains(term)) {
+                if (comic.getReleaseDate().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }

@@ -39,10 +39,11 @@ public class ComicBookTest {
         data.add(expected_issue);
         data.add(expected_title);
         data.add(expected_varDesc);
-        data.add(expected_publisher);
+        
         data.add(expected_releaseDate);
         data.add(expected_format);
         data.add(expected_dateAdded);
+        data.add(expected_publisher);
         data.add(expected_creators);
         data.add(expected_id);
 

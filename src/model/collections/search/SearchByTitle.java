@@ -17,13 +17,13 @@ public class SearchByTitle implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getTitle().equals(term)) {
+                if (comic.getTitle().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getTitle().contains(term)) {
+                if (comic.getTitle().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }

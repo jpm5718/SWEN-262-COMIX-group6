@@ -19,6 +19,14 @@ import src.model.collections.editComic.IssueEditor;
 import src.model.collections.editComic.ReleaseDateEditor;
 import src.model.collections.editComic.SeriesEditor;
 import src.model.collections.editComic.VarDescEditor;
+import src.model.collections.exportComic.CSVExport;
+import src.model.collections.exportComic.Export;
+import src.model.collections.exportComic.JSONExport;
+import src.model.collections.exportComic.XMLExport;
+import src.model.collections.importComic.CSVImport;
+import src.model.collections.importComic.Import;
+import src.model.collections.importComic.JSONImport;
+import src.model.collections.importComic.XMLImport;
 import src.model.collections.search.SearchByComicType;
 import src.model.collections.search.SearchByCreators;
 import src.model.collections.search.SearchByDateAdded;
@@ -142,40 +150,50 @@ public class UI {
                 "\n\t10) Search by Series" +
                 "\n\t11) Search by Title" +
                 "\n\t12) Search by Var Description" +
-                "\n\t13) Quit");
+                "\n\t13) Back" + 
+                "\n\t14) Quit");
 
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 13) {
+            if (choice < 1 || choice > 14) {
                 throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println("Invalid Input");
+            System.out.println("\nError: Please enter the number of a command from the list aboven\n");
             searchCollectionHandler(collection);
         }
 
-        if (choice == 13) {
+        if(choice == 13){
+            if(collection != database)
+                personalCollectionHandler();
+            else    
+                manageUser();
+        }
+
+        if (choice == 14) {
                 System.out.println("Goodbye!");
                 System.exit(0);
         }
 
-        System.out.println("Which match results would you like to view?" +
-                "\n\t1) Exact Matches" +
-                "\n\t2) Partial Matches");
-        int matchChoice = -1;
-        try {
-            String commandString = scan.nextLine();
-            matchChoice = Integer.parseInt(commandString);
-            if (matchChoice != 1 && matchChoice != 2) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            System.out.println("Invalid Input");
-            searchCollectionHandler(collection);
-        }
         boolean exactMatch = false;
+        if (choice != 5 && choice != 9) {
+                System.out.println("Which match results would you like to view?" +
+                    "\n\t1) Exact Matches" +
+                    "\n\t2) Partial Matches");
+            int matchChoice = 0;
+            try {
+                String commandString = scan.nextLine();
+                matchChoice = Integer.parseInt(commandString);
+                if (matchChoice != 1 && matchChoice != 2) {
+                    throw new Exception();
+                } else if (matchChoice == 1) { exactMatch = true;}
+            } catch (Exception e) {
+                System.out.println("\nError: Please enter the number of a command from the list aboven\n");
+                searchCollectionHandler(collection);
+            }
+        }
 
         switch (choice) {
             case 1:
@@ -203,10 +221,8 @@ public class UI {
                 results = collection.search(input, exactMatch);
                 break;
             case 5:
-                System.out.print("Search Term: ");
-                input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByGaps());
-                results = collection.search(input, exactMatch);
+                results = collection.search(null, exactMatch);
                 break;
             case 6:
                 System.out.print("Search Term: ");
@@ -227,10 +243,8 @@ public class UI {
                 results = collection.search(input, exactMatch);
                 break;
             case 9:
-                System.out.print("Search Term: ");
-                input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByRuns());
-                results = collection.search(input, exactMatch);
+                results = collection.search(null, exactMatch);
                 break;
             case 10:
                 System.out.print("Search Term: ");
@@ -252,23 +266,26 @@ public class UI {
                 break;
         }
         for (Comic comic : results) {
-            System.out.println(comic);
+            System.out.println("\n" + comic);
             System.out.println();
         }
-        System.out.print("\nEnter the id of the comic you would like to add to \n" + 
-        "or enter 0 to go back. ");
-        String inputString = scan.nextLine();
-        int idChoice = Integer.parseInt(inputString);
-        if(idChoice != 0){
-            Comic choiceComic = database.getComic(idChoice);
-            Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
-            addComicCommand.execute();
-            commandsToUndo.add(addComicCommand);
-            System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
-            dao.save();
-        }
+
+        if(collection == database){
+            System.out.print("\nEnter the id of the comic you would like to add to \n" + 
+            "or enter 0 to go back. ");
+            String inputString = scan.nextLine();
+            int idChoice = Integer.parseInt(inputString);
+            if(idChoice != 0){
+              Comic choiceComic = database.getComic(idChoice);
+              Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
+              addComicCommand.execute();
+              commandsToUndo.add(addComicCommand);
+              System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
+              dao.save();
+            }
         else    
             searchCollectionHandler(collection);
+        }
     }
 
     public static boolean manageSignUp() throws IOException{
@@ -291,13 +308,16 @@ public class UI {
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) Search Database" +
-                "\n\t3) Logout" +
-                "\n\t4) Quit");
+                "\n\t3) Export Database" +
+                "\n\t4) Import Database" +
+                "\n\t5) View Entire Database" +
+                "\n\t6) Logout" +
+                "\n\t7) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 4) {
+            if (choice < 1 || choice > 5) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -318,10 +338,21 @@ public class UI {
                 manageUser();
                 break;
             case 3:
+                ExportHandler(database);
+                break;
+            case 4:
+                ImportHandler(database, 1);
+                break;
+            case 5: 
+                for(Comic c : database.getCollection()){
+                    System.out.println(c);
+                }
+                break;
+            case 6:
                 currentUser = null;
                 manageStart();
                 break;
-            case 4:
+            case 7:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -404,17 +435,23 @@ public class UI {
     }
 
     public static void personalCollectionHandler() throws IOException{
-        System.out.println("\nPersonal Collection Options" +
+        double val = currentUser.getCollection().getValue();
+
+        System.out.println("\nPersonal Collection Options (No. of issues: " + currentUser.getCollection().getNumberOfIssues() + 
+                ", Total value: $" + String.format("%.2f", val) + ")" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Sort Collection" +
                 "\n\t3) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\t4) Go Back" +
-                "\n\t5) Quit");
+                "\n\t4) Export Personal Collection (csv, json, or xml)" +
+                "\n\t5) Import to Personal Collection (csv, json, xml)" +       
+                "\n\t6) View Collection" +
+                "\n\t7) Go Back" +
+                "\n\t8) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 5) {
+            if (choice < 1 || choice > 8) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -432,21 +469,95 @@ public class UI {
             case 2:
                 sortCollectionHandler(currentUser.getCollection());
                 break;
-
-            // comic book actions
+            
             case 3:
                 ComicBookHandler();
                 break;
 
             case 4:
-                manageUser();
+                ExportHandler(currentUser.getCollection());
                 break;
 
             case 5:
+                ImportHandler(currentUser.getCollection(), 2);
+                break;
+                
+            case 6: 
+                PersonalCollection pc = currentUser.getCollection();
+                pc.setSortStrategy(new SortByID());
+
+                for(Comic c : pc.sort()){
+                    System.out.println(c);
+                }
+                personalCollectionHandler();
+                break;
+
+            case 7:
+                manageUser();
+                break;
+
+            case 8:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
         }
+    }
+
+    public static void ExportHandler(ComicCollection collection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Export in?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name your file: ");
+        String filename = scanner.nextLine();
+
+        switch(choice) {
+            case 1: 
+                Export csvExporter = new CSVExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 2:
+                Export jsonExport = new JSONExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 3:
+                Export xmlExporter = new XMLExport(filename);
+                xmlExporter.exportCollection(collection);
+                break;
+
+        } 
+
+    }
+
+    public static void ImportHandler(ComicCollection collection, int type) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Import from?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name of file Importing (EXCLUDING .csv, .json, .xml): ");
+        String filename = scanner.nextLine();
+
+        switch (choice) {
+            case 1: 
+                Import csvImporter = new CSVImport(filename);
+                csvImporter.importCollection(type);
+                break;
+            case 2:
+                Import jsonImporter = new JSONImport(filename);
+                jsonImporter.importCollection(type);
+                break;
+            case 3:
+                Import xmlImporter = new XMLImport(filename);
+                xmlImporter.importCollection(type);
+                break;
+        }
+
     }
 
     public static void addManuallyHandler() throws IOException{

@@ -17,15 +17,15 @@ public class SearchByCreators implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                String creators = comic.getCreators();
-                if (creators.equals(term + " | ")) {
+                String creators = comic.getCreators().toLowerCase();
+                if (creators.equals(term.toLowerCase() + " | ")) {
                     results.add(comic);
                 } 
             }
         } else {
             for (Comic comic : collection) {
-                String creators = comic.getCreators();
-                if (creators.contains(term)) {
+                String creators = comic.getCreators().toLowerCase();
+                if (creators.contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }

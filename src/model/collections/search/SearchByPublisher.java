@@ -15,13 +15,13 @@ public class SearchByPublisher implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                if (comic.getPublisher().equals(term)) {
+                if (comic.getPublisher().toLowerCase().equals(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
         } else {
             for (Comic comic : collection) {
-                if (comic.getPublisher().contains(term)) {
+                if (comic.getPublisher().toLowerCase().contains(term.toLowerCase())) {
                     results.add(comic);
                 }
             }
