@@ -19,6 +19,14 @@ import src.model.collections.editComic.IssueEditor;
 import src.model.collections.editComic.ReleaseDateEditor;
 import src.model.collections.editComic.SeriesEditor;
 import src.model.collections.editComic.VarDescEditor;
+import src.model.collections.exportComic.CSVExport;
+import src.model.collections.exportComic.Export;
+import src.model.collections.exportComic.JSONExport;
+import src.model.collections.exportComic.XMLExport;
+import src.model.collections.importComic.CSVImport;
+import src.model.collections.importComic.Import;
+import src.model.collections.importComic.JSONImport;
+import src.model.collections.importComic.XMLImport;
 import src.model.collections.search.SearchByComicType;
 import src.model.collections.search.SearchByCreators;
 import src.model.collections.search.SearchByDateAdded;
@@ -238,8 +246,10 @@ public class UI {
         System.out.println("\nUser Options" +
                 "\n\t1) View Personal Collection Options" +
                 "\n\t2) Search Database" +
-                "\n\t3) Logout" +
-                "\n\t4) Quit");
+                "\n\t3) Export Database" +
+                "\n\t4) Import Database" +
+                "\n\t5) Logout" +
+                "\n\t6) Quit");
         int choice = scanner.nextInt();
         switch (choice) {
             // close out of program
@@ -255,10 +265,16 @@ public class UI {
                 manageUser();
                 break;
             case 3:
+                ExportHandler(database);
+                break;
+            case 4:
+                ImportHandler(database, 1);
+                break;
+            case 5:
                 currentUser = null;
                 manageStart();
                 break;
-            case 4:
+            case 6:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -270,8 +286,10 @@ public class UI {
         System.out.println("\nPersonal Collection Options" +
                 "\n\t1) Search Collection" +
                 "\n\t2) Comic Book Actions (add, remove, edit, etc.)" +
-                "\n\t3) Go Back" +
-                "\n\t4) Quit");
+                "\n\t3) Export Personal Collection (csv, json, or xml)" +
+                "\n\t4) Import to Personal Collection (csv, json, xml)" +
+                "\n\t5) Go Back" +
+                "\n\t6) Quit");
         int choice = scanner.nextInt();
         switch (choice) {
 
@@ -287,13 +305,78 @@ public class UI {
                 break;
             
             case 3:
+                ExportHandler(currentUser.getCollection());
                 break;
 
             case 4:
+                ImportHandler(currentUser.getCollection(), 2);
+                break;
+
+            case 5:
+                break;
+
+            case 6:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
         }
+    }
+
+    public static void ExportHandler(ComicCollection collection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Export in?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name your file: ");
+        String filename = scanner.nextLine();
+
+        switch(choice) {
+            case 1: 
+                Export csvExporter = new CSVExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 2:
+                Export jsonExport = new JSONExport(filename);
+                csvExporter.exportCollection(collection);
+                break;
+            case 3:
+                Export xmlExporter = new XMLExport(filename);
+                xmlExporter.exportCollection(collection);
+                break;
+
+        } 
+
+    }
+
+    public static void ImportHandler(ComicCollection collection, int type) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What format would you like to Import from?" + 
+        "\n\t1) CSV" + 
+        "\n\t2) JSON" + 
+        "\n\t3) XML");
+
+        int choice = scanner.nextInt();
+        System.out.println("Name of file Importing (EXCLUDING .csv, .json, .xml): ");
+        String filename = scanner.nextLine();
+
+        switch (choice) {
+            case 1: 
+                Import csvImporter = new CSVImport(filename);
+                csvImporter.importCollection(type);
+                break;
+            case 2:
+                Import jsonImporter = new JSONImport(filename);
+                jsonImporter.importCollection(type);
+                break;
+            case 3:
+                Import xmlImporter = new XMLImport(filename);
+                xmlImporter.importCollection(type);
+                break;
+        }
+
     }
 
     public static void addManuallyHandler() throws IOException{
