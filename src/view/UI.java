@@ -266,6 +266,7 @@ public class UI {
         User user = new User(newUsername, newPassword, new PersonalCollection(newCollName));
         dao.addUser(user);
         currentUser = user;
+        dao.save();
 
         return true;
     }
@@ -454,6 +455,14 @@ public class UI {
         String dateadded = scanner.nextLine();
         System.out.println("Who are the creators of the comic book?");
         String creators = scanner.nextLine();
+        System.out.println("What ID would you like to assign to the comic book? (must be over 14301)");
+        String id;
+        while (true) {
+            id = scanner.nextLine();
+            if (Integer.parseInt(id) <= 14301) {
+                System.out.println("Error: invalid id, please enter an id that is greater than 14301");;
+            } else { break; }
+        }
 
         // create queue to pass thru constructor
         Queue<String> data = new LinkedList<>();
@@ -466,9 +475,7 @@ public class UI {
         data.add(format);
         data.add(dateadded);
         data.add(creators);
-        int currentnum = collection.getNumberOfIssues(); // gets current num of entries so proper id can be
-                                                        // calculated
-        data.add(String.valueOf(++currentnum));
+        data.add(id);
 
         // create new comic and add it
         Comic newcomic = new ComicBook(data);
