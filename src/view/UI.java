@@ -7,6 +7,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import src.model.collections.ComicCollection;
@@ -83,7 +85,7 @@ public class UI {
         String password = scan.nextLine();
 
         for(User u : users){
-            if(u.getUsername().equals(username) && u.getPassword().equals(password)){
+            if(u.getUsername().equals(username) && BCrypt.checkpw(password, u.getPassword())){
                 System.out.println("\n\tLogged in as " + u.getUsername());
                 currentUser = u;
                 return true;
@@ -253,7 +255,7 @@ public class UI {
             System.out.println(comic);
             System.out.println();
         }
-        System.out.print("\nEnter the id of the comic you would like to add to \n" + 
+        System.out.print("\nEnter the id of the comic you would like to add to \n" +
         "or enter 0 to go back. ");
         int idChoice = scanner.nextInt();
         if(idChoice != 0){
@@ -264,7 +266,7 @@ public class UI {
             System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
             dao.save();
         }
-        else    
+        else
             searchCollectionHandler(collection);
     }
 
@@ -273,10 +275,11 @@ public class UI {
         String newUsername = scan.nextLine();
         System.out.print("Enter new password: ");
         String newPassword = scan.nextLine();
+        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
         System.out.print("Enter collection name: ");
         String newCollName = scan.nextLine();
 
-        User user = new User(newUsername, newPassword, new PersonalCollection(newCollName));
+        User user = new User(newUsername, hashedPassword, new PersonalCollection(newCollName));
         dao.addUser(user);
         currentUser = user;
         dao.save();
