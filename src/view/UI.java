@@ -618,13 +618,14 @@ public class UI {
         try {
             System.out.print("ID of Comic to slab: ");
             String commandString = scan.nextLine();
-            int input = Integer.parseInt(commandString);            Comic choice = currentUser.getCollection().getComic(input);
+            int input = Integer.parseInt(commandString);
+            Comic choice = currentUser.getCollection().getComic(input);
             if (choice instanceof GradedComic) {
                 Command slabComicCommand = new SlabComic((GradedComic) choice, currentUser.getCollection());
                 slabComicCommand.execute();
                 commandsToUndo.add(slabComicCommand);
             } else {
-                System.out.println("Invalid choice");
+                System.out.println("Error: comic must be graded before slabbing");
             }
             dao.save();
         } catch (Exception e) {
