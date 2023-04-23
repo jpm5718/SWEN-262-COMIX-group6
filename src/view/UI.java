@@ -428,6 +428,7 @@ public class UI {
 
             case 2:
                 sortCollectionHandler(currentUser.getCollection());
+                break;
 
             // comic book actions
             case 3:
