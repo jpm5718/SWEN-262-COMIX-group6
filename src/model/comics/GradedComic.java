@@ -16,12 +16,12 @@ public class GradedComic extends ComicBookDecorator {
 
     @Override
     public double getValue() {
-        double value = 0;
+        double value = comic.getValue();
 
         if (grade == 1) {
-            value = comic.getValue() * .1;
+            value = value * .1;
         } else {
-            value = Math.log10(grade) * comic.getValue();
+            value = Math.log10(grade) * value;
         }
 
         return value;

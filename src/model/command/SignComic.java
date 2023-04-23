@@ -8,7 +8,7 @@ import src.model.comics.Comic;
  * The SignComic class extends DecoratorCommand to sign a Comic.
  */
 public class SignComic extends DecoratorCommand {
-    
+
     /**
      * Constructor for SignComic, takes in a Comic and a PersonalCollection.
      * @param comic The Comic to be signed.

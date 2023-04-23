@@ -18,6 +18,7 @@ public class GradeComic extends DecoratorCommand {
      */
     public GradeComic(Comic comic, int grade, PersonalCollection personalCollection) {
         super(comic, personalCollection);
+        this.grade = grade;
     }
 
     /**
