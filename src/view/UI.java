@@ -139,18 +139,24 @@ public class UI {
                 "\n\t9) Search by Runs" +
                 "\n\t10) Search by Series" +
                 "\n\t11) Search by Title" +
-                "\n\t12) Search by Var Description");
+                "\n\t12) Search by Var Description" +
+                "\n\t13) Quit");
 
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 12) {
+            if (choice < 1 || choice > 13) {
                 throw new Exception();
             }
         } catch (Exception e) {
             System.out.println("Invalid Input");
             searchCollectionHandler(collection);
+        }
+
+        if (choice == 13) {
+                System.out.println("Goodbye!");
+                System.exit(0);
         }
 
         System.out.println("Which match results would you like to view?" +
@@ -315,12 +321,14 @@ public class UI {
                 "\n\t4) Sort by Issue" +
                 "\n\t5) Sort by Release Date" +
                 "\n\t6) Sort by Series" +
-                "\n\t7) Sort by Title");
+                "\n\t7) Sort by Title" +
+                "\n\t8) Go Back" +
+                "\n\t9) Quit");
         int choice = -1;
         try {
             String commandString = scan.nextLine();
             choice = Integer.parseInt(commandString);
-            if (choice < 1 || choice > 7) {
+            if (choice < 1 || choice > 9) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -356,6 +364,16 @@ public class UI {
             case 7:
                 collection.setSortStrategy(new SortByTitle());
                 results = collection.sort();
+                break;
+            case 8:
+                try {
+                    personalCollectionHandler();
+                } catch (IOException e) {
+                }
+
+            case 9:
+                System.out.println("Goodbye!");
+                System.exit(0);
                 break;
         }
         for (Comic comic : results) {
@@ -399,6 +417,7 @@ public class UI {
                 break;
 
             case 4:
+                manageUser();
                 break;
 
             case 5:
