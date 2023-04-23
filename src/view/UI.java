@@ -380,6 +380,10 @@ public class UI {
             System.out.println(comic);
             System.out.println();
         }
+        try {
+            personalCollectionHandler();
+        } catch (IOException e) {
+        }
     }
 
     public static void personalCollectionHandler() throws IOException{
