@@ -191,7 +191,8 @@ public class PersonalCollection implements ComicCollection {
      */
     @Override
     public ArrayList<Comic> search(String term, boolean exactMatch) {
-        return searchStrategy.search(collection, term, exactMatch);
+        setSortStrategy(new SortByID());
+        return searchStrategy.search(sort(), term, exactMatch);
     }
 
     /**

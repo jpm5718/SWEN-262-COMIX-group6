@@ -28,10 +28,14 @@ public class SearchByRuns implements SearchStrategy {
                 inRun = false;
             }
             
-            if (!inRun || i == copy.size() - 2) {
+            if (!inRun || i == copy.size() - 2 || !copy.get(i).getSeries().equals(copy.get(i+1).getSeries())) {
                 if (runSize >= 12) {
                     for (int j = 0; j < runSize; j++) {
                         results.add(copy.get(start + j));
+                    }
+
+                    if (!copy.get(i).getSeries().equals(copy.get(i+1).getSeries())) {
+                        results.remove(results.size() - 1);
                     }
                 }
 
