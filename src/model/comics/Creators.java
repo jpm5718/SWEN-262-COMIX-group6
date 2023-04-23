@@ -3,6 +3,7 @@ package src.model.comics;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Creators implements SpecialComicAttribute {
+    
     @JsonProperty("creators")
     private String[] creators;
 

@@ -13,6 +13,7 @@ public class SlabbedComic extends ComicBookDecorator {
 
     @Override
     public double getValue() {
+        
         return comic.getValue() * 2;
     }
 }
