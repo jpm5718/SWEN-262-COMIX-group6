@@ -214,7 +214,7 @@ public class UI {
                 break;
         }
         for (Comic comic : results) {
-            System.out.println("Id: " + comic.getId() + ", Title: " + comic.getTitle());
+            System.out.println(comic);
             System.out.println();
         }
         System.out.print("\nEnter the id of the comic you would like to add to \n" + 
