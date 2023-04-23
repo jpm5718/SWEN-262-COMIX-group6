@@ -46,10 +46,12 @@ import src.model.collections.sort.SortByIssue;
 import src.model.collections.sort.SortByReleaseDate;
 import src.model.collections.sort.SortBySeries;
 import src.model.collections.sort.SortByTitle;
+import src.model.comics.AuthenticatedComic;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 import src.model.comics.GradedComic;
 import src.model.comics.SignedComic;
+import src.model.comics.SlabbedComic;
 import src.model.command.AddComic;
 import src.model.command.AuthenticateComic;
 import src.model.command.Command;
@@ -271,17 +273,18 @@ public class UI {
         if(collection == database){
             System.out.print("\nEnter the id of the comic you would like to add to \n" + 
             "or enter 0 to go back. ");
-            int idChoice = scanner.nextInt();
+            String inputString = scan.nextLine();
+            int idChoice = Integer.parseInt(inputString);
             if(idChoice != 0){
-                Comic choiceComic = database.getComic(idChoice);
-                Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
-                addComicCommand.execute();
-                commandsToUndo.add(addComicCommand);
-                System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
-                dao.save();
+              Comic choiceComic = database.getComic(idChoice);
+              Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
+              addComicCommand.execute();
+              commandsToUndo.add(addComicCommand);
+              System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
+              dao.save();
             }
-            else    
-                searchCollectionHandler(collection);
+        else    
+            searchCollectionHandler(collection);
         }
     }
 
@@ -721,11 +724,17 @@ public class UI {
             String commandString = scan.nextLine();
             int input = Integer.parseInt(commandString);
             Comic choice = currentUser.getCollection().getComic(input);
+            if (choice instanceof GradedComic || choice instanceof SlabbedComic) {
+                System.out.println("Comic already graded");
+                gradeComicHandler();
+            }
             System.out.print("Grade of the comic: ");
-            input = scan.nextInt();
+            String inputString = scan.nextLine();
+            input = Integer.parseInt(commandString);
             Command gradeComicCommand = new GradeComic(choice, input, currentUser.getCollection());
             gradeComicCommand.execute();
             commandsToUndo.add(gradeComicCommand);
+            System.out.println("Comic Successfully Graded");
             dao.save();
         } catch (Exception e) {
             System.out.println("Invalid Input");
@@ -745,10 +754,15 @@ public class UI {
             String commandString = scan.nextLine();
             int input = Integer.parseInt(commandString);
             Comic choice = currentUser.getCollection().getComic(input);
+            if (choice instanceof SlabbedComic) {
+                System.out.println("Comic already slabbed");
+                slabComicHandler();
+            }
             if (choice instanceof GradedComic) {
                 Command slabComicCommand = new SlabComic((GradedComic) choice, currentUser.getCollection());
                 slabComicCommand.execute();
                 commandsToUndo.add(slabComicCommand);
+                System.out.println("Comic Successfully Slabbed");
             } else {
                 System.out.println("Error: comic must be graded before slabbing");
             }
@@ -771,6 +785,7 @@ public class UI {
             Command signComicCommand = new SignComic(choice, currentUser.getCollection());
             signComicCommand.execute();
             commandsToUndo.add(signComicCommand);
+            System.out.println("Comic Successfully Signed");
             dao.save();
         } catch (Exception e) {
             System.out.println("Invalid Input");
@@ -788,11 +803,17 @@ public class UI {
         try {
             System.out.print("ID of Comic to authenticate: ");
             String commandString = scan.nextLine();
-            int input = Integer.parseInt(commandString);            Comic choice = currentUser.getCollection().getComic(input);
+            int input = Integer.parseInt(commandString);
+            Comic choice = currentUser.getCollection().getComic(input);
+            if (choice instanceof AuthenticatedComic) {
+                System.out.println("Comic already authenticated");
+                authenticateComicHandler();
+            }
             if (choice instanceof SignedComic) {
                 Command authenticateComicCommand = new AuthenticateComic((SignedComic) choice, currentUser.getCollection());
                 authenticateComicCommand.execute();
                 commandsToUndo.add(authenticateComicCommand);
+                System.out.println("Comic Successfully Authenticated");
             } else {
                 System.out.println("Invalid choice");
             }
