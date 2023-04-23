@@ -151,7 +151,7 @@ public class UI {
                 throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println("Invalid Input");
+            System.out.println("\nError: Please enter the number of a command from the list aboven\n");
             searchCollectionHandler(collection);
         }
 
@@ -167,21 +167,23 @@ public class UI {
                 System.exit(0);
         }
 
-        System.out.println("Which match results would you like to view?" +
-                "\n\t1) Exact Matches" +
-                "\n\t2) Partial Matches");
-        int matchChoice = -1;
-        try {
-            String commandString = scan.nextLine();
-            matchChoice = Integer.parseInt(commandString);
-            if (matchChoice != 1 && matchChoice != 2) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            System.out.println("Invalid Input");
-            searchCollectionHandler(collection);
-        }
         boolean exactMatch = false;
+        if (choice != 5 && choice != 9) {
+                System.out.println("Which match results would you like to view?" +
+                    "\n\t1) Exact Matches" +
+                    "\n\t2) Partial Matches");
+            int matchChoice = 0;
+            try {
+                String commandString = scan.nextLine();
+                matchChoice = Integer.parseInt(commandString);
+                if (matchChoice != 1 && matchChoice != 2) {
+                    throw new Exception();
+                } else if (matchChoice == 1) { exactMatch = true;}
+            } catch (Exception e) {
+                System.out.println("\nError: Please enter the number of a command from the list aboven\n");
+                searchCollectionHandler(collection);
+            }
+        }
 
         switch (choice) {
             case 1:
@@ -209,10 +211,8 @@ public class UI {
                 results = collection.search(input, exactMatch);
                 break;
             case 5:
-                System.out.print("Search Term: ");
-                input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByGaps());
-                results = collection.search(input, exactMatch);
+                results = collection.search(null, exactMatch);
                 break;
             case 6:
                 System.out.print("Search Term: ");
@@ -233,10 +233,8 @@ public class UI {
                 results = collection.search(input, exactMatch);
                 break;
             case 9:
-                System.out.print("Search Term: ");
-                input = scan.nextLine();
                 collection.setSearchStrategy(new SearchByRuns());
-                results = collection.search(input, exactMatch);
+                results = collection.search(null, exactMatch);
                 break;
             case 10:
                 System.out.print("Search Term: ");
