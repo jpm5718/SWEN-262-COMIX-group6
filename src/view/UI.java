@@ -99,7 +99,17 @@ public class UI {
     public static void manageGuest() {
         // System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Browse Collection\n\t2) Search Collection\n\t3) Search Database");
         System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Search Database\n\t2) View Database");
-        int choice = scanner.nextInt();
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice != 1 && choice != 2) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            manageGuest();
+        }
         switch (choice) {
             // close out of program
             case 1:
@@ -130,21 +140,34 @@ public class UI {
                 "\n\t10) Search by Series" +
                 "\n\t11) Search by Title" +
                 "\n\t12) Search by Var Description");
-        int choice = scanner.nextInt();
+
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice < 1 || choice > 12) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            searchCollectionHandler(collection);
+        }
 
         System.out.println("Which match results would you like to view?" +
                 "\n\t1) Exact Matches" +
                 "\n\t2) Partial Matches");
-        int matchChoice = scanner.nextInt();
-        boolean exactMatch = false;
-        if (matchChoice == 1) {
-            exactMatch = true;
-        } else if (matchChoice == 2) {
-            exactMatch = false;
-        } else {
+        int matchChoice = -1;
+        try {
+            String commandString = scan.nextLine();
+            matchChoice = Integer.parseInt(commandString);
+            if (matchChoice != 1 && matchChoice != 2) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
             System.out.println("Invalid Input");
             searchCollectionHandler(collection);
         }
+        boolean exactMatch = false;
 
         switch (choice) {
             case 1:
@@ -247,7 +270,17 @@ public class UI {
                 "\n\t2) Search Database" +
                 "\n\t3) Logout" +
                 "\n\t4) Quit");
-        int choice = scanner.nextInt();
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice < 1 || choice > 4) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            manageUser();
+        }
         switch (choice) {
             // close out of program
             case 1:
@@ -283,7 +316,17 @@ public class UI {
                 "\n\t5) Sort by Release Date" +
                 "\n\t6) Sort by Series" +
                 "\n\t7) Sort by Title");
-        int choice = scanner.nextInt();
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice < 1 || choice > 7) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            sortCollectionHandler(collection);
+        }
 
         switch (choice) {
             case 1:
@@ -328,7 +371,17 @@ public class UI {
                 "\n\t3) Comic Book Actions (add, remove, edit, etc.)" +
                 "\n\t4) Go Back" +
                 "\n\t5) Quit");
-        int choice = scanner.nextInt();
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice < 1 || choice > 5) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            personalCollectionHandler();
+        }
         switch (choice) {
 
             // viewing existing collections
@@ -405,17 +458,23 @@ public class UI {
 
     public static void addFromDatabaseHandler() throws IOException {
         System.out.println("Enter a Comic ID from below to add to your collection:");
-        // for (Comic comic : database.getCollection()) {
-        //     System.out.println(comic);
-        // }
-        System.out.print("ID of Comic to add: ");
-        int input = scan.nextInt();
-        Comic choice = database.getComic(input);
-        Command addComicCommand = new AddComic(choice, currentUser.getCollection());
-        addComicCommand.execute();
-        commandsToUndo.add(addComicCommand);
-        System.out.println(choice.getTitle() + " has been added to " + currentUser.getCollection().getName());
-        dao.save();
+        for (Comic comic : database.getCollection()) {
+            System.out.println(comic);
+        }
+        try {
+            System.out.print("ID of Comic to add: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);
+            Comic choice = database.getComic(input);
+            Command addComicCommand = new AddComic(choice, currentUser.getCollection());
+            addComicCommand.execute();
+            commandsToUndo.add(addComicCommand);
+            System.out.println(choice.getTitle() + " has been added to " + currentUser.getCollection().getName());
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            addFromDatabaseHandler();
+        }
     }
 
     public static void removeComicHandler() throws IOException{
@@ -423,13 +482,19 @@ public class UI {
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println(comic);
         }
-        System.out.print("ID of Comic to remove: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        Command removeComicCommand = new RemoveComic(choice, currentUser.getCollection());
-        removeComicCommand.execute();
-        commandsToUndo.add(removeComicCommand);
-        dao.save();
+        try {
+            System.out.print("ID of Comic to remove: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);
+            Comic choice = currentUser.getCollection().getComic(input);
+            Command removeComicCommand = new RemoveComic(choice, currentUser.getCollection());
+            removeComicCommand.execute();
+            commandsToUndo.add(removeComicCommand);
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            removeComicHandler();
+        }
     }
 
     public static void editComicHandler() throws IOException {
@@ -438,50 +503,57 @@ public class UI {
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println(comic);
         }
-        System.out.print("ID of Comic to edit: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        System.out.println("Which field of the Comic would you like to modify? " +
-            "\n\t1) Creators" +
-            "\n\t2) Date Added" +
-            "\n\t3) Publisher" +
-            "\n\t4) Format" +
-            "\n\t5) Issue" +
-            "\n\t6) Release Date" +
-            "\n\t7) Series" +
-            "\n\t8) Description");
-        input = scan.nextInt();
-        switch (input) {
-            case 1:
-                collection.setEditStrategy(new CreatorsEditor());
-                break;
-            case 2:
-                collection.setEditStrategy(new DateAddedEditor());
-                break;
-            case 3:
-                collection.setEditStrategy(new EditPublisher());
-                break;
-            case 4:
-                collection.setEditStrategy(new FormatEditor());
-                break;
-            case 5:
-                collection.setEditStrategy(new IssueEditor());
-                break;
-            case 6:
-                collection.setEditStrategy(new ReleaseDateEditor());
-                break;
-            case 7:
-                collection.setEditStrategy(new SeriesEditor());
-                break;
-            case 8:
-                collection.setEditStrategy(new VarDescEditor());
-                break;
-        }
+        try {
+            System.out.print("ID of Comic to edit: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);
+            Comic choice = currentUser.getCollection().getComic(input);
+            System.out.println("Which field of the Comic would you like to modify? " +
+                "\n\t1) Creators" +
+                "\n\t2) Date Added" +
+                "\n\t3) Publisher" +
+                "\n\t4) Format" +
+                "\n\t5) Issue" +
+                "\n\t6) Release Date" +
+                "\n\t7) Series" +
+                "\n\t8) Description");
+            commandString = scan.nextLine();
+            input = Integer.parseInt(commandString);
+            switch (input) {
+                case 1:
+                    collection.setEditStrategy(new CreatorsEditor());
+                    break;
+                case 2:
+                    collection.setEditStrategy(new DateAddedEditor());
+                    break;
+                case 3:
+                    collection.setEditStrategy(new EditPublisher());
+                    break;
+                case 4:
+                    collection.setEditStrategy(new FormatEditor());
+                    break;
+                case 5:
+                    collection.setEditStrategy(new IssueEditor());
+                    break;
+                case 6:
+                    collection.setEditStrategy(new ReleaseDateEditor());
+                    break;
+                case 7:
+                    collection.setEditStrategy(new SeriesEditor());
+                    break;
+                case 8:
+                    collection.setEditStrategy(new VarDescEditor());
+                    break;
+            }
 
-        System.out.print("Replacement for field: ");
-        String line = scan.nextLine();
-        collection.editComic(choice, line);
-        dao.save();
+            System.out.print("Replacement for field: ");
+            String line = scan.nextLine();
+            collection.editComic(choice, line);
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            editComicHandler();
+        }
     }
 
     public static void gradeComicHandler() throws IOException{
@@ -489,15 +561,21 @@ public class UI {
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println(comic);
         }
-        System.out.print("ID of Comic to grade: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        System.out.print("Grade of the comic: ");
-        input = scan.nextInt();
-        Command gradeComicCommand = new GradeComic(choice, input, currentUser.getCollection());
-        gradeComicCommand.execute();
-        commandsToUndo.add(gradeComicCommand);
-        dao.save();
+        try {
+            System.out.print("ID of Comic to grade: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);
+            Comic choice = currentUser.getCollection().getComic(input);
+            System.out.print("Grade of the comic: ");
+            input = scan.nextInt();
+            Command gradeComicCommand = new GradeComic(choice, input, currentUser.getCollection());
+            gradeComicCommand.execute();
+            commandsToUndo.add(gradeComicCommand);
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            gradeComicHandler();
+        }
     }
 
     public static void slabComicHandler() throws IOException{
@@ -507,17 +585,22 @@ public class UI {
                 System.out.println(comic);
             }
         }
-        System.out.print("ID of Comic to slab: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        if (choice instanceof GradedComic) {
-            Command slabComicCommand = new SlabComic((GradedComic) choice, currentUser.getCollection());
-            slabComicCommand.execute();
-            commandsToUndo.add(slabComicCommand);
-        } else {
-            System.out.println("Invalid choice");
+        try {
+            System.out.print("ID of Comic to slab: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);            Comic choice = currentUser.getCollection().getComic(input);
+            if (choice instanceof GradedComic) {
+                Command slabComicCommand = new SlabComic((GradedComic) choice, currentUser.getCollection());
+                slabComicCommand.execute();
+                commandsToUndo.add(slabComicCommand);
+            } else {
+                System.out.println("Invalid choice");
+            }
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            slabComicHandler();
         }
-        dao.save();
     }
 
     public static void signComicHandler() throws IOException{
@@ -525,13 +608,18 @@ public class UI {
         for (Comic comic : currentUser.getCollection().getCollection()) {
             System.out.println(comic);
         }
-        System.out.print("ID of Comic to sign: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        Command signComicCommand = new SignComic(choice, currentUser.getCollection());
-        signComicCommand.execute();
-        commandsToUndo.add(signComicCommand);
-        dao.save();
+        try {
+            System.out.print("ID of Comic to sign: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);            Comic choice = currentUser.getCollection().getComic(input);
+            Command signComicCommand = new SignComic(choice, currentUser.getCollection());
+            signComicCommand.execute();
+            commandsToUndo.add(signComicCommand);
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            signComicHandler();
+        }
     }
 
     public static void authenticateComicHandler() throws IOException{
@@ -541,17 +629,22 @@ public class UI {
                 System.out.println(comic);
             }
         }
-        System.out.print("ID of Comic to authenticate: ");
-        int input = scan.nextInt();
-        Comic choice = currentUser.getCollection().getComic(input);
-        if (choice instanceof SignedComic) {
-            Command authenticateComicCommand = new AuthenticateComic((SignedComic) choice, currentUser.getCollection());
-            authenticateComicCommand.execute();
-            commandsToUndo.add(authenticateComicCommand);
-        } else {
-            System.out.println("Invalid choice");
+        try {
+            System.out.print("ID of Comic to authenticate: ");
+            String commandString = scan.nextLine();
+            int input = Integer.parseInt(commandString);            Comic choice = currentUser.getCollection().getComic(input);
+            if (choice instanceof SignedComic) {
+                Command authenticateComicCommand = new AuthenticateComic((SignedComic) choice, currentUser.getCollection());
+                authenticateComicCommand.execute();
+                commandsToUndo.add(authenticateComicCommand);
+            } else {
+                System.out.println("Invalid choice");
+            }
+            dao.save();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            authenticateComicHandler();
         }
-        dao.save();
     }
 
     public static void ComicBookHandler() throws IOException{
@@ -567,7 +660,17 @@ public class UI {
                 "\n\t9) Undo Action" +
                 "\n\t10) Redo Action" +
                 "\n\t11) Go Back");
-        int choice = scanner.nextInt();
+        int choice = -1;
+        try {
+            String commandString = scan.nextLine();
+            choice = Integer.parseInt(commandString);
+            if (choice < 1 || choice > 11) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            ComicBookHandler();
+        }
         switch (choice) {
             // add a comic manually to a collection
             case 1:
@@ -629,18 +732,27 @@ public class UI {
         } catch (Exception e) {
             System.out.println("Error Loading");
         }
+        manageWelcome();
+    }
+
+    public static void manageWelcome() {
         System.out.println("Welcome to COMIX!!\n\nChoose a command\n\t1) Login\n\t2) Sign up\n\t3) Guest mode");
-        String commandString = scan.nextLine();
-        int command = Integer.parseInt(commandString);
-        // scan.next(); // add this line to consume the newline character
-        if (command == 1) {
-            signIn();
-            manageUser();
-        } else if (command == 2) {
-            manageSignUp();
-            manageUser();
-        } else if (command == 3) {
-            manageGuest();
+        try {
+            String commandString = scan.nextLine();
+            int command = Integer.parseInt(commandString);
+            // scan.next(); // add this line to consume the newline character
+            if (command == 1) {
+                signIn();
+                manageUser();
+            } else if (command == 2) {
+                manageSignUp();
+                manageUser();
+            } else if (command == 3) {
+                manageGuest();
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            manageWelcome();
         }
     }
 
