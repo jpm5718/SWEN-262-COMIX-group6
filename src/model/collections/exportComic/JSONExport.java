@@ -20,9 +20,11 @@ public class JSONExport implements Export {
         File file = new File(fileDest);
         if (!(file.exists())) {
             this.writer = new FileWriter(fileDest);
+            writer.write("[");
         } else {
             file.delete();
             this.writer = new FileWriter(fileDest);
+            writer.write("[");
         }
         System.out.println("Exporter Created!");
     }
@@ -31,26 +33,20 @@ public class JSONExport implements Export {
     public void exportCollection(ComicCollection comics) throws IOException {
         for (Comic comic : comics.getCollection()) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Series", comic.getSeries().toString());
-            jsonObject.put("Issue", comic.getIssue().toString());
-            jsonObject.put("Title", comic.getTitle().toString());
-            jsonObject.put("Variant Description", comic.getVarDesc().toString());
-            jsonObject.put("Release Date", comic.getReleaseDate().toString());
-            jsonObject.put("Fomat", comic.getFormat().toString());
-            jsonObject.put("Date Added", comic.getDateAdded().toString());
-            jsonObject.put("Publisher", comic.getPublisher().toString());
-            jsonObject.put("Creators", comic.getCreators().toString());
+            jsonObject.put("series", comic.getSeries().toString());
+            jsonObject.put("issue", comic.getIssue().toString());
+            jsonObject.put("title", comic.getTitle().toString());
+            jsonObject.put("varDesc", comic.getVarDesc().toString());
+            jsonObject.put("releaseDate", comic.getReleaseDate().toString());
+            jsonObject.put("format", comic.getFormat().toString());
+            jsonObject.put("dateAdded", comic.getDateAdded().toString());
+            jsonObject.put("publisher", comic.getPublisher().toString());
+            jsonObject.put("creators", comic.getCreators().toString());
             
             writer.write(jsonObject.toJSONString());
+            writer.write("]");
         }
         writer.flush();
-        //Verify that file works
-        BufferedReader br = new BufferedReader(new FileReader(fileDest));
-        String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
-        }
-        br.close();
     }
     
 }

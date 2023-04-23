@@ -11,6 +11,7 @@ import com.opencsv.CSVReader;
 
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
+import src.model.collections.PersonalCollection;
 import src.model.comics.Comic;
 import src.model.comics.ComicBook;
 
@@ -31,8 +32,16 @@ public class CSVImport implements Import {
     }
 
     @Override
-    public ComicCollection importCollection() {
-        ComicCollection collection = new DatabaseCollection();
+    public ComicCollection importCollection(int type) {
+        ComicCollection collection;
+        if (type == 1) {
+            collection = new DatabaseCollection();
+        } else if (type == 2) {
+            collection = new PersonalCollection(fileDest);
+        } else {
+            return null;
+        }
+        
 
         try {
             reader.readNext();

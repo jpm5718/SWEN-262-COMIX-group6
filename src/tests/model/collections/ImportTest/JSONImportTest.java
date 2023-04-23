@@ -44,7 +44,7 @@ public class JSONImportTest {
 
          //Test for importing;
          Import testImport = new JSONImport("test2");
-         ComicCollection testCollection = testImport.importCollection();
+         ComicCollection testCollection = testImport.importCollection(1);
          assertNotNull("collection should exist!", testCollection);
     }
 }

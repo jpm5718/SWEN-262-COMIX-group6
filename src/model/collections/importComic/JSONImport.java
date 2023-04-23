@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
+import src.model.collections.PersonalCollection;
 import src.model.comics.ComicBook;
 
 public class JSONImport implements Import {
@@ -33,9 +34,16 @@ public class JSONImport implements Import {
         System.out.println("Importer Created!");
     }
 
-    public ComicCollection importCollection() {
+    public ComicCollection importCollection(int type) {
         try {
-            ComicCollection collection = new DatabaseCollection();
+            ComicCollection collection;
+            if (type == 1) {
+                collection = new DatabaseCollection();
+            } else if (type == 2) {
+                collection = new PersonalCollection(fileDest);
+            } else {
+                return null;
+            }
             ObjectMapper mapper = new ObjectMapper();
             ComicBook[] comics = mapper.readValue(this.file, ComicBook[].class);
             for (ComicBook comic : comics) {

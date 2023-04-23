@@ -11,6 +11,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import src.model.collections.ComicCollection;
 import src.model.collections.DatabaseCollection;
+import src.model.collections.PersonalCollection;
+import src.model.comics.Comic;
+import src.model.comics.ComicBook;
 
 public class XMLImport implements Import {
     private FileReader reader;
@@ -28,11 +31,21 @@ public class XMLImport implements Import {
         }
         System.out.println("Exporter Created!");
     }
-    public ComicCollection importCollection() {
+    public ComicCollection importCollection(int type) {
         XmlMapper mapper = new XmlMapper();
         ComicCollection collection;
+        if (type == 1) {
+            collection = new DatabaseCollection();
+        } else if (type == 2) {
+            collection = new PersonalCollection(fileDest);
+        } else {
+            return null;
+        }
         try {
-            collection = mapper.readValue(file, DatabaseCollection.class);
+            ComicBook[] books = mapper.readValue(file, ComicBook[].class);
+            for (ComicBook comic : books) {
+                collection.addComic(comic);
+            }
             return collection;
         } catch (StreamReadException e) {
             // TODO Auto-generated catch block

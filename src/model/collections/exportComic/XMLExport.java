@@ -48,13 +48,7 @@ public class XMLExport implements Export {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //Verify that file works
-        BufferedReader br = new BufferedReader(new FileReader(fileDest));
-        String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
-        }
-        br.close();
+
     }
     
 }
