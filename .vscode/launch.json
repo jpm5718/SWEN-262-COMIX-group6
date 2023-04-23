@@ -9,7 +9,7 @@
             "name": "UI",
             "request": "launch",
             "mainClass": "src.view.UI",
-            "projectName": "SWEN-262-COMIX-group6_976f67dc"
+            "projectName": "SWEN-262-COMIX-group6_17d1f9bc"
         },
         {
             "type": "java",

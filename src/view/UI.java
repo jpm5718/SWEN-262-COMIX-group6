@@ -96,7 +96,7 @@ public class UI {
         return false;
     }
 
-    public static void manageGuest() {
+    public static void manageGuest() throws IOException{
         // System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Browse Collection\n\t2) Search Collection\n\t3) Search Database");
         System.out.println("Welcome to Guest Mode!!\n\nChoose a command\n\t1) Search Database\n\t2) View Database");
         int choice = -1;
@@ -124,7 +124,7 @@ public class UI {
 
     }
 
-    public static void searchCollectionHandler(ComicCollection collection) {
+    public static void searchCollectionHandler(ComicCollection collection) throws IOException{
         String input = "";
         ArrayList<Comic> results = null;
         System.out.println("Choose one of the following actions:" +
@@ -253,6 +253,19 @@ public class UI {
             System.out.println(comic);
             System.out.println();
         }
+        System.out.print("\nEnter the id of the comic you would like to add to \n" + 
+        "or enter 0 to go back. ");
+        int idChoice = scanner.nextInt();
+        if(idChoice != 0){
+            Comic choiceComic = database.getComic(idChoice);
+            Command addComicCommand = new AddComic(choiceComic, currentUser.getCollection());
+            addComicCommand.execute();
+            commandsToUndo.add(addComicCommand);
+            System.out.println(choiceComic.getTitle() + " has been added to " + currentUser.getCollection().getName());
+            dao.save();
+        }
+        else    
+            searchCollectionHandler(collection);
     }
 
     public static boolean manageSignUp() throws IOException{
