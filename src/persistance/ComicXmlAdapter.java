@@ -32,12 +32,11 @@
 //         } catch (Exception e) {
 //             e.printStackTrace();
 //         }
-   
+
 //     }
 
 //     @Override
 //     public DatabaseCollection importToFormat() throws Exception {
-
 //         try {
 //             JAXBContext context = JAXBContext.newInstance(ComicBook[].class);
 //             Unmarshaller unmarsh = context.createUnmarshaller();

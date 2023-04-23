@@ -54,7 +54,7 @@ public abstract class ComicBookDecorator implements Comic {
     }
 
     @Override
-    public Creators getCreators() {
+    public String getCreators() {
         return comic.getCreators();
     }
 
@@ -116,5 +116,11 @@ public abstract class ComicBookDecorator implements Comic {
     @Override
     public void setValue(double value) {
         comic.setValue(value);
+    }
+
+    @Override
+    public String toString() {
+        String result = "Comic " + comic.getId() +":\nSeries: " + comic.getSeries() + "\nIssue: " + comic.getIssue() + "\nTitle: " + comic.getTitle() + "\nDescription: " + comic.getVarDesc() + "\nPublisher: " + comic.getPublisher() + "\nRelease Date: " + comic.getReleaseDate() + "\nFormat: " + comic.getFormat() + "\nDate Added: " + comic.getDateAdded() + "\nCreators: " + comic.getCreators() + "\nValue: " + comic.getValue() + "\n------------------------------------------------------\n\n";
+        return result;
     }
 }

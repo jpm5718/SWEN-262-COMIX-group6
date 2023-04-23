@@ -24,10 +24,6 @@ public class SortByIssue implements SortStrategy {
 
         ArrayList<Comic> sorted = new ArrayList<>();
         Collections.addAll(sorted, comicsArr);
-
-        for (int i = 0; i < comicsArr.length; i++) {
-            System.out.println("\n" + comicsArr[i].getIssue());
-        }
         
         return sorted;
     }

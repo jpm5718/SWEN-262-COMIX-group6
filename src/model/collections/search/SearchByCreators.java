@@ -6,8 +6,6 @@
 package src.model.collections.search;
 
 import src.model.comics.Comic;
-import src.model.comics.Creators;
-
 import java.util.ArrayList;
 
 
@@ -19,20 +17,16 @@ public class SearchByCreators implements SearchStrategy {
 
         if (exactMatch) {
             for (Comic comic : collection) {
-                Creators creators = comic.getCreators();
-                for (String creator : creators.getCreators()) {
-                    if (creator.equals(term)) {
-                        results.add(comic);
-                    }
-                }
+                String creators = comic.getCreators().toLowerCase();
+                if (creators.equals(term.toLowerCase() + " | ")) {
+                    results.add(comic);
+                } 
             }
         } else {
             for (Comic comic : collection) {
-                Creators creators = comic.getCreators();
-                for (String creator : creators.getCreators()) {
-                    if (creator.contains(term)) {
-                        results.add(comic);
-                    }
+                String creators = comic.getCreators().toLowerCase();
+                if (creators.contains(term.toLowerCase())) {
+                    results.add(comic);
                 }
             }
         }
