@@ -44,6 +44,13 @@ public class JSONExport implements Export {
             writer.write(jsonObject.toJSONString());
         }
         writer.flush();
+        //Verify that file works
+        BufferedReader br = new BufferedReader(new FileReader(fileDest));
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+        br.close();
     }
     
 }

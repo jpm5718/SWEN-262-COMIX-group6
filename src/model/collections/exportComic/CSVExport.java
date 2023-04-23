@@ -47,15 +47,13 @@ public class CSVExport implements Export {
             writer.writeNext(nextLine);
         }
         writer.flush();
-        /*
-         * BufferedReader br = new BufferedReader(new FileReader(fileDest));
+        //Verify that file works
+        BufferedReader br = new BufferedReader(new FileReader(fileDest));
         String line;
         while ((line = br.readLine()) != null) {
             System.out.println(line);
         }
         br.close();
-         */
-        //Verify that file works
         
     }
 }
