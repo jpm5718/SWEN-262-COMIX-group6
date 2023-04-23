@@ -112,10 +112,8 @@ public class PersonalCollection implements ComicCollection {
     public Comic gradeComic(int id, int grade) {
         for (Comic comic : collection) {
             if (id == comic.getId()) {
-                System.out.println("\n\nTEST: " + comic.getValue() + "\n\n");
                 int index = collection.indexOf(comic);
                 comic = new GradedComic(comic, grade);
-                System.out.println("\n\nTEST: " + comic.getValue() + "\n\n");
                 collection.set(index, comic);
                 return comic;
             }
